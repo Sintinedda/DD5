@@ -18,12 +18,54 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            App:
+            Assets:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Entity/Assets'
+                prefix: 'App\Entity\Assets'
+                alias: Assets
+            Backgrounds:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity/Backgrounds'
+                prefix: 'App\Entity\Backgrounds'
+                alias: Backgrounds
+            Classes:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity/Classes'
+                prefix: 'App\Entity\Classes'
+                alias: Classes
+            Construct:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity/Construct'
+                prefix: 'App\Entity\Construct'
+                alias: Construct
+            Items:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity/Items'
+                prefix: 'App\Entity\Items'
+                alias: Items
+            Monsters:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity/Monsters'
+                prefix: 'App\Entity\Monsters'
+                alias: Monsters
+            Races:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity/Races'
+                prefix: 'App\Entity\Races'
+                alias: Races
+            Spells:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity/Spells'
+                prefix: 'App\Entity\Spells'
+                alias: Spells
         controller_resolver:
             auto_mapping: false
 
