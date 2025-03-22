@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SpecialtyListe{% endblock %}
+
+{% block body %}
+    <h1>SpecialtyListe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ specialty_liste.id }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ specialty_liste.number }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ specialty_liste.place }}</td>
+            </tr>
+            <tr>
+                <th>L1</th>
+                <td>{{ specialty_liste.l1 }}</td>
+            </tr>
+            <tr>
+                <th>L2</th>
+                <td>{{ specialty_liste.l2 }}</td>
+            </tr>
+            <tr>
+                <th>L3</th>
+                <td>{{ specialty_liste.l3 }}</td>
+            </tr>
+            <tr>
+                <th>L4</th>
+                <td>{{ specialty_liste.l4 }}</td>
+            </tr>
+            <tr>
+                <th>L5</th>
+                <td>{{ specialty_liste.l5 }}</td>
+            </tr>
+            <tr>
+                <th>L6</th>
+                <td>{{ specialty_liste.l6 }}</td>
+            </tr>
+            <tr>
+                <th>L7</th>
+                <td>{{ specialty_liste.l7 }}</td>
+            </tr>
+            <tr>
+                <th>L8</th>
+                <td>{{ specialty_liste.l8 }}</td>
+            </tr>
+            <tr>
+                <th>L9</th>
+                <td>{{ specialty_liste.l9 }}</td>
+            </tr>
+            <tr>
+                <th>L10</th>
+                <td>{{ specialty_liste.l10 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_classes_specialty_liste_index') }}">back to list</a>
+
+    <a href="{{ path('app_classes_specialty_liste_edit', {'id': specialty_liste.id}) }}">edit</a>
+
+    {{ include('classes/specialty_liste/_delete_form.html.twig') }}
+{% endblock %}

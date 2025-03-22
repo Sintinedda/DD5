@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BGRow{% endblock %}
+
+{% block body %}
+    <h1>Create new BGRow</h1>
+
+    {{ include('backgrounds/bg_row/_form.html.twig') }}
+
+    <a href="{{ path('app_backgrounds_b_g_row_index') }}">back to list</a>
+{% endblock %}

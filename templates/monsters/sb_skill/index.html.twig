@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SBSkill index{% endblock %}
+
+{% block body %}
+    <h1>SBSkill index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Part</th>
+                <th>D</th>
+                <th>Type_attack</th>
+                <th>Target</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for s_b_skill in s_b_skills %}
+            <tr>
+                <td>{{ s_b_skill.id }}</td>
+                <td>{{ s_b_skill.type }}</td>
+                <td>{{ s_b_skill.name }}</td>
+                <td>{{ s_b_skill.part }}</td>
+                <td>{{ s_b_skill.d }}</td>
+                <td>{{ s_b_skill.typeAttack }}</td>
+                <td>{{ s_b_skill.target }}</td>
+                <td>
+                    <a href="{{ path('app_monsters_s_b_skill_show', {'id': s_b_skill.id}) }}">show</a>
+                    <a href="{{ path('app_monsters_s_b_skill_edit', {'id': s_b_skill.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_monsters_s_b_skill_new') }}">Create new</a>
+{% endblock %}

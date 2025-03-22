@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classe index{% endblock %}
+
+{% block body %}
+    <h1>Classe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>D</th>
+                <th>Dv</th>
+                <th>Save</th>
+                <th>ManyToMany</th>
+                <th>Equipment1</th>
+                <th>Equipment2</th>
+                <th>Equipment3</th>
+                <th>Equipment4</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for classe in classes %}
+            <tr>
+                <td>{{ classe.id }}</td>
+                <td>{{ classe.name }}</td>
+                <td>{{ classe.slug }}</td>
+                <td>{{ classe.d }}</td>
+                <td>{{ classe.dv }}</td>
+                <td>{{ classe.save ? classe.save|json_encode : '' }}</td>
+                <td>{{ classe.ManyToMany }}</td>
+                <td>{{ classe.equipment1 }}</td>
+                <td>{{ classe.equipment2 }}</td>
+                <td>{{ classe.equipment3 }}</td>
+                <td>{{ classe.equipment4 }}</td>
+                <td>
+                    <a href="{{ path('app_classes_classe_show', {'id': classe.id}) }}">show</a>
+                    <a href="{{ path('app_classes_classe_edit', {'id': classe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_classes_classe_new') }}">Create new</a>
+{% endblock %}

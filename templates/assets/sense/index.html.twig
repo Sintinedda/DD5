@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sense index{% endblock %}
+
+{% block body %}
+    <h1>Sense index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Abbreviation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sense in senses %}
+            <tr>
+                <td>{{ sense.id }}</td>
+                <td>{{ sense.name }}</td>
+                <td>{{ sense.abbreviation }}</td>
+                <td>
+                    <a href="{{ path('app_assets_sense_show', {'id': sense.id}) }}">show</a>
+                    <a href="{{ path('app_assets_sense_edit', {'id': sense.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_assets_sense_new') }}">Create new</a>
+{% endblock %}

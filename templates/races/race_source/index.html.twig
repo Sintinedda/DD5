@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RaceSource index{% endblock %}
+
+{% block body %}
+    <h1>RaceSource index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>Ability</th>
+                <th>Age</th>
+                <th>Alignment</th>
+                <th>Size</th>
+                <th>Speed</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for race_source in race_sources %}
+            <tr>
+                <td>{{ race_source.id }}</td>
+                <td>{{ race_source.d1 }}</td>
+                <td>{{ race_source.d2 }}</td>
+                <td>{{ race_source.d3 }}</td>
+                <td>{{ race_source.ability }}</td>
+                <td>{{ race_source.age }}</td>
+                <td>{{ race_source.alignment }}</td>
+                <td>{{ race_source.size }}</td>
+                <td>{{ race_source.speed }}</td>
+                <td>
+                    <a href="{{ path('app_races_race_source_show', {'id': race_source.id}) }}">show</a>
+                    <a href="{{ path('app_races_race_source_edit', {'id': race_source.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_races_race_source_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ItemSubcategory{% endblock %}
+
+{% block body %}
+    <h1>Create new ItemSubcategory</h1>
+
+    {{ include('items/item_subcategory/_form.html.twig') }}
+
+    <a href="{{ path('app_items_item_subcategory_index') }}">back to list</a>
+{% endblock %}

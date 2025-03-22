@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BG index{% endblock %}
+
+{% block body %}
+    <h1>BG index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>Equipment</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for b_g in b_gs %}
+            <tr>
+                <td>{{ b_g.id }}</td>
+                <td>{{ b_g.name }}</td>
+                <td>{{ b_g.slug }}</td>
+                <td>{{ b_g.d1 }}</td>
+                <td>{{ b_g.d2 }}</td>
+                <td>{{ b_g.d3 }}</td>
+                <td>{{ b_g.equipment }}</td>
+                <td>
+                    <a href="{{ path('app_backgrounds_b_g_show', {'id': b_g.id}) }}">show</a>
+                    <a href="{{ path('app_backgrounds_b_g_edit', {'id': b_g.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backgrounds_b_g_new') }}">Create new</a>
+{% endblock %}

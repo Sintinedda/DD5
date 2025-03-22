@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Feat{% endblock %}
+
+{% block body %}
+    <h1>Edit Feat</h1>
+
+    {{ include('assets/feat/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_assets_feat_index') }}">back to list</a>
+
+    {{ include('assets/feat/_delete_form.html.twig') }}
+{% endblock %}

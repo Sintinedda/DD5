@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClasseSpellcasting index{% endblock %}
+
+{% block body %}
+    <h1>ClasseSpellcasting index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>D</th>
+                <th>Modifier</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for classe_spellcasting in classe_spellcastings %}
+            <tr>
+                <td>{{ classe_spellcasting.id }}</td>
+                <td>{{ classe_spellcasting.d }}</td>
+                <td>{{ classe_spellcasting.modifier }}</td>
+                <td>
+                    <a href="{{ path('app_classes_classe_spellcasting_show', {'id': classe_spellcasting.id}) }}">show</a>
+                    <a href="{{ path('app_classes_classe_spellcasting_edit', {'id': classe_spellcasting.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_classes_classe_spellcasting_new') }}">Create new</a>
+{% endblock %}

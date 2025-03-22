@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RaceTable index{% endblock %}
+
+{% block body %}
+    <h1>RaceTable index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>Place</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for race_table in race_tables %}
+            <tr>
+                <td>{{ race_table.id }}</td>
+                <td>{{ race_table.number }}</td>
+                <td>{{ race_table.place }}</td>
+                <td>{{ race_table.name }}</td>
+                <td>
+                    <a href="{{ path('app_races_race_table_show', {'id': race_table.id}) }}">show</a>
+                    <a href="{{ path('app_races_race_table_edit', {'id': race_table.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_races_race_table_new') }}">Create new</a>
+{% endblock %}

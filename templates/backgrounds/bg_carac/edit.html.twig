@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit BGCarac{% endblock %}
+
+{% block body %}
+    <h1>Edit BGCarac</h1>
+
+    {{ include('backgrounds/bg_carac/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_backgrounds_b_g_carac_index') }}">back to list</a>
+
+    {{ include('backgrounds/bg_carac/_delete_form.html.twig') }}
+{% endblock %}

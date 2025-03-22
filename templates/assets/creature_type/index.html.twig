@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CreatureType index{% endblock %}
+
+{% block body %}
+    <h1>CreatureType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Abbreviation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for creature_type in creature_types %}
+            <tr>
+                <td>{{ creature_type.id }}</td>
+                <td>{{ creature_type.name }}</td>
+                <td>{{ creature_type.abbreviation }}</td>
+                <td>
+                    <a href="{{ path('app_assets_creature_type_show', {'id': creature_type.id}) }}">show</a>
+                    <a href="{{ path('app_assets_creature_type_edit', {'id': creature_type.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_assets_creature_type_new') }}">Create new</a>
+{% endblock %}

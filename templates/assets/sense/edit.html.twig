@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Sense{% endblock %}
+
+{% block body %}
+    <h1>Edit Sense</h1>
+
+    {{ include('assets/sense/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_assets_sense_index') }}">back to list</a>
+
+    {{ include('assets/sense/_delete_form.html.twig') }}
+{% endblock %}

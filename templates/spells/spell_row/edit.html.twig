@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SpellRow{% endblock %}
+
+{% block body %}
+    <h1>Edit SpellRow</h1>
+
+    {{ include('spells/spell_row/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_spells_spell_row_index') }}">back to list</a>
+
+    {{ include('spells/spell_row/_delete_form.html.twig') }}
+{% endblock %}

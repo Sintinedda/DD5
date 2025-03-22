@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RaceRow index{% endblock %}
+
+{% block body %}
+    <h1>RaceRow index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>D4</th>
+                <th>D5</th>
+                <th>D6</th>
+                <th>D7</th>
+                <th>D8</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for race_row in race_rows %}
+            <tr>
+                <td>{{ race_row.id }}</td>
+                <td>{{ race_row.number }}</td>
+                <td>{{ race_row.d1 }}</td>
+                <td>{{ race_row.d2 }}</td>
+                <td>{{ race_row.d3 }}</td>
+                <td>{{ race_row.d4 }}</td>
+                <td>{{ race_row.d5 }}</td>
+                <td>{{ race_row.d6 }}</td>
+                <td>{{ race_row.d7 }}</td>
+                <td>{{ race_row.d8 }}</td>
+                <td>
+                    <a href="{{ path('app_races_race_row_show', {'id': race_row.id}) }}">show</a>
+                    <a href="{{ path('app_races_race_row_edit', {'id': race_row.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_races_race_row_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BGRow{% endblock %}
+
+{% block body %}
+    <h1>BGRow</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ b_g_row.id }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ b_g_row.number }}</td>
+            </tr>
+            <tr>
+                <th>D1</th>
+                <td>{{ b_g_row.d1 }}</td>
+            </tr>
+            <tr>
+                <th>D2</th>
+                <td>{{ b_g_row.d2 }}</td>
+            </tr>
+            <tr>
+                <th>D3</th>
+                <td>{{ b_g_row.d3 }}</td>
+            </tr>
+            <tr>
+                <th>D4</th>
+                <td>{{ b_g_row.d4 }}</td>
+            </tr>
+            <tr>
+                <th>D5</th>
+                <td>{{ b_g_row.d5 }}</td>
+            </tr>
+            <tr>
+                <th>D6</th>
+                <td>{{ b_g_row.d6 }}</td>
+            </tr>
+            <tr>
+                <th>D7</th>
+                <td>{{ b_g_row.d7 }}</td>
+            </tr>
+            <tr>
+                <th>D8</th>
+                <td>{{ b_g_row.d8 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backgrounds_b_g_row_index') }}">back to list</a>
+
+    <a href="{{ path('app_backgrounds_b_g_row_edit', {'id': b_g_row.id}) }}">edit</a>
+
+    {{ include('backgrounds/bg_row/_delete_form.html.twig') }}
+{% endblock %}

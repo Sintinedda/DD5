@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Damage{% endblock %}
+
+{% block body %}
+    <h1>Create new Damage</h1>
+
+    {{ include('assets/damage/_form.html.twig') }}
+
+    <a href="{{ path('app_assets_damage_index') }}">back to list</a>
+{% endblock %}

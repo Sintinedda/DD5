@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Feat{% endblock %}
+
+{% block body %}
+    <h1>Create new Feat</h1>
+
+    {{ include('assets/feat/_form.html.twig') }}
+
+    <a href="{{ path('app_assets_feat_index') }}">back to list</a>
+{% endblock %}

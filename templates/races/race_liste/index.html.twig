@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RaceListe index{% endblock %}
+
+{% block body %}
+    <h1>RaceListe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Number</th>
+                <th>Place</th>
+                <th>L1</th>
+                <th>L2</th>
+                <th>L3</th>
+                <th>L4</th>
+                <th>L5</th>
+                <th>L6</th>
+                <th>L7</th>
+                <th>L8</th>
+                <th>L9</th>
+                <th>L10</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for race_liste in race_listes %}
+            <tr>
+                <td>{{ race_liste.id }}</td>
+                <td>{{ race_liste.number }}</td>
+                <td>{{ race_liste.place }}</td>
+                <td>{{ race_liste.l1 }}</td>
+                <td>{{ race_liste.l2 }}</td>
+                <td>{{ race_liste.l3 }}</td>
+                <td>{{ race_liste.l4 }}</td>
+                <td>{{ race_liste.l5 }}</td>
+                <td>{{ race_liste.l6 }}</td>
+                <td>{{ race_liste.l7 }}</td>
+                <td>{{ race_liste.l8 }}</td>
+                <td>{{ race_liste.l9 }}</td>
+                <td>{{ race_liste.l10 }}</td>
+                <td>
+                    <a href="{{ path('app_races_race_liste_show', {'id': race_liste.id}) }}">show</a>
+                    <a href="{{ path('app_races_race_liste_edit', {'id': race_liste.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_races_race_liste_new') }}">Create new</a>
+{% endblock %}

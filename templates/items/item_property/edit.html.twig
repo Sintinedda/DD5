@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ItemProperty{% endblock %}
+
+{% block body %}
+    <h1>Edit ItemProperty</h1>
+
+    {{ include('items/item_property/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_items_item_property_index') }}">back to list</a>
+
+    {{ include('items/item_property/_delete_form.html.twig') }}
+{% endblock %}
