@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Alignment{% endblock %}
+
+{% block body %}
+    <h1>Edit Alignment</h1>
+
+    {{ include('assets/alignment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_assets_alignment_index') }}">back to list</a>
+
+    {{ include('assets/alignment/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SourcePart{% endblock %}
+
+{% block body %}
+    <h1>Create new SourcePart</h1>
+
+    {{ include('assets/source_part/_form.html.twig') }}
+
+    <a href="{{ path('app_assets_source_part_index') }}">back to list</a>
+{% endblock %}

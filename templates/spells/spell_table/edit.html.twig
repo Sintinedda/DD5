@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SpellTable{% endblock %}
+
+{% block body %}
+    <h1>Edit SpellTable</h1>
+
+    {{ include('spells/spell_table/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_spells_spell_table_index') }}">back to list</a>
+
+    {{ include('spells/spell_table/_delete_form.html.twig') }}
+{% endblock %}

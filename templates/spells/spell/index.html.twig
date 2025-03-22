@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Spell index{% endblock %}
+
+{% block body %}
+    <h1>Spell index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Slug</th>
+                <th>Name_fr</th>
+                <th>Name_eng</th>
+                <th>Level</th>
+                <th>Ritual</th>
+                <th>Casting</th>
+                <th>Range1</th>
+                <th>Range2</th>
+                <th>Components</th>
+                <th>Materials</th>
+                <th>Duration</th>
+                <th>Concentration</th>
+                <th>Short</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>D4</th>
+                <th>D5</th>
+                <th>D6</th>
+                <th>D7</th>
+                <th>D8</th>
+                <th>D9</th>
+                <th>D10</th>
+                <th>Higher</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for spell in spells %}
+            <tr>
+                <td>{{ spell.id }}</td>
+                <td>{{ spell.slug }}</td>
+                <td>{{ spell.nameFr }}</td>
+                <td>{{ spell.nameEng }}</td>
+                <td>{{ spell.level }}</td>
+                <td>{{ spell.ritual ? 'Yes' : 'No' }}</td>
+                <td>{{ spell.casting }}</td>
+                <td>{{ spell.range1 }}</td>
+                <td>{{ spell.range2 }}</td>
+                <td>{{ spell.components ? spell.components|json_encode : '' }}</td>
+                <td>{{ spell.materials }}</td>
+                <td>{{ spell.duration }}</td>
+                <td>{{ spell.concentration ? 'Yes' : 'No' }}</td>
+                <td>{{ spell.short }}</td>
+                <td>{{ spell.d1 }}</td>
+                <td>{{ spell.d2 }}</td>
+                <td>{{ spell.d3 }}</td>
+                <td>{{ spell.d4 }}</td>
+                <td>{{ spell.d5 }}</td>
+                <td>{{ spell.d6 }}</td>
+                <td>{{ spell.d7 }}</td>
+                <td>{{ spell.d8 }}</td>
+                <td>{{ spell.d9 }}</td>
+                <td>{{ spell.d10 }}</td>
+                <td>{{ spell.higher }}</td>
+                <td>
+                    <a href="{{ path('app_spells_spell_show', {'id': spell.id}) }}">show</a>
+                    <a href="{{ path('app_spells_spell_edit', {'id': spell.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="26">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_spells_spell_new') }}">Create new</a>
+{% endblock %}

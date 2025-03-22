@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SB{% endblock %}
+
+{% block body %}
+    <h1>SB</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ s_b.id }}</td>
+            </tr>
+            <tr>
+                <th>Name_fr</th>
+                <td>{{ s_b.nameFr }}</td>
+            </tr>
+            <tr>
+                <th>Name_eng</th>
+                <td>{{ s_b.nameEng }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ s_b.slug }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ s_b.category }}</td>
+            </tr>
+            <tr>
+                <th>Type2</th>
+                <td>{{ s_b.type2 }}</td>
+            </tr>
+            <tr>
+                <th>Sizes</th>
+                <td>{{ s_b.sizes ? s_b.sizes|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Size_inf</th>
+                <td>{{ s_b.sizeInf ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Size_sup</th>
+                <td>{{ s_b.sizeSup ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Ca</th>
+                <td>{{ s_b.ca }}</td>
+            </tr>
+            <tr>
+                <th>Armor</th>
+                <td>{{ s_b.armor }}</td>
+            </tr>
+            <tr>
+                <th>Pv</th>
+                <td>{{ s_b.pv }}</td>
+            </tr>
+            <tr>
+                <th>Dv</th>
+                <td>{{ s_b.dv }}</td>
+            </tr>
+            <tr>
+                <th>Speeds</th>
+                <td>{{ s_b.speeds ? s_b.speeds|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Strenght</th>
+                <td>{{ s_b.strenght }}</td>
+            </tr>
+            <tr>
+                <th>Dexterity</th>
+                <td>{{ s_b.dexterity }}</td>
+            </tr>
+            <tr>
+                <th>Constitution</th>
+                <td>{{ s_b.constitution }}</td>
+            </tr>
+            <tr>
+                <th>Intelligence</th>
+                <td>{{ s_b.intelligence }}</td>
+            </tr>
+            <tr>
+                <th>Wisdow</th>
+                <td>{{ s_b.wisdow }}</td>
+            </tr>
+            <tr>
+                <th>Charisma</th>
+                <td>{{ s_b.charisma }}</td>
+            </tr>
+            <tr>
+                <th>Save</th>
+                <td>{{ s_b.save }}</td>
+            </tr>
+            <tr>
+                <th>Competence</th>
+                <td>{{ s_b.competence }}</td>
+            </tr>
+            <tr>
+                <th>Pp</th>
+                <td>{{ s_b.pp }}</td>
+            </tr>
+            <tr>
+                <th>Pp2</th>
+                <td>{{ s_b.pp2 }}</td>
+            </tr>
+            <tr>
+                <th>Fp</th>
+                <td>{{ s_b.fp }}</td>
+            </tr>
+            <tr>
+                <th>Xp</th>
+                <td>{{ s_b.xp }}</td>
+            </tr>
+            <tr>
+                <th>Bm</th>
+                <td>{{ s_b.bm }}</td>
+            </tr>
+            <tr>
+                <th>D</th>
+                <td>{{ s_b.d }}</td>
+            </tr>
+            <tr>
+                <th>Cac_t</th>
+                <td>{{ s_b.cacT }}</td>
+            </tr>
+            <tr>
+                <th>Cac_r</th>
+                <td>{{ s_b.cacR }}</td>
+            </tr>
+            <tr>
+                <th>Cac_d</th>
+                <td>{{ s_b.cacD }}</td>
+            </tr>
+            <tr>
+                <th>Range_t</th>
+                <td>{{ s_b.rangeT }}</td>
+            </tr>
+            <tr>
+                <th>Range_r</th>
+                <td>{{ s_b.rangeR }}</td>
+            </tr>
+            <tr>
+                <th>Range_d</th>
+                <td>{{ s_b.rangeD }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_monsters_s_b_index') }}">back to list</a>
+
+    <a href="{{ path('app_monsters_s_b_edit', {'id': s_b.id}) }}">edit</a>
+
+    {{ include('monsters/sb/_delete_form.html.twig') }}
+{% endblock %}

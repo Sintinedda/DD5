@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RaceSkill index{% endblock %}
+
+{% block body %}
+    <h1>RaceSkill index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Level</th>
+                <th>Show_skill</th>
+                <th>Optional</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>D4</th>
+                <th>D5</th>
+                <th>D6</th>
+                <th>D7</th>
+                <th>D8</th>
+                <th>D9</th>
+                <th>D10</th>
+                <th>Part</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for race_skill in race_skills %}
+            <tr>
+                <td>{{ race_skill.id }}</td>
+                <td>{{ race_skill.name }}</td>
+                <td>{{ race_skill.level }}</td>
+                <td>{{ race_skill.showSkill ? 'Yes' : 'No' }}</td>
+                <td>{{ race_skill.optional ? 'Yes' : 'No' }}</td>
+                <td>{{ race_skill.d1 }}</td>
+                <td>{{ race_skill.d2 }}</td>
+                <td>{{ race_skill.d3 }}</td>
+                <td>{{ race_skill.d4 }}</td>
+                <td>{{ race_skill.d5 }}</td>
+                <td>{{ race_skill.d6 }}</td>
+                <td>{{ race_skill.d7 }}</td>
+                <td>{{ race_skill.d8 }}</td>
+                <td>{{ race_skill.d9 }}</td>
+                <td>{{ race_skill.d10 }}</td>
+                <td>{{ race_skill.part }}</td>
+                <td>
+                    <a href="{{ path('app_races_race_skill_show', {'id': race_skill.id}) }}">show</a>
+                    <a href="{{ path('app_races_race_skill_edit', {'id': race_skill.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="17">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_races_race_skill_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SpecialtyRow{% endblock %}
+
+{% block body %}
+    <h1>Create new SpecialtyRow</h1>
+
+    {{ include('classes/specialty_row/_form.html.twig') }}
+
+    <a href="{{ path('app_classes_specialty_row_index') }}">back to list</a>
+{% endblock %}

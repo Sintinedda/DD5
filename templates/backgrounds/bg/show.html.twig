@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BG{% endblock %}
+
+{% block body %}
+    <h1>BG</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ b_g.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ b_g.name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ b_g.slug }}</td>
+            </tr>
+            <tr>
+                <th>D1</th>
+                <td>{{ b_g.d1 }}</td>
+            </tr>
+            <tr>
+                <th>D2</th>
+                <td>{{ b_g.d2 }}</td>
+            </tr>
+            <tr>
+                <th>D3</th>
+                <td>{{ b_g.d3 }}</td>
+            </tr>
+            <tr>
+                <th>Equipment</th>
+                <td>{{ b_g.equipment }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_backgrounds_b_g_index') }}">back to list</a>
+
+    <a href="{{ path('app_backgrounds_b_g_edit', {'id': b_g.id}) }}">edit</a>
+
+    {{ include('backgrounds/bg/_delete_form.html.twig') }}
+{% endblock %}

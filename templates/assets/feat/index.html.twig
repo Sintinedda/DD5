@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Feat index{% endblock %}
+
+{% block body %}
+    <h1>Feat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Prerequisite</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for feat in feats %}
+            <tr>
+                <td>{{ feat.id }}</td>
+                <td>{{ feat.name }}</td>
+                <td>{{ feat.slug }}</td>
+                <td>{{ feat.prerequisite }}</td>
+                <td>
+                    <a href="{{ path('app_assets_feat_show', {'id': feat.id}) }}">show</a>
+                    <a href="{{ path('app_assets_feat_edit', {'id': feat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_assets_feat_new') }}">Create new</a>
+{% endblock %}

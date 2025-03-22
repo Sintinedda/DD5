@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ClasseSpellcasting{% endblock %}
+
+{% block body %}
+    <h1>Create new ClasseSpellcasting</h1>
+
+    {{ include('classes/classe_spellcasting/_form.html.twig') }}
+
+    <a href="{{ path('app_classes_classe_spellcasting_index') }}">back to list</a>
+{% endblock %}

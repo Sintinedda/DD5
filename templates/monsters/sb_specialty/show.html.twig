@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SBSpecialty{% endblock %}
+
+{% block body %}
+    <h1>SBSpecialty</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ s_b_specialty.id }}</td>
+            </tr>
+            <tr>
+                <th>D</th>
+                <td>{{ s_b_specialty.d }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_monsters_s_b_specialty_index') }}">back to list</a>
+
+    <a href="{{ path('app_monsters_s_b_specialty_edit', {'id': s_b_specialty.id}) }}">edit</a>
+
+    {{ include('monsters/sb_specialty/_delete_form.html.twig') }}
+{% endblock %}

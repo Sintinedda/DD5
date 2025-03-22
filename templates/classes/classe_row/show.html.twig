@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClasseRow{% endblock %}
+
+{% block body %}
+    <h1>ClasseRow</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ classe_row.id }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ classe_row.number }}</td>
+            </tr>
+            <tr>
+                <th>D1</th>
+                <td>{{ classe_row.d1 }}</td>
+            </tr>
+            <tr>
+                <th>D2</th>
+                <td>{{ classe_row.d2 }}</td>
+            </tr>
+            <tr>
+                <th>D3</th>
+                <td>{{ classe_row.d3 }}</td>
+            </tr>
+            <tr>
+                <th>D4</th>
+                <td>{{ classe_row.d4 }}</td>
+            </tr>
+            <tr>
+                <th>D5</th>
+                <td>{{ classe_row.d5 }}</td>
+            </tr>
+            <tr>
+                <th>D6</th>
+                <td>{{ classe_row.d6 }}</td>
+            </tr>
+            <tr>
+                <th>D7</th>
+                <td>{{ classe_row.d7 }}</td>
+            </tr>
+            <tr>
+                <th>D8</th>
+                <td>{{ classe_row.d8 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_classes_classe_row_index') }}">back to list</a>
+
+    <a href="{{ path('app_classes_classe_row_edit', {'id': classe_row.id}) }}">edit</a>
+
+    {{ include('classes/classe_row/_delete_form.html.twig') }}
+{% endblock %}

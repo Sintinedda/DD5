@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste{% endblock %}
+
+{% block body %}
+    <h1>Liste</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ liste.id }}</td>
+            </tr>
+            <tr>
+                <th>Number</th>
+                <td>{{ liste.number }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ liste.place }}</td>
+            </tr>
+            <tr>
+                <th>L1</th>
+                <td>{{ liste.l1 }}</td>
+            </tr>
+            <tr>
+                <th>L2</th>
+                <td>{{ liste.l2 }}</td>
+            </tr>
+            <tr>
+                <th>L3</th>
+                <td>{{ liste.l3 }}</td>
+            </tr>
+            <tr>
+                <th>L4</th>
+                <td>{{ liste.l4 }}</td>
+            </tr>
+            <tr>
+                <th>L5</th>
+                <td>{{ liste.l5 }}</td>
+            </tr>
+            <tr>
+                <th>L6</th>
+                <td>{{ liste.l6 }}</td>
+            </tr>
+            <tr>
+                <th>L7</th>
+                <td>{{ liste.l7 }}</td>
+            </tr>
+            <tr>
+                <th>L8</th>
+                <td>{{ liste.l8 }}</td>
+            </tr>
+            <tr>
+                <th>L9</th>
+                <td>{{ liste.l9 }}</td>
+            </tr>
+            <tr>
+                <th>L10</th>
+                <td>{{ liste.l10 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_construct_liste_index') }}">back to list</a>
+
+    <a href="{{ path('app_construct_liste_edit', {'id': liste.id}) }}">edit</a>
+
+    {{ include('construct/liste/_delete_form.html.twig') }}
+{% endblock %}

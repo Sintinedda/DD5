@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClasseSubskill{% endblock %}
+
+{% block body %}
+    <h1>ClasseSubskill</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ classe_subskill.id }}</td>
+            </tr>
+            <tr>
+                <th>T1</th>
+                <td>{{ classe_subskill.t1 }}</td>
+            </tr>
+            <tr>
+                <th>D1</th>
+                <td>{{ classe_subskill.d1 }}</td>
+            </tr>
+            <tr>
+                <th>D2</th>
+                <td>{{ classe_subskill.d2 }}</td>
+            </tr>
+            <tr>
+                <th>D3</th>
+                <td>{{ classe_subskill.d3 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_classes_classe_subskill_index') }}">back to list</a>
+
+    <a href="{{ path('app_classes_classe_subskill_edit', {'id': classe_subskill.id}) }}">edit</a>
+
+    {{ include('classes/classe_subskill/_delete_form.html.twig') }}
+{% endblock %}

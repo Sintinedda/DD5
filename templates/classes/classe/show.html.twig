@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classe{% endblock %}
+
+{% block body %}
+    <h1>Classe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ classe.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ classe.name }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ classe.slug }}</td>
+            </tr>
+            <tr>
+                <th>D</th>
+                <td>{{ classe.d }}</td>
+            </tr>
+            <tr>
+                <th>Dv</th>
+                <td>{{ classe.dv }}</td>
+            </tr>
+            <tr>
+                <th>Save</th>
+                <td>{{ classe.save ? classe.save|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>ManyToMany</th>
+                <td>{{ classe.ManyToMany }}</td>
+            </tr>
+            <tr>
+                <th>Equipment1</th>
+                <td>{{ classe.equipment1 }}</td>
+            </tr>
+            <tr>
+                <th>Equipment2</th>
+                <td>{{ classe.equipment2 }}</td>
+            </tr>
+            <tr>
+                <th>Equipment3</th>
+                <td>{{ classe.equipment3 }}</td>
+            </tr>
+            <tr>
+                <th>Equipment4</th>
+                <td>{{ classe.equipment4 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_classes_classe_index') }}">back to list</a>
+
+    <a href="{{ path('app_classes_classe_edit', {'id': classe.id}) }}">edit</a>
+
+    {{ include('classes/classe/_delete_form.html.twig') }}
+{% endblock %}

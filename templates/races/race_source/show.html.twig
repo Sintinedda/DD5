@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RaceSource{% endblock %}
+
+{% block body %}
+    <h1>RaceSource</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ race_source.id }}</td>
+            </tr>
+            <tr>
+                <th>D1</th>
+                <td>{{ race_source.d1 }}</td>
+            </tr>
+            <tr>
+                <th>D2</th>
+                <td>{{ race_source.d2 }}</td>
+            </tr>
+            <tr>
+                <th>D3</th>
+                <td>{{ race_source.d3 }}</td>
+            </tr>
+            <tr>
+                <th>Ability</th>
+                <td>{{ race_source.ability }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ race_source.age }}</td>
+            </tr>
+            <tr>
+                <th>Alignment</th>
+                <td>{{ race_source.alignment }}</td>
+            </tr>
+            <tr>
+                <th>Size</th>
+                <td>{{ race_source.size }}</td>
+            </tr>
+            <tr>
+                <th>Speed</th>
+                <td>{{ race_source.speed }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_races_race_source_index') }}">back to list</a>
+
+    <a href="{{ path('app_races_race_source_edit', {'id': race_source.id}) }}">edit</a>
+
+    {{ include('races/race_source/_delete_form.html.twig') }}
+{% endblock %}

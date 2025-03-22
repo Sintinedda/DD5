@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BGSkill{% endblock %}
+
+{% block body %}
+    <h1>Create new BGSkill</h1>
+
+    {{ include('backgrounds/bg_skill/_form.html.twig') }}
+
+    <a href="{{ path('app_backgrounds_b_g_skill_index') }}">back to list</a>
+{% endblock %}

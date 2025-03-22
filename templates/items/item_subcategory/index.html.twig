@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ItemSubcategory index{% endblock %}
+
+{% block body %}
+    <h1>ItemSubcategory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Place</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>D4</th>
+                <th>D5</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item_subcategory in item_subcategories %}
+            <tr>
+                <td>{{ item_subcategory.id }}</td>
+                <td>{{ item_subcategory.name }}</td>
+                <td>{{ item_subcategory.slug }}</td>
+                <td>{{ item_subcategory.place }}</td>
+                <td>{{ item_subcategory.d1 }}</td>
+                <td>{{ item_subcategory.d2 }}</td>
+                <td>{{ item_subcategory.d3 }}</td>
+                <td>{{ item_subcategory.d4 }}</td>
+                <td>{{ item_subcategory.d5 }}</td>
+                <td>
+                    <a href="{{ path('app_items_item_subcategory_show', {'id': item_subcategory.id}) }}">show</a>
+                    <a href="{{ path('app_items_item_subcategory_edit', {'id': item_subcategory.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_items_item_subcategory_new') }}">Create new</a>
+{% endblock %}

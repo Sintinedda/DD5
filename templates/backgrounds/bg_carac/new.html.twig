@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BGCarac{% endblock %}
+
+{% block body %}
+    <h1>Create new BGCarac</h1>
+
+    {{ include('backgrounds/bg_carac/_form.html.twig') }}
+
+    <a href="{{ path('app_backgrounds_b_g_carac_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SBSpecialty{% endblock %}
+
+{% block body %}
+    <h1>Edit SBSpecialty</h1>
+
+    {{ include('monsters/sb_specialty/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_monsters_s_b_specialty_index') }}">back to list</a>
+
+    {{ include('monsters/sb_specialty/_delete_form.html.twig') }}
+{% endblock %}

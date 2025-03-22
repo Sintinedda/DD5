@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Alignment{% endblock %}
+
+{% block body %}
+    <h1>Create new Alignment</h1>
+
+    {{ include('assets/alignment/_form.html.twig') }}
+
+    <a href="{{ path('app_assets_alignment_index') }}">back to list</a>
+{% endblock %}

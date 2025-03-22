@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClasseSubskill index{% endblock %}
+
+{% block body %}
+    <h1>ClasseSubskill index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>T1</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for classe_subskill in classe_subskills %}
+            <tr>
+                <td>{{ classe_subskill.id }}</td>
+                <td>{{ classe_subskill.t1 }}</td>
+                <td>{{ classe_subskill.d1 }}</td>
+                <td>{{ classe_subskill.d2 }}</td>
+                <td>{{ classe_subskill.d3 }}</td>
+                <td>
+                    <a href="{{ path('app_classes_classe_subskill_show', {'id': classe_subskill.id}) }}">show</a>
+                    <a href="{{ path('app_classes_classe_subskill_edit', {'id': classe_subskill.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_classes_classe_subskill_new') }}">Create new</a>
+{% endblock %}

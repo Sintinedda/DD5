@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit BGTable{% endblock %}
+
+{% block body %}
+    <h1>Edit BGTable</h1>
+
+    {{ include('backgrounds/bg_table/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_backgrounds_b_g_table_index') }}">back to list</a>
+
+    {{ include('backgrounds/bg_table/_delete_form.html.twig') }}
+{% endblock %}

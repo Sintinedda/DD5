@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ItemCategory index{% endblock %}
+
+{% block body %}
+    <h1>ItemCategory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>D1</th>
+                <th>D2</th>
+                <th>D3</th>
+                <th>D4</th>
+                <th>D5</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item_category in item_categories %}
+            <tr>
+                <td>{{ item_category.id }}</td>
+                <td>{{ item_category.name }}</td>
+                <td>{{ item_category.slug }}</td>
+                <td>{{ item_category.d1 }}</td>
+                <td>{{ item_category.d2 }}</td>
+                <td>{{ item_category.d3 }}</td>
+                <td>{{ item_category.d4 }}</td>
+                <td>{{ item_category.d5 }}</td>
+                <td>
+                    <a href="{{ path('app_items_item_category_show', {'id': item_category.id}) }}">show</a>
+                    <a href="{{ path('app_items_item_category_edit', {'id': item_category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_items_item_category_new') }}">Create new</a>
+{% endblock %}
