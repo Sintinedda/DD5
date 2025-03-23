@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/assets/feat')]
+#[Route('/admin/feat')]
 final class FeatController extends AbstractController
 {
-    #[Route(name: 'app_assets_feat_index', methods: ['GET'])]
+    #[Route(name: 'feat', methods: ['GET'])]
     public function index(FeatRepository $featRepository): Response
     {
         return $this->render('assets/feat/index.html.twig', [
@@ -22,7 +22,7 @@ final class FeatController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_assets_feat_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'feat_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $feat = new Feat();
@@ -33,7 +33,7 @@ final class FeatController extends AbstractController
             $entityManager->persist($feat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_assets_feat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('feat', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('assets/feat/new.html.twig', [
@@ -42,15 +42,7 @@ final class FeatController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_assets_feat_show', methods: ['GET'])]
-    public function show(Feat $feat): Response
-    {
-        return $this->render('assets/feat/show.html.twig', [
-            'feat' => $feat,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_assets_feat_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'feat_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Feat $feat, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FeatType::class, $feat);
@@ -59,7 +51,7 @@ final class FeatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_assets_feat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('feat', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('assets/feat/edit.html.twig', [
@@ -68,7 +60,7 @@ final class FeatController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_assets_feat_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'feat_delete', methods: ['POST'])]
     public function delete(Request $request, Feat $feat, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$feat->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +68,6 @@ final class FeatController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_assets_feat_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('feat', [], Response::HTTP_SEE_OTHER);
     }
 }

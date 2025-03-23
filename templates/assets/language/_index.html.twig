@@ -1,15 +1,9 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Language index{% endblock %}
-
-{% block body %}
-    <h1>Language index</h1>
-
+<div class="accordion-body">
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Abbreviation</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -17,10 +11,9 @@
         {% for language in languages %}
             <tr>
                 <td>{{ language.id }}</td>
-                <td>{{ language.name }}</td>
+                <td>{{ language.abbreviation }}</td>
                 <td>
-                    <a href="{{ path('app_assets_language_show', {'id': language.id}) }}">show</a>
-                    <a href="{{ path('app_assets_language_edit', {'id': language.id}) }}">edit</a>
+                    <a href="{{ path('language_edit', {'id': language.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -30,6 +23,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_assets_language_new') }}">Create new</a>
-{% endblock %}
+</div>

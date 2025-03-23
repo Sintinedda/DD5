@@ -1,10 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Alignment index{% endblock %}
-
-{% block body %}
-    <h1>Alignment index</h1>
-
+<div class="accordion-body">
     <table class="table">
         <thead>
             <tr>
@@ -21,8 +15,7 @@
                 <td>{{ alignment.name }}</td>
                 <td>{{ alignment.abbreviation }}</td>
                 <td>
-                    <a href="{{ path('app_assets_alignment_show', {'id': alignment.id}) }}">show</a>
-                    <a href="{{ path('app_assets_alignment_edit', {'id': alignment.id}) }}">edit</a>
+                    <a href="{{ path('alignment_edit', {'id': alignment.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -32,6 +25,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_assets_alignment_new') }}">Create new</a>
-{% endblock %}
+</div>

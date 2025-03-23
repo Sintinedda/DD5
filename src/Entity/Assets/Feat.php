@@ -31,6 +31,21 @@ class Feat
     #[ORM\ManyToOne(inversedBy: 'feats')]
     private ?SourcePart $source_part = null;
 
+    #[ORM\Column(length: 1000)]
+    private ?string $d1 = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $d2 = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $d3 = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $d4 = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $d5 = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +137,66 @@ class Feat
                 $skill->setFeat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getD1(): ?string
+    {
+        return $this->d1;
+    }
+
+    public function setD1(string $d1): static
+    {
+        $this->d1 = $d1;
+
+        return $this;
+    }
+
+    public function getD2(): ?string
+    {
+        return $this->d2;
+    }
+
+    public function setD2(?string $d2): static
+    {
+        $this->d2 = $d2;
+
+        return $this;
+    }
+
+    public function getD3(): ?string
+    {
+        return $this->d3;
+    }
+
+    public function setD3(?string $d3): static
+    {
+        $this->d3 = $d3;
+
+        return $this;
+    }
+
+    public function getD4(): ?string
+    {
+        return $this->d4;
+    }
+
+    public function setD4(?string $d4): static
+    {
+        $this->d4 = $d4;
+
+        return $this;
+    }
+
+    public function getD5(): ?string
+    {
+        return $this->d5;
+    }
+
+    public function setD5(?string $d5): static
+    {
+        $this->d5 = $d5;
 
         return $this;
     }

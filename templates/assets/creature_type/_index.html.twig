@@ -1,10 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}CreatureType index{% endblock %}
-
-{% block body %}
-    <h1>CreatureType index</h1>
-
+<div class="accordion-body">
     <table class="table">
         <thead>
             <tr>
@@ -15,14 +9,13 @@
             </tr>
         </thead>
         <tbody>
-        {% for creature_type in creature_types %}
+        {% for creature_type in creatureTypes %}
             <tr>
                 <td>{{ creature_type.id }}</td>
                 <td>{{ creature_type.name }}</td>
                 <td>{{ creature_type.abbreviation }}</td>
                 <td>
-                    <a href="{{ path('app_assets_creature_type_show', {'id': creature_type.id}) }}">show</a>
-                    <a href="{{ path('app_assets_creature_type_edit', {'id': creature_type.id}) }}">edit</a>
+                    <a href="{{ path('creature_type_edit', {'id': creature_type.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -32,6 +25,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_assets_creature_type_new') }}">Create new</a>
-{% endblock %}
+</div>
