@@ -2,38 +2,32 @@
 
 namespace App\Controller\Backgrounds;
 
+use App\Entity\Backgrounds\BG;
 use App\Entity\Backgrounds\BGSkill;
 use App\Form\Backgrounds\BGSkillType;
-use App\Repository\Backgrounds\BGSkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/backgrounds/b/g/skill')]
+#[Route('/admin/bgskill')]
 final class BGSkillController extends AbstractController
 {
-    #[Route(name: 'app_backgrounds_b_g_skill_index', methods: ['GET'])]
-    public function index(BGSkillRepository $bGSkillRepository): Response
+    #[Route('/new/{id}', name: 'bgskill_new', methods: ['GET', 'POST'])]
+    public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('backgrounds/bg_skill/index.html.twig', [
-            'b_g_skills' => $bGSkillRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_backgrounds_b_g_skill_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+        $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
         $bGSkill = new BGSkill();
         $form = $this->createForm(BGSkillType::class, $bGSkill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $bGSkill->addBG($bg);
             $entityManager->persist($bGSkill);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_backgrounds_b_g_skill_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('background', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backgrounds/bg_skill/new.html.twig', [
@@ -42,40 +36,40 @@ final class BGSkillController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_backgrounds_b_g_skill_show', methods: ['GET'])]
-    public function show(BGSkill $bGSkill): Response
+    #[Route('/{id}/edit/{id2}', name: 'bgskill_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, BGSkill $bGSkill, EntityManagerInterface $entityManager, int $id2): Response
     {
-        return $this->render('backgrounds/bg_skill/show.html.twig', [
-            'b_g_skill' => $bGSkill,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_backgrounds_b_g_skill_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, BGSkill $bGSkill, EntityManagerInterface $entityManager): Response
-    {
+        $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id2]);
         $form = $this->createForm(BGSkillType::class, $bGSkill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $bGSkill->addBG($bg);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_backgrounds_b_g_skill_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('background', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backgrounds/bg_skill/edit.html.twig', [
             'b_g_skill' => $bGSkill,
             'form' => $form,
+            'bg' => $bg
         ]);
     }
 
-    #[Route('/{id}', name: 'app_backgrounds_b_g_skill_delete', methods: ['POST'])]
-    public function delete(Request $request, BGSkill $bGSkill, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/{id2}', name: 'bgskill_delete', methods: ['POST'])]
+    public function delete(Request $request, BGSkill $bGSkill, EntityManagerInterface $entityManager, int $id2): Response
     {
+        $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id2]);
+
         if ($this->isCsrfTokenValid('delete'.$bGSkill->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($bGSkill);
+            $bGSkill->removeBG($bg);
+            if ($bGSkill->getBGs()->count() == 0) {
+                $entityManager->remove($bGSkill);
+            }
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_backgrounds_b_g_skill_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('background', [], Response::HTTP_SEE_OTHER);
     }
 }

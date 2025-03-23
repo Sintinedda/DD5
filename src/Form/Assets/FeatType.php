@@ -22,11 +22,11 @@ class FeatType extends AbstractType
             ->add('prerequisite', TextType::class)
             ->add('source', EntityType::class, [
                 'class' => Source::class,
-                'choice_label' => 'id',
+                'choice_label' => 'abbreviation',
             ])
             ->add('source_part', EntityType::class, [
                 'class' => SourcePart::class,
-                'choice_label' => 'id',
+                'choice_label' => 'number',
                 'required' => false
             ])
             ->add('d1', TextareaType::class)

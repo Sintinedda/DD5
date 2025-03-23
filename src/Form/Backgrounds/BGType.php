@@ -7,10 +7,10 @@ use App\Entity\Assets\Language;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
 use App\Entity\Backgrounds\BG;
-use App\Entity\Backgrounds\BGCarac;
-use App\Entity\Backgrounds\BGSkill;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,38 +19,40 @@ class BGType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('slug')
-            ->add('d1')
-            ->add('d2')
-            ->add('d3')
-            ->add('equipment')
+            ->add('name', TextType::class)
+            ->add('slug', TextType::class)
+            ->add('d1', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d2', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d3', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('equipment', TextareaType::class, [
+                'required' => false
+            ])
             ->add('source', EntityType::class, [
                 'class' => Source::class,
-                'choice_label' => 'id',
+                'choice_label' => 'abbreviation',
             ])
             ->add('source_part', EntityType::class, [
                 'class' => SourcePart::class,
-                'choice_label' => 'id',
+                'choice_label' => 'number',
+                'required' => false
             ])
             ->add('competences', EntityType::class, [
                 'class' => Competence::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
+                'required' => false
             ])
-            ->add('Language', EntityType::class, [
+            ->add('languages', EntityType::class, [
                 'class' => Language::class,
-                'choice_label' => 'id',
+                'choice_label' => 'abbreviation',
                 'multiple' => true,
-            ])
-            ->add('skills', EntityType::class, [
-                'class' => BGSkill::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('carac', EntityType::class, [
-                'class' => BGCarac::class,
-                'choice_label' => 'id',
+                'required' => false
             ])
         ;
     }

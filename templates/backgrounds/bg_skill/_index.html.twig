@@ -1,0 +1,25 @@
+<p><a href="{{ path('bgskill_new', {'id': b.id}) }}">new skill</a></p>
+<br/><br/>
+{% for s in b.skills %}
+    <div>
+        <p><a href="{{ path('bgskill_edit', {'id': s.id, 'id2': b.id}) }}">{{ s.name }}</a></p>
+        <br/>
+        {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
+            <p>
+                <a style="margin-right: 10px;" href="{{ path('bgtable_edit', {'id': t.id}) }}">Table {{ t.number }}</a>
+                {% for r in t.rows %}
+                    <a style="margin-right: 10px;" href="{{ path('bgrow_edit', {'id': r.id}) }}">Row {{ r.number }}</a>
+                {% endfor %}
+                <a style="right: 10px;" href="{{ path('bgrow_new', {'id': t.id}) }}">new row</a>
+            <p>
+        {% endfor %}
+        <p><a href="{{ path('bgtable_skill_new', {'id': s.id}) }}">new table</a></p>
+        <br/>
+        <p>
+            {% for l in s.listes %}
+                <a style="margin-right: 10px;" href="{{ path('bgliste_edit', {'id': l.id}) }}">Liste {{ l.number }}</a>
+            {% endfor %}
+            <a style="right: 10px;" href="{{ path('bgliste_new', {'id': s.id}) }}">new liste</a>
+        </p>
+    </div>
+{% endfor %}

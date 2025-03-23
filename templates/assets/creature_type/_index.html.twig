@@ -4,7 +4,6 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Abbreviation</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -13,7 +12,6 @@
             <tr>
                 <td>{{ creature_type.id }}</td>
                 <td>{{ creature_type.name }}</td>
-                <td>{{ creature_type.abbreviation }}</td>
                 <td>
                     <a href="{{ path('creature_type_edit', {'id': creature_type.id}) }}">edit</a>
                 </td>

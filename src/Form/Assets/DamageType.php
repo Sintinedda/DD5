@@ -14,6 +14,9 @@ class DamageType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
+            ->add('part', TextType::class, [
+                'required' => false
+            ])
             ->add('abbreviation', TextType::class)
         ;
     }

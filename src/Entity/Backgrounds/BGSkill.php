@@ -66,6 +66,9 @@ class BGSkill
     #[ORM\ManyToMany(targetEntity: BG::class, mappedBy: 'skills')]
     private Collection $bGs;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $part = null;
+
     public function __construct()
     {
         $this->listes = new ArrayCollection();
@@ -293,6 +296,18 @@ class BGSkill
         if ($this->bGs->removeElement($bG)) {
             $bG->removeSkill($this);
         }
+
+        return $this;
+    }
+
+    public function getPart(): ?string
+    {
+        return $this->part;
+    }
+
+    public function setPart(?string $part): static
+    {
+        $this->part = $part;
 
         return $this;
     }

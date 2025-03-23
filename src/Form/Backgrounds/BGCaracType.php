@@ -2,10 +2,9 @@
 
 namespace App\Form\Backgrounds;
 
-use App\Entity\Backgrounds\BG;
 use App\Entity\Backgrounds\BGCarac;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,12 +13,14 @@ class BGCaracType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('d1')
-            ->add('d2')
-            ->add('d3')
-            ->add('bg', EntityType::class, [
-                'class' => BG::class,
-                'choice_label' => 'id',
+            ->add('d1', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d2', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d3', TextareaType::class, [
+                'required' => false
             ])
         ;
     }

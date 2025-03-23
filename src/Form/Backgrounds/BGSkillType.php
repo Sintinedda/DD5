@@ -2,10 +2,10 @@
 
 namespace App\Form\Backgrounds;
 
-use App\Entity\Backgrounds\BG;
 use App\Entity\Backgrounds\BGSkill;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,21 +14,41 @@ class BGSkillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('d1')
-            ->add('d2')
-            ->add('d3')
-            ->add('d4')
-            ->add('d5')
-            ->add('d6')
-            ->add('d7')
-            ->add('d8')
-            ->add('d9')
-            ->add('d10')
-            ->add('bGs', EntityType::class, [
-                'class' => BG::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+            ->add('name', TextType::class, [
+                'required' => false
+            ])
+            ->add('part', TextType::class, [
+                'required' =>false
+            ])
+            ->add('d1', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d2', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d3', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d4', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d5', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d6', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d7', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d8', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d9', TextareaType::class, [
+                'required' =>false
+            ])
+            ->add('d10', TextareaType::class, [
+                'required' =>false
             ])
         ;
     }
