@@ -32,6 +32,9 @@ class Competence
     #[ORM\ManyToMany(targetEntity: Classe::class, mappedBy: 'competences')]
     private Collection $classes;
 
+    #[ORM\Column(length: 20)]
+    private ?string $category = null;
+
     public function __construct()
     {
         $this->bGs = new ArrayCollection();
@@ -105,6 +108,18 @@ class Competence
         if ($this->classes->removeElement($class)) {
             $class->removeCompetence($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -19,9 +19,6 @@ class CreatureType
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $abbreviation = null;
-
     /**
      * @var Collection<int, SB>
      */
@@ -46,18 +43,6 @@ class CreatureType
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAbbreviation(): ?string
-    {
-        return $this->abbreviation;
-    }
-
-    public function setAbbreviation(string $abbreviation): static
-    {
-        $this->abbreviation = $abbreviation;
 
         return $this;
     }

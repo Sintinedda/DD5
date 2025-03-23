@@ -20,9 +20,6 @@ class Damage
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $abbreviation = null;
-
     /**
      * @var Collection<int, Item>
      */
@@ -34,6 +31,9 @@ class Damage
      */
     #[ORM\OneToMany(targetEntity: SBSkill::class, mappedBy: 'damage')]
     private Collection $sBSkills;
+
+    #[ORM\Column(length: 255)]
+    private ?string $abbreviation = null;
 
     public function __construct()
     {
@@ -54,18 +54,6 @@ class Damage
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAbbreviation(): ?string
-    {
-        return $this->abbreviation;
-    }
-
-    public function setAbbreviation(string $abbreviation): static
-    {
-        $this->abbreviation = $abbreviation;
 
         return $this;
     }
@@ -126,6 +114,18 @@ class Damage
                 $sBSkill->setDamage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAbbreviation(): ?string
+    {
+        return $this->abbreviation;
+    }
+
+    public function setAbbreviation(string $abbreviation): static
+    {
+        $this->abbreviation = $abbreviation;
 
         return $this;
     }

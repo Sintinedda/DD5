@@ -1,10 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Condition index{% endblock %}
-
-{% block body %}
-    <h1>Condition index</h1>
-
+<div class="accordion-body">
     <table class="table">
         <thead>
             <tr>
@@ -19,8 +13,7 @@
                 <td>{{ condition.id }}</td>
                 <td>{{ condition.name }}</td>
                 <td>
-                    <a href="{{ path('app_assets_condition_show', {'id': condition.id}) }}">show</a>
-                    <a href="{{ path('app_assets_condition_edit', {'id': condition.id}) }}">edit</a>
+                    <a href="{{ path('condition_edit', {'id': condition.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -30,6 +23,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_assets_condition_new') }}">Create new</a>
-{% endblock %}
+</div>

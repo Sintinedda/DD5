@@ -32,6 +32,9 @@ class Language
     #[ORM\ManyToMany(targetEntity: RaceSource::class, mappedBy: 'languages')]
     private Collection $races;
 
+    #[ORM\Column(length: 20)]
+    private ?string $abbreviation = null;
+
     public function __construct()
     {
         $this->bGs = new ArrayCollection();
@@ -105,6 +108,18 @@ class Language
         if ($this->races->removeElement($race)) {
             $race->removeLanguage($this);
         }
+
+        return $this;
+    }
+
+    public function getAbbreviation(): ?string
+    {
+        return $this->abbreviation;
+    }
+
+    public function setAbbreviation(string $abbreviation): static
+    {
+        $this->abbreviation = $abbreviation;
 
         return $this;
     }
