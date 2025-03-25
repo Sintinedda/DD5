@@ -1,0 +1,17 @@
+{% for b in b_gs %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bg{{ b.id }}" aria-expanded="true" aria-controls="collapseOne">
+                {{ b.name }} {% if b.source.abbreviation == 'AD' %}AD{% endif %}
+            </button>
+        </h2>
+        <a href="{{ path('background_edit', {'id': b.id}) }}">edit background</a>
+        {{ include('backgrounds/bg/_delete_form.html.twig') }}
+        <div id="bg{{ b.id }}" class="accordion-collapse collapse" data-bs-parent="#bg">
+            <br/><br/>
+            {% include "backgrounds/bg_carac/_index.html.twig" %}
+            <br/><br/>
+            {% include "backgrounds/bg_skill/_index.html.twig" %}
+        </div>
+    </div>
+{% endfor %}

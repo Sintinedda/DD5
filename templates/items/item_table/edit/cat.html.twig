@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ItemTable{% endblock %}
+
+{% block body %}
+    <h1>Edit ItemTable</h1>
+
+    {{ include('items/item_table/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('items_show', {'id': id}) }}">back to list</a>
+
+{% endblock %}

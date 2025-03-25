@@ -15,7 +15,7 @@ class BGCarac
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'carac', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'carac', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?BG $bg = null;
 
@@ -31,7 +31,7 @@ class BGCarac
     /**
      * @var Collection<int, BGTable>
      */
-    #[ORM\OneToMany(targetEntity: BGTable::class, mappedBy: 'bGCarac')]
+    #[ORM\OneToMany(targetEntity: BGTable::class, mappedBy: 'bGCarac', orphanRemoval: true)]
     private Collection $tables;
 
     public function __construct()

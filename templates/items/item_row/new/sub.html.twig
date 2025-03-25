@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ItemRow{% endblock %}
+
+{% block body %}
+    <h1>Create new ItemRow</h1>
+
+    {{ include('items/item_row/_form.html.twig') }}
+
+    <a href="{{ path('item_sub_show', {'id': id}) }}">back to list</a>
+{% endblock %}

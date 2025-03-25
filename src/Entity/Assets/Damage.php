@@ -35,6 +35,9 @@ class Damage
     #[ORM\Column(length: 255)]
     private ?string $abbreviation = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $part = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -126,6 +129,18 @@ class Damage
     public function setAbbreviation(string $abbreviation): static
     {
         $this->abbreviation = $abbreviation;
+
+        return $this;
+    }
+
+    public function getPart(): ?string
+    {
+        return $this->part;
+    }
+
+    public function setPart(?string $part): static
+    {
+        $this->part = $part;
 
         return $this;
     }

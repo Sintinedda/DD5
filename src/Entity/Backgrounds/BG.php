@@ -51,7 +51,7 @@ class BG
      * @var Collection<int, Language>
      */
     #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'bGs')]
-    private Collection $Language;
+    private Collection $languages;
 
     #[ORM\Column(length: 1000)]
     private ?string $equipment = null;
@@ -68,7 +68,7 @@ class BG
     public function __construct()
     {
         $this->competences = new ArrayCollection();
-        $this->Language = new ArrayCollection();
+        $this->languages = new ArrayCollection();
         $this->skills = new ArrayCollection();
     }
 
@@ -188,15 +188,15 @@ class BG
     /**
      * @return Collection<int, Language>
      */
-    public function getLanguage(): Collection
+    public function getLanguages(): Collection
     {
-        return $this->Language;
+        return $this->languages;
     }
 
     public function addLanguage(Language $language): static
     {
-        if (!$this->Language->contains($language)) {
-            $this->Language->add($language);
+        if (!$this->languages->contains($language)) {
+            $this->languages->add($language);
         }
 
         return $this;
@@ -204,7 +204,7 @@ class BG
 
     public function removeLanguage(Language $language): static
     {
-        $this->Language->removeElement($language);
+        $this->languages->removeElement($language);
 
         return $this;
     }
