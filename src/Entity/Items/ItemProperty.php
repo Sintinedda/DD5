@@ -33,6 +33,9 @@ class ItemProperty
     #[ORM\Column(length: 1000)]
     private ?string $d = null;
 
+    #[ORM\Column]
+    private ?bool $show_skill = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -111,6 +114,18 @@ class ItemProperty
     public function setD(string $d): static
     {
         $this->d = $d;
+
+        return $this;
+    }
+
+    public function isShowSkill(): ?bool
+    {
+        return $this->show_skill;
+    }
+
+    public function setShowSkill(bool $show_skill): static
+    {
+        $this->show_skill = $show_skill;
 
         return $this;
     }

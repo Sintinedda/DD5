@@ -1,4 +1,47 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div>
+        {{ form_row(form.name) }}
+        {{ form_row(form.slug) }}
+        {{ form_row(form.quantity) }}
+        {{ form_row(form.source) }}
+        {{ form_row(form.source_part) }}
+    </div>
+    <div>
+        {{ form_row(form.cost) }}
+        {{ form_row(form.weight) }}
+        {{ form_row(form.dice) }}
+        {{ form_row(form.damage) }}
+        {{ form_row(form.damage2) }}
+        {{ form_row(form.properties) }}
+    </div>
+    <div>
+        {{ form_row(form.ca) }}
+        {{ form_row(form.ca_dex) }}
+        {{ form_row(form.ca_max) }}
+        {{ form_row(form.ca_str) }}
+        {{ form_row(form.ca_stealth) }}
+        {{ form_row(form.ca_don) }}
+        {{ form_row(form.ca_doff) }}
+    </div>
+    <div>
+        {{ form_row(form.link) }}
+        {{ form_row(form.rarity) }}
+        {{ form_row(form.type) }}
+    </div>
+    <div>
+        {{ form_row(form.d1) }}
+    </div>
+    <div>
+        {{ form_row(form.d2) }}
+    </div>
+    <div>
+        {{ form_row(form.d3) }}
+    </div>
+    <div>
+        {{ form_row(form.d4) }}
+    </div>
+    <div>
+        {{ form_row(form.d5) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

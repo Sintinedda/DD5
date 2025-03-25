@@ -4,51 +4,179 @@
 
 {% block body %}
     <h1>ItemSubcategory</h1>
+    <div style="display:flex;">
+        <a href="{{ path('items_show', {'id': id}) }}">back to list</a>
+        <a href="{{ path('item_sub_edit', {'id': item_subcategory.id}) }}">edit</a>
+        {{ include('items/item_subcategory/_delete_form.html.twig') }}
+    </div>
+    <br/><br/>
+    <div style="display:flex;">
+        <a style="margin-right: 20px;" href="{{ path('item_skill_sub_new', {'id': item_subcategory.id}) }}">new skill</a>   
+        <a style="margin-right: 20px;" href="{{ path('item_liste_sub_new', {'id': item_subcategory.id}) }}">new liste</a>   
+        <a style="margin-right: 20px;" href="{{ path('item_table_sub_new', {'id': item_subcategory.id}) }}">new table</a>   
+        <a style="margin-right: 20px;" href="{{ path('item_sub_item_new', {'id': item_subcategory.id}) }}">new item</a>   
+    </div>
+    <br/><br/>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ item_subcategory.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ item_subcategory.name }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ item_subcategory.slug }}</td>
-            </tr>
-            <tr>
-                <th>Place</th>
-                <td>{{ item_subcategory.place }}</td>
-            </tr>
-            <tr>
-                <th>D1</th>
-                <td>{{ item_subcategory.d1 }}</td>
-            </tr>
-            <tr>
-                <th>D2</th>
-                <td>{{ item_subcategory.d2 }}</td>
-            </tr>
-            <tr>
-                <th>D3</th>
-                <td>{{ item_subcategory.d3 }}</td>
-            </tr>
-            <tr>
-                <th>D4</th>
-                <td>{{ item_subcategory.d4 }}</td>
-            </tr>
-            <tr>
-                <th>D5</th>
-                <td>{{ item_subcategory.d5 }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {# item subcategory -> skills #}
+    {% if item_subcategory.skills|count != 0 %}
+        <h2>Skills</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>actions</th>
+                    <th>Listes</th>
+                    {% for s in item_subcategory.skills %}
+                        {% for l in s.listes %}<th></th>{% endfor %}
+                    {% endfor %}
+                    <th>Tables</th>
+                    {% for s in item_subcategory.skills %}
+                        {% for t in s.tables %}<th></th>{% endfor %}
+                    {% endfor %}
+                    {% for s in item_subcategory.skills %}
+                        {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}<th></th>{% endfor %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in item_subcategory.skills|sort((a, b) => a.level <=> b.level) %}
+                    <tr>
+                        <td>{{ s.id }}</td>
+                        <td><a href="{{ path('item_skill_sub_edit', {'id': s.id, 'id2': item_subcategory.id}) }}">{{ s.name }}</a></td>
+                        <td>{{ include('items/item_skill/delete/_sub_form.html.twig') }}</td>
+                        <td><a href="{{ path('item_liste_skill_sub_new', {'id': s.id, 'id2': item_subcategory.id}) }}">new liste</a></td>
+                        {% for l in s.listes|sort((a, b) => a.number <=> b.number) %}
+                            <td>
+                                <a href="{{ path('item_liste_skill_sub_edit', {'id': l.id, 'id2': item_subcategory.id}) }}">Liste {{ l.number }}</a>
+                                {{ include 'items/item_liste/delete/_sub-skill_form.html.twig' }}
+                            </td>
+                        {% endfor %}
+                        <td><a href="{{ path('item_table_skill_sub_new', {'id': item_subcategory.id, 'id2': s.id}) }}">new table</a></td>
+                        {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
+                            <td>
+                                <a href="{{ path('item_table_skill_sub_edit', {'id': t.id, 'id2': item_subcategory.id}) }}">Table {{ t.number }}</a>
+                                {{ include 'items/item_table/delete/_sub-skill_form.html.twig' }}
+                            </td>
+                        {% endfor %}
+                        {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
+                            <td><ul>
+                                <li><a href="{{ path('item_row_sub_new', {'id': item_subcategory.id, 'id2': t.id}) }}">new row</a></li>
+                                {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
+                                    <li>
+                                        <a href="{{ path('item_row_sub_edit', {'id': r.id, 'id2': item_subcategory.id}) }}">Row {{ r.number }}</a>
+                                        {{ include 'items/item_row/delete/_sub_form.html.twig' }}
+                                    </li>
+                                {% endfor %}
+                            </ul></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+    {% endif %}
 
-    <a href="{{ path('app_items_item_subcategory_index') }}">back to list</a>
+    {# item subcategory -> listes #}
+    {% if item_subcategory.listes|count != 0 %}
+        <h2>Listes</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for l in item_subcategory.listes|sort((a, b) => a.number <=> b.number) %}
+                    <tr>
+                        <td>{{ s.id }}</td>
+                        <td><a href="{{ path('item_liste_sub_edit', {'id': l.id, 'id2': item_subcategory.id}) }}">Liste {{ l.number }}</a></td>
+                        <td>{{ include 'items/item_liste/delete/_sub_form.html.twig' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+    {% endif %}
 
-    <a href="{{ path('app_items_item_subcategory_edit', {'id': item_subcategory.id}) }}">edit</a>
+    {# item subcategory -> tables #}
+    {% if item_subcategory.tables|count != 0 %}
+        <h2>Tables</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>actions</th>
+                    <th>Lignes</th>
+                    {% for t in item_subcategory.tables %}
+                        {% for r in t.rows %}<th></th>{% endfor %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in item_subcategory.tables|sort((a, b) => a.number <=> b.number) %}
+                    <tr>
+                        <td>{{ t.id }}</td>
+                        <td><a href="{{ path('item_table_sub_edit', {'id': t.id, 'id2': item_subcategory.id}) }}">{{ t.name }}</a></td>
+                        <td>{{ include('items/item_table/delete/_sub_form.html.twig') }}</td>
+                        <td><a href="{{ path('item_row_sub_new', {'id': item_subcategory.id, 'id2': t.id}) }}">new row</a></td>
+                        {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
+                            <td>
+                                <a href="{{ path('item_row_sub_edit', {'id': r.id, 'id2': item_subcategory.id}) }}">Row {{ r.number }}</a>
+                                {{ include 'items/item_row/delete/_sub_form.html.twig' }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+    {% endif %}
 
-    {{ include('items/item_subcategory/_delete_form.html.twig') }}
+    {# item subcategory -> items #}
+    {% if item_subcategory.items|count != 0 %}
+        <h2>Items</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>actions</th>
+                    {% for t in i.tables %}<th></th>{% endfor %}
+                    {% for t in i.tables %}<th>Rows</th>{% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in item_subcategory.items %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td><a href="{{ path('item_sub_item_edit', {'id': i.id}) }}">{{ i.name }}</a></td>
+                        <td>{{ i.slug }}</td>
+                        <td>{{ include('items/item/delete/_sub_form.html.twig') }}</td>
+                        <td><a href="{{ path('item_table_item_sub_new', {'id': item_subcategory.id, 'id2': i.id}) }}">new table</td>
+                        {% for t in i.tables|sort((a, b) => a.number <=> b.number) %}
+                            <td>
+                                <a href="{{ path('item_table_item_sub_edit', {'id': t.id, 'id2': item_subcategory.id, 'id3': i.id}) }}">Table {{ t.number }}</a>
+                                {{ include 'items/item_table/delete/_sub-item_form.html.twig' }}
+                            </td>
+                        {% endfor %}
+                        {% for t in i.tables|sort((a, b) => a.number <=> b.number) %}
+                            <td><ul>
+                                <li><a href="{{ path('item_row_sub_new', {'id': item_subcategory.id, 'id2': t.id}) }}">new row</a></li>
+                                {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
+                                    <li>
+                                        <a href="{{ path('item_row_sub_edit', {'id': r.id, 'id2': item_subcategory.id}) }}">Row {{ r.number }}</a>
+                                        {{ include 'items/item_row/delete/_sub_form.html.twig' }}
+                                    </li>
+                                {% endfor %}
+                            </ul></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+    {% endif %}
+
 {% endblock %}

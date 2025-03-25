@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ItemSkill{% endblock %}
+
+{% block body %}
+    <h1>Create new ItemSkill</h1>
+
+    {{ include('items/item_skill/_form.html.twig') }}
+
+    <a href="{{ path('item_sub_show', {'id': id}) }}">back to list</a>
+{% endblock %}

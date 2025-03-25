@@ -2,80 +2,80 @@
 
 namespace App\Controller\Items;
 
+use App\Entity\Items\ItemCategory;
 use App\Entity\Items\ItemSubcategory;
 use App\Form\Items\ItemSubcategoryType;
-use App\Repository\Items\ItemSubcategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/items/item/subcategory')]
+#[Route('/admin/item-sub')]
 final class ItemSubcategoryController extends AbstractController
 {
-    #[Route(name: 'app_items_item_subcategory_index', methods: ['GET'])]
-    public function index(ItemSubcategoryRepository $itemSubcategoryRepository): Response
+    #[Route('/new/{id}', name: 'item_sub_new', methods: ['GET', 'POST'])]
+    public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('items/item_subcategory/index.html.twig', [
-            'item_subcategories' => $itemSubcategoryRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_items_item_subcategory_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+        $category = $entityManager->getRepository(ItemCategory::class)->findOneBy(['id' => $id]);
         $itemSubcategory = new ItemSubcategory();
         $form = $this->createForm(ItemSubcategoryType::class, $itemSubcategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $itemSubcategory->setCategory($category);
             $entityManager->persist($itemSubcategory);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_items_item_subcategory_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('items_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_subcategory/new.html.twig', [
             'item_subcategory' => $itemSubcategory,
             'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}', name: 'app_items_item_subcategory_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'item_sub_show', methods: ['GET'])]
     public function show(ItemSubcategory $itemSubcategory): Response
     {
         return $this->render('items/item_subcategory/show.html.twig', [
             'item_subcategory' => $itemSubcategory,
+            'id' => $itemSubcategory->getCategory('id')
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_items_item_subcategory_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'item_sub_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ItemSubcategory $itemSubcategory, EntityManagerInterface $entityManager): Response
     {
+        $id = $itemSubcategory->getCategory('id');
         $form = $this->createForm(ItemSubcategoryType::class, $itemSubcategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_items_item_subcategory_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('items_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_subcategory/edit.html.twig', [
             'item_subcategory' => $itemSubcategory,
             'form' => $form,
+            'id' => $itemSubcategory->getCategory('id')
         ]);
     }
 
-    #[Route('/{id}', name: 'app_items_item_subcategory_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'item_sub_delete', methods: ['POST'])]
     public function delete(Request $request, ItemSubcategory $itemSubcategory, EntityManagerInterface $entityManager): Response
     {
+        $id = $itemSubcategory->getCategory('id');
+
         if ($this->isCsrfTokenValid('delete'.$itemSubcategory->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($itemSubcategory);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_items_item_subcategory_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('items_show', ['id' => $id], Response::HTTP_SEE_OTHER);
     }
 }

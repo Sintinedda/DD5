@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/items/item/property')]
+#[Route('/admin/item-property')]
 final class ItemPropertyController extends AbstractController
 {
-    #[Route(name: 'app_items_item_property_index', methods: ['GET'])]
+    #[Route(name: 'item_property', methods: ['GET'])]
     public function index(ItemPropertyRepository $itemPropertyRepository): Response
     {
         return $this->render('items/item_property/index.html.twig', [
@@ -22,7 +22,7 @@ final class ItemPropertyController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_items_item_property_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'item_property_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $itemProperty = new ItemProperty();
@@ -33,7 +33,7 @@ final class ItemPropertyController extends AbstractController
             $entityManager->persist($itemProperty);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_items_item_property_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('item_property', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_property/new.html.twig', [
@@ -42,15 +42,7 @@ final class ItemPropertyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_items_item_property_show', methods: ['GET'])]
-    public function show(ItemProperty $itemProperty): Response
-    {
-        return $this->render('items/item_property/show.html.twig', [
-            'item_property' => $itemProperty,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_items_item_property_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'item_property_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ItemProperty $itemProperty, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ItemPropertyType::class, $itemProperty);
@@ -59,7 +51,7 @@ final class ItemPropertyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_items_item_property_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('item_property', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_property/edit.html.twig', [
@@ -68,7 +60,7 @@ final class ItemPropertyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_items_item_property_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'item_property_delete', methods: ['POST'])]
     public function delete(Request $request, ItemProperty $itemProperty, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$itemProperty->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +68,6 @@ final class ItemPropertyController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_items_item_property_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('item_property', [], Response::HTTP_SEE_OTHER);
     }
 }

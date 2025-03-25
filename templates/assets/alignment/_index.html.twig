@@ -16,6 +16,7 @@
                 <td>{{ alignment.abbreviation }}</td>
                 <td>
                     <a href="{{ path('alignment_edit', {'id': alignment.id}) }}">edit</a>
+                    {{ include('assets/alignment/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}

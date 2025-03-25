@@ -3,55 +3,65 @@
 namespace App\Controller\Items;
 
 use App\Entity\Items\ItemRow;
+use App\Entity\Items\ItemTable;
 use App\Form\Items\ItemRowType;
-use App\Repository\Items\ItemRowRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/items/item/row')]
+#[Route('/admin/item-row')]
 final class ItemRowController extends AbstractController
 {
-    #[Route(name: 'app_items_item_row_index', methods: ['GET'])]
-    public function index(ItemRowRepository $itemRowRepository): Response
+    #[Route('/new/cat={id}/table={id2}', name: 'item_row_cat_new', methods: ['GET', 'POST'])]
+    public function newCategory(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        return $this->render('items/item_row/index.html.twig', [
-            'item_rows' => $itemRowRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_items_item_row_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+        $table = $entityManager->getRepository(ItemTable::class)->findOneBy(['id' => $id2]);
         $itemRow = new ItemRow();
         $form = $this->createForm(ItemRowType::class, $itemRow);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $itemRow->setTableau($table);
             $entityManager->persist($itemRow);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_items_item_row_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('items_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('items/item_row/new.html.twig', [
+        return $this->render('items/item_row/new/cat.html.twig', [
             'item_row' => $itemRow,
             'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}', name: 'app_items_item_row_show', methods: ['GET'])]
-    public function show(ItemRow $itemRow): Response
+    #[Route('/new/sub={id}/table={id2}', name: 'item_row_sub_new', methods: ['GET', 'POST'])]
+    public function newSubcategory(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        return $this->render('items/item_row/show.html.twig', [
+        $table = $entityManager->getRepository(ItemTable::class)->findOneBy(['id' => $id2]);
+        $itemRow = new ItemRow();
+        $form = $this->createForm(ItemRowType::class, $itemRow);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $itemRow->setTableau($table);
+            $entityManager->persist($itemRow);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('item_sub_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('items/item_row/new/sub.html.twig', [
             'item_row' => $itemRow,
+            'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_items_item_row_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, ItemRow $itemRow, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit/cat={id2}', name: 'item_row_cat_edit', methods: ['GET', 'POST'])]
+    public function editCategory(Request $request, ItemRow $itemRow, EntityManagerInterface $entityManager, int $id2): Response
     {
         $form = $this->createForm(ItemRowType::class, $itemRow);
         $form->handleRequest($request);
@@ -59,23 +69,54 @@ final class ItemRowController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_items_item_row_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('items_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('items/item_row/edit.html.twig', [
+        return $this->render('items/item_row/edit/cat.html.twig', [
             'item_row' => $itemRow,
             'form' => $form,
+            'id' => $id2
         ]);
     }
 
-    #[Route('/{id}', name: 'app_items_item_row_delete', methods: ['POST'])]
-    public function delete(Request $request, ItemRow $itemRow, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit/sub={id2}', name: 'item_row_sub_edit', methods: ['GET', 'POST'])]
+    public function editSubcategory(Request $request, ItemRow $itemRow, EntityManagerInterface $entityManager, int $id2): Response
+    {
+        $form = $this->createForm(ItemRowType::class, $itemRow);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('item_sub_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('items/item_row/edit/sub.html.twig', [
+            'item_row' => $itemRow,
+            'form' => $form,
+            'id' => $id2
+        ]);
+    }
+
+    #[Route('/{id}/cat={id2}', name: 'item_row_cat_delete', methods: ['POST'])]
+    public function deleteCategory(Request $request, ItemRow $itemRow, EntityManagerInterface $entityManager, int $id2): Response
     {
         if ($this->isCsrfTokenValid('delete'.$itemRow->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($itemRow);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_items_item_row_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('items_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/sub={id2}', name: 'item_row_sub_delete', methods: ['POST'])]
+    public function deleteSubcategory(Request $request, ItemRow $itemRow, EntityManagerInterface $entityManager, int $id2): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$itemRow->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($itemRow);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('item_sub_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
     }
 }

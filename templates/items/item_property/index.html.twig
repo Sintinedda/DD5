@@ -4,6 +4,8 @@
 
 {% block body %}
     <h1>ItemProperty index</h1>
+    <a href="{{ path('item_property_new') }}">Create new</a>
+    <br/><br/>
 
     <table class="table">
         <thead>
@@ -12,7 +14,6 @@
                 <th>Name</th>
                 <th>Slug</th>
                 <th>Part</th>
-                <th>D</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,22 +21,17 @@
         {% for item_property in item_properties %}
             <tr>
                 <td>{{ item_property.id }}</td>
-                <td>{{ item_property.name }}</td>
+                <td><a href="{{ path('item_property_edit', {'id': item_property.id}) }}">{{ item_property.name }}</a></td>
                 <td>{{ item_property.slug }}</td>
                 <td>{{ item_property.part }}</td>
-                <td>{{ item_property.d }}</td>
-                <td>
-                    <a href="{{ path('app_items_item_property_show', {'id': item_property.id}) }}">show</a>
-                    <a href="{{ path('app_items_item_property_edit', {'id': item_property.id}) }}">edit</a>
-                </td>
+                <td>{{ include('items/item_property/_delete_form.html.twig') }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_items_item_property_new') }}">Create new</a>
 {% endblock %}

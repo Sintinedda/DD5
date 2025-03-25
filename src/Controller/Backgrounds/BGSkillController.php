@@ -53,7 +53,6 @@ final class BGSkillController extends AbstractController
         return $this->render('backgrounds/bg_skill/edit.html.twig', [
             'b_g_skill' => $bGSkill,
             'form' => $form,
-            'bg' => $bg
         ]);
     }
 

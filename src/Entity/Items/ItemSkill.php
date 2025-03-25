@@ -22,12 +22,6 @@ class ItemSkill
     #[ORM\Column(nullable: true)]
     private ?int $level = null;
 
-    #[ORM\Column]
-    private ?bool $show_skill = null;
-
-    #[ORM\Column]
-    private ?bool $optional = null;
-
     #[ORM\Column(length: 1000, nullable: true)]
     private ?string $d1 = null;
 
@@ -115,30 +109,6 @@ class ItemSkill
     public function setLevel(?int $level): static
     {
         $this->level = $level;
-
-        return $this;
-    }
-
-    public function isShowSkill(): ?bool
-    {
-        return $this->show_skill;
-    }
-
-    public function setShowSkill(bool $show_skill): static
-    {
-        $this->show_skill = $show_skill;
-
-        return $this;
-    }
-
-    public function isOptional(): ?bool
-    {
-        return $this->optional;
-    }
-
-    public function setOptional(bool $optional): static
-    {
-        $this->optional = $optional;
 
         return $this;
     }
