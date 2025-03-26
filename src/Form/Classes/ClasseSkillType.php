@@ -2,11 +2,12 @@
 
 namespace App\Form\Classes;
 
-use App\Entity\Classes\ClasseLevel;
 use App\Entity\Classes\ClasseSkill;
-use App\Entity\Classes\ClasseSpellcasting;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,28 +16,65 @@ class ClasseSkillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('level')
+            ->add('name', TextType::class)
+            ->add('level', IntegerType::class)
             ->add('show_skill')
             ->add('optional')
-            ->add('d1')
-            ->add('d2')
-            ->add('d3')
-            ->add('d4')
-            ->add('d5')
-            ->add('d6')
-            ->add('d7')
-            ->add('d8')
-            ->add('d9')
-            ->add('d10')
-            ->add('spellcasting', EntityType::class, [
-                'class' => ClasseSpellcasting::class,
-                'choice_label' => 'id',
+            ->add('d1', TextareaType::class, [
+                'required' => false
             ])
-            ->add('classeLevels', EntityType::class, [
-                'class' => ClasseLevel::class,
-                'choice_label' => 'id',
+            ->add('d2', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d3', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d4', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d5', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d6', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d7', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d8', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d9', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d10', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('lvls', ChoiceType::class, [
                 'multiple' => true,
+                'mapped' => false,
+                'choices' => [
+                    1 => 1,
+                    2 => 2,
+                    3 => 3,
+                    4 => 4,
+                    5 => 5,
+                    6 => 6,
+                    7 => 7,
+                    8 => 8,
+                    9 => 9,
+                    10 => 10,
+                    11 => 11,
+                    12 => 12,
+                    13 => 13,
+                    14 => 14,
+                    15 => 15,
+                    16 => 16,
+                    17 => 17,
+                    18 => 18,
+                    19 => 19,
+                    20 => 20
+                ]
             ])
         ;
     }

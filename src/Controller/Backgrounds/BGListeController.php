@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/bgliste')]
 final class BGListeController extends AbstractController
 {
-    #[Route('/new/{id}', name: 'bgliste_new', methods: ['GET', 'POST'])]
+    #[Route('/bg{id}/new', name: 'bgliste_new', methods: ['GET', 'POST'])]
     public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $skill = $entityManager->getRepository(BGSkill::class)->findOneBy(['id' => $id]);

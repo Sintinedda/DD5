@@ -1,0 +1,32 @@
+{% if classe.specialty %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#specialties" aria-expanded="true" aria-controls="collapseOne">
+                {{ classe.specialty.name }}
+            </button>
+        </h2>
+        <div id="specialties" class="accordion-collapse collapse" data-bs-parent="#classe"> 
+            <div class="accordion-body">  
+                <table>
+                    {% for spe in classe.specialty.items|sort((a, b) => a.slug <=> b.slug) %}
+                        {% if spe.source != 'Arcanes Déterrés' %}
+                            <tr>
+                                <td>{{ spe.id }}</td>
+                                <td><a href="{{ path('specialties_show', {'id': classe.specialty.id, 'id2': spe.id}) }}">{{ s.name }}</a></td>
+                                <td>{{ spe.slug }}</td>
+                            </td>
+                        {% endif %}
+                        <td>ARCANES DÉTERRÉS</td>
+                        {% if spe.source == 'Arcanes Déterrés' %}
+                            <tr>
+                                <td>{{ spe.id }}</td>
+                                <td><a href="{{ path('specialties_show', {'id': classe.specialty.id, 'id2': spe.id}) }}">{{ s.name }}</a></td>
+                                <td>{{ spe.slug }}</td>
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}

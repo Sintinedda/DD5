@@ -2,80 +2,93 @@
 
 namespace App\Controller\Classes;
 
+use App\Entity\Classes\Specialty;
 use App\Entity\Classes\SpecialtyItem;
 use App\Form\Classes\SpecialtyItemType;
-use App\Repository\Classes\SpecialtyItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/classes/specialty/item')]
+#[Route('/admin/specialties')]
 final class SpecialtyItemController extends AbstractController
 {
-    #[Route(name: 'app_classes_specialty_item_index', methods: ['GET'])]
-    public function index(SpecialtyItemRepository $specialtyItemRepository): Response
+    #[Route('/spe{id}/new', name: 'specialties_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
-        return $this->render('classes/specialty_item/index.html.twig', [
-            'specialty_items' => $specialtyItemRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_classes_specialty_item_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+        $spe = $entityManager->getRepository(Specialty::class)->findOneBy(['id' => $id]);
+        $classeId = $spe->getClasse()->getId();
         $specialtyItem = new SpecialtyItem();
         $form = $this->createForm(SpecialtyItemType::class, $specialtyItem);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $specialtyItem->addSpecialty($spe);
             $entityManager->persist($specialtyItem);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_classes_specialty_item_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('classe_show', ['id' => $classeId], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('classes/specialty_item/new.html.twig', [
             'specialty_item' => $specialtyItem,
             'form' => $form,
+            'id' => $classeId
         ]);
     }
 
-    #[Route('/{id}', name: 'app_classes_specialty_item_show', methods: ['GET'])]
-    public function show(SpecialtyItem $specialtyItem): Response
+    #[Route('/spe{id}/{id2}', name: 'specialties_show', methods: ['GET'])]
+    public function show(int $id, int $id2, EntityManagerInterface $em): Response
     {
+        $spe = $em->getRepository(Specialty::class)->findOneBy(['id' => $id]);
+
         return $this->render('classes/specialty_item/show.html.twig', [
-            'specialty_item' => $specialtyItem,
+            'specialty_item' => $em->getRepository(SpecialtyItem::class)->findOneBy(['id' => $id2]),
+            'id' => $id,
+            'id2' => $id2,
+            'classeId' => $spe->getClasse()->getId()
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_classes_specialty_item_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, SpecialtyItem $specialtyItem, EntityManagerInterface $entityManager): Response
+    #[Route('/spe{id}/{id2}/edit', name: 'specialties_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
+        $spe = $entityManager->getRepository(Specialty::class)->findOneBy(['id' => $id]);
+        $specialtyItem = $entityManager->getRepository(SpecialtyItem::class)->findOneBy(['id' => $id2]);
         $form = $this->createForm(SpecialtyItemType::class, $specialtyItem);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $specialtyItem->addSpecialty($spe);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_classes_specialty_item_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('specialties_show', ['id' => $id, 'id2' => $id2], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('classes/specialty_item/edit.html.twig', [
             'specialty_item' => $specialtyItem,
             'form' => $form,
+            'id' => $id,
+            'id2' => $id2
         ]);
     }
 
-    #[Route('/{id}', name: 'app_classes_specialty_item_delete', methods: ['POST'])]
-    public function delete(Request $request, SpecialtyItem $specialtyItem, EntityManagerInterface $entityManager): Response
+    #[Route('/spe{id}/{id2}', name: 'specialties_delete', methods: ['POST'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
+        $spe = $entityManager->getRepository(Specialty::class)->findOneBy(['id' => $id]);
+        $specialtyItem = $entityManager->getRepository(SpecialtyItem::class)->findOneBy(['id' => $id2]);
+        $classeId = $spe->getClasse()->getId();
+
         if ($this->isCsrfTokenValid('delete'.$specialtyItem->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($specialtyItem);
+            $specialtyItem->removeSpecialty($spe);
+            if ($specialtyItem->getSpecialties()->count() == 0) {
+                $entityManager->remove($specialtyItem);
+            }
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_classes_specialty_item_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('classe_show', ['id' => $classeId], Response::HTTP_SEE_OTHER);
     }
 }

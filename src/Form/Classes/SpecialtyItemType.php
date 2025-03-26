@@ -4,12 +4,11 @@ namespace App\Form\Classes;
 
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
-use App\Entity\Classes\Specialty;
 use App\Entity\Classes\SpecialtyItem;
-use App\Entity\Classes\SpecialtySkill;
-use App\Entity\Classes\SpecialtyTable;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,38 +17,38 @@ class SpecialtyItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('part1')
-            ->add('part2')
-            ->add('name')
-            ->add('slug')
-            ->add('d1')
-            ->add('d2')
-            ->add('d3')
-            ->add('d4')
-            ->add('d5')
-            ->add('specialty', EntityType::class, [
-                'class' => Specialty::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+            ->add('part1', TextType::class, [
+                'required' => false
+            ])
+            ->add('part2', TextType::class, [
+                'required' => false
+            ])
+            ->add('name', TextType::class)
+            ->add('slug', TextType::class)
+            ->add('d1', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d2', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d3', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d4', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('d5', TextareaType::class, [
+                'required' => false
             ])
             ->add('source', EntityType::class, [
                 'class' => Source::class,
-                'choice_label' => 'id',
+                'choice_label' => 'abbreviation',
                 'multiple' => true,
             ])
             ->add('soucre_part', EntityType::class, [
                 'class' => SourcePart::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('skills', EntityType::class, [
-                'class' => SpecialtySkill::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('tables', EntityType::class, [
-                'class' => SpecialtyTable::class,
-                'choice_label' => 'id',
+                'required' => false,
+                'choice_label' => 'number',
                 'multiple' => true,
             ])
         ;

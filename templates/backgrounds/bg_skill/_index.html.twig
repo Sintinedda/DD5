@@ -2,7 +2,7 @@
 <br/><br/>
 {% for s in b.skills %}
     <div>
-        <p><a href="{{ path('bgskill_edit', {'id': s.id, 'id2': b.id}) }}">{{ s.name }}</a></p>
+        <p><a href="{{ path('bgskill_edit', {'id': b.id, 'id2': s.id}) }}">{{ s.name }}</a></p>
         {{ include('backgrounds/bg_skill/_delete_form.html.twig') }}
         <br/>
         {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}

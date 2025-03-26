@@ -24,11 +24,8 @@ class ClasseSpellcasting
     #[ORM\OneToMany(targetEntity: ClasseSkill::class, mappedBy: 'spellcasting')]
     private Collection $skills;
 
-    #[ORM\Column(length: 10)]
-    private ?string $modifier = null;
-
     #[ORM\OneToOne(mappedBy: 'spellcasting', cascade: ['persist'])]
-    private ?ClasseLevel $classeLevel = null;
+    private ?Classe $classe = null;
 
     public function __construct()
     {
@@ -82,36 +79,24 @@ class ClasseSpellcasting
         return $this;
     }
 
-    public function getModifier(): ?string
+    public function getClasse(): ?Classe
     {
-        return $this->modifier;
+        return $this->classe;
     }
 
-    public function setModifier(string $modifier): static
-    {
-        $this->modifier = $modifier;
-
-        return $this;
-    }
-
-    public function getClasseLevel(): ?ClasseLevel
-    {
-        return $this->classeLevel;
-    }
-
-    public function setClasseLevel(?ClasseLevel $classeLevel): static
+    public function setClasse(?Classe $classe): static
     {
         // unset the owning side of the relation if necessary
-        if ($classeLevel === null && $this->classeLevel !== null) {
-            $this->classeLevel->setSpellcasting(null);
+        if ($classe === null && $this->classe !== null) {
+            $this->classe->setSpellcasting(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($classeLevel !== null && $classeLevel->getSpellcasting() !== $this) {
-            $classeLevel->setSpellcasting($this);
+        if ($classe !== null && $classe->getSpellcasting() !== $this) {
+            $classe->setSpellcasting($this);
         }
 
-        $this->classeLevel = $classeLevel;
+        $this->classe = $classe;
 
         return $this;
     }

@@ -2,11 +2,10 @@
 
 namespace App\Form\Classes;
 
-use App\Entity\Classes\SpecialtyItem;
-use App\Entity\Classes\SpecialtySkill;
 use App\Entity\Classes\SpecialtyTable;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,18 +14,9 @@ class SpecialtyTableType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number')
-            ->add('place')
-            ->add('name')
-            ->add('skill', EntityType::class, [
-                'class' => SpecialtySkill::class,
-                'choice_label' => 'id',
-            ])
-            ->add('specialties', EntityType::class, [
-                'class' => SpecialtyItem::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
+            ->add('number', IntegerType::class)
+            ->add('place', IntegerType::class)
+            ->add('name', TextType::class)
         ;
     }
 

@@ -7,7 +7,5 @@
 
     {{ include('classes/classe_spellcasting/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_classes_classe_spellcasting_index') }}">back to list</a>
-
-    {{ include('classes/classe_spellcasting/_delete_form.html.twig') }}
+    <a href="{{ path('classe_show', {'id': id}) }}">back to list</a>
 {% endblock %}

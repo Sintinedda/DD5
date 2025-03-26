@@ -1,4 +1,51 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div>
+        {{ form_row(form.level) }}
+        {{ form_row(form.bm) }}
+    </div>
+    <h3>Sorts</h3>
+    <div>
+        {{ form_row(form.cantrip_know) }}
+        {{ form_row(form.spell_know) }}
+        {{ form_row(form.s1) }}
+        {{ form_row(form.s2) }}
+        {{ form_row(form.s3) }}
+        {{ form_row(form.s4) }}
+        {{ form_row(form.s5) }}
+        {{ form_row(form.s6) }}
+        {{ form_row(form.s7) }}
+        {{ form_row(form.s8) }}
+        {{ form_row(form.s9) }}
+    </div>
+    <h3>Artificier</h3>
+    <div>
+        {{ form_row(form.infusion_know) }}
+        {{ form_row(form.infused_item) }}
+    </div>
+    <h3>Barbare</h3>
+    <div>
+        {{ form_row(form.rage) }}
+        {{ form_row(form.rage_damage) }}
+    </div>
+    <h3>Moine</h3>
+    <div>
+        {{ form_row(form.martial_art) }}
+        {{ form_row(form.ki) }}
+        {{ form_row(form.unarmored_move) }}
+    </div>
+    <h3>Roublard</h3>
+    <div>
+        {{ form_row(form.sneak_attack) }}
+    </div>
+    <h3>Ensorceleur</h3>
+    <div>
+        {{ form_row(form.sorcery_point) }}
+    </div>
+    <h3>Occultiste</h3>
+    <div>
+        {{ form_row(form.spell_slot) }}
+        {{ form_row(form.slot_level) }}
+        {{ form_row(form.invocation_know) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

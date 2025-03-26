@@ -1,0 +1,5 @@
+    <div>
+        {{ form_row(form.) }}
+    </div>
+
+    <a href="{{ path('specialties_show', {'id': id, 'id2': id2}) }}">back to list</a>

@@ -1,0 +1,32 @@
+{% if item_subcategory.tables|count != 0 %}
+    <h2>Tables</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+                <th>Lignes</th>
+                {% for t in item_subcategory.tables %}
+                    {% for r in t.rows %}<th></th>{% endfor %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in item_subcategory.tables|sort((a, b) => a.number <=> b.number) %}
+                <tr>
+                    <td>{{ t.id }}</td>
+                    <td><a href="{{ path('item_table_sub_edit', {'id': t.id, 'id2': item_subcategory.id}) }}">{{ t.name }}</a></td>
+                    <td>{{ include('items/item_table/delete/_sub_form.html.twig') }}</td>
+                    <td><a href="{{ path('item_row_sub_new', {'id': item_subcategory.id, 'id2': t.id}) }}">new row</a></td>
+                    {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
+                        <td>
+                            <a href="{{ path('item_row_sub_edit', {'id': r.id, 'id2': item_subcategory.id}) }}">Row {{ r.number }}</a>
+                            {{ include 'items/item_row/delete/_sub_form.html.twig' }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+{% endif %}

@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/bgskill')]
 final class BGSkillController extends AbstractController
 {
-    #[Route('/new/{id}', name: 'bgskill_new', methods: ['GET', 'POST'])]
+    #[Route('/bg{id}/new', name: 'bgskill_new', methods: ['GET', 'POST'])]
     public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
@@ -36,10 +36,11 @@ final class BGSkillController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit/{id2}', name: 'bgskill_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, BGSkill $bGSkill, EntityManagerInterface $entityManager, int $id2): Response
+    #[Route('/bg{id}/{id2}/edit', name: 'bgskill_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id2]);
+        $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
+        $bGSkill = $entityManager->getRepository(BGSkill::class)->findOneBy(['id' => $id2]);
         $form = $this->createForm(BGSkillType::class, $bGSkill);
         $form->handleRequest($request);
 
@@ -56,10 +57,11 @@ final class BGSkillController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/{id2}', name: 'bgskill_delete', methods: ['POST'])]
-    public function delete(Request $request, BGSkill $bGSkill, EntityManagerInterface $entityManager, int $id2): Response
+    #[Route('/bg{id}/{id2}', name: 'bgskill_delete', methods: ['POST'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id2]);
+        $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
+        $bGSkill = $entityManager->getRepository(BGSkill::class)->findOneBy(['id' => $id2]);
 
         if ($this->isCsrfTokenValid('delete'.$bGSkill->getId(), $request->getPayload()->getString('_token'))) {
             $bGSkill->removeBG($bg);

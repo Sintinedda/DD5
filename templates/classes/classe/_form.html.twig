@@ -1,4 +1,33 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div>
+        {{ form_row(form.name) }}
+        {{ form_row(form.slug) }}
+        {{ form_row(form.dv) }}
+        {{ form_row(form.save) }}
+        {{ form_row(form.competences) }}
+    </div>
+    <div>
+        {{ form_row(form.armor1) }}
+        {{ form_row(form.armor2) }}
+        {{ form_row(form.weapon1) }}
+        {{ form_row(form.weapon2) }}
+        {{ form_row(form.tool1) }}
+        {{ form_row(form.tool2) }}
+    </div>
+    <div>
+        {{ form_row(form.d) }}
+    </div>
+    <div>
+        {{ form_row(form.equipment1) }}
+    </div>
+    <div>
+        {{ form_row(form.equipment2) }}
+    </div>
+    <div>
+        {{ form_row(form.equipment3) }}
+    </div>
+    <div>
+        {{ form_row(form.equipment4) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

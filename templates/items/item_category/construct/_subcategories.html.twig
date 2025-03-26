@@ -1,0 +1,21 @@
+{% if item_category.subcategories|count != 0 %}
+    <h2>Subcategories</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in item_category.subcategories|sort((a, b) => a.place <=> b.place) %}
+                <tr>
+                    <td>{{ s.id }}</td>
+                    <td><a href="{{ path('item_sub_show', {'id': s.id}) }}">{{ s.name }}</a></td>
+                    <td>{{ s.slug }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+{% endif %}

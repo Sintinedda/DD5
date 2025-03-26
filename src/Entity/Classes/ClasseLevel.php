@@ -100,9 +100,6 @@ class ClasseLevel
     #[ORM\ManyToMany(targetEntity: ClasseSkill::class, inversedBy: 'classeLevels')]
     private Collection $skills;
 
-    #[ORM\OneToOne(inversedBy: 'classeLevel', cascade: ['persist', 'remove'])]
-    private ?ClasseSpellcasting $spellcasting = null;
-
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -445,18 +442,6 @@ class ClasseLevel
     public function removeSkill(ClasseSkill $skill): static
     {
         $this->skills->removeElement($skill);
-
-        return $this;
-    }
-
-    public function getSpellcasting(): ?ClasseSpellcasting
-    {
-        return $this->spellcasting;
-    }
-
-    public function setSpellcasting(?ClasseSpellcasting $spellcasting): static
-    {
-        $this->spellcasting = $spellcasting;
 
         return $this;
     }

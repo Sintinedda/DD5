@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/bgcarac')]
 final class BGCaracController extends AbstractController
 {
-    #[Route('/new/{id}', name: 'bgcarac_new', methods: ['GET', 'POST'])]
+    #[Route('/bg{id}/new', name: 'bgcarac_new', methods: ['GET', 'POST'])]
     public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
