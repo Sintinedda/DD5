@@ -7,7 +7,5 @@
 
     {{ include('classes/specialty_liste/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_classes_specialty_liste_index') }}">back to list</a>
-
-    {{ include('classes/specialty_liste/_delete_form.html.twig') }}
+    <a href="{{ path('specialties_show', {'id': id, 'id2': id2}) }}">back to list</a>
 {% endblock %}

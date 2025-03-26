@@ -1,0 +1,44 @@
+{% if item_category.items|count != 0 %}
+    <h2>Items</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>actions</th>
+                <th>Tables</th>
+                {% for t in i.tables %}<th></th>{% endfor %}
+                {% for t in i.tables|sort((a, b) => a.number <=> b.number) %}<th>Rows</th>{% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in item_category.items %}
+                <tr>
+                    <td>{{ i.id }}</td>
+                    <td><a href="{{ path('item_cat_item_edit', {'id': i.id}) }}">{{ i.name }}</a></td>
+                    <td>{{ i.slug }}</td>
+                    <td>{{ include('items/item/delete/_cat_form.html.twig') }}</td>
+                    <td><a href="{{ path('item_table_item_cat_new', {'id': item_category.id, 'id2': i.id}) }}">new table</td>
+                    {% for t in i.tables|sort((a, b) => a.number <=> b.number) %}
+                        <td>
+                            <a href="{{ path('item_table_item_cat_edit', {'id': t.id, 'id2': item_category.id, 'id3': i.id}) }}">Table {{ t.number }}</a>
+                            {{ include 'items/item_table/delete/_cat-item_form.html.twig' }}
+                        </td>
+                    {% endfor %}
+                    {% for t in i.tables|sort((a, b) => a.number <=> b.number) %}
+                        <td><ul>
+                            <li><a href="{{ path('item_row_cat_new', {'id': item_category.id, 'id2': t.id}) }}">new row</a></li>
+                            {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
+                                <li>
+                                    <a href="{{ path('item_row_cat_edit', {'id': r.id, 'id2': item_category.id}) }}">Row {{ r.number }}</a>
+                                    {{ include 'items/item_row/delete/_cat_form.html.twig' }}
+                                </li>
+                            {% endfor %}
+                        </ul></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+{% endif %}

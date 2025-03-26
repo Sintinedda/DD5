@@ -1,0 +1,23 @@
+{% if classe.spellcasting %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#spellcasting" aria-expanded="true" aria-controls="collapseOne">
+                Spellcasting
+            </button>
+        </h2>
+        <div id="spellcasting" class="accordion-collapse collapse" data-bs-parent="#classe"> 
+            <div class="accordion-body">
+                {{ include ('classes/classe_spellcasting/_delete_form.html.twig') }}
+                <a style="margin-right: 10px;" href="{{ path('classe_skill_spellcasting_new', {'id': classe.spellcasting.id}) }}">new skill</a>
+                <table>
+                    {% for s in classe.spellcasting.skills|sort((a, b) => a.level <=> b.level) %}
+                        <tr>
+                            <td><a style="margin-right: 10px;" href="{{ path('classe_skill_edit', {'id':classe.id, 'id2': s.id}) }}">{{ s.name }}</a></td>
+                            <td>{{ include ('classes/classe_skill/_delete_form.html.twig') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,21 @@
+{% if item_subcategory.listes|count != 0 %}
+    <h2>Listes</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for l in item_subcategory.listes|sort((a, b) => a.number <=> b.number) %}
+                <tr>
+                    <td>{{ s.id }}</td>
+                    <td><a href="{{ path('item_liste_sub_edit', {'id': l.id, 'id2': item_subcategory.id}) }}">Liste {{ l.number }}</a></td>
+                    <td>{{ include 'items/item_liste/delete/_sub_form.html.twig' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+{% endif %}

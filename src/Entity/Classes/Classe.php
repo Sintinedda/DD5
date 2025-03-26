@@ -59,9 +59,6 @@ class Classe
     #[ORM\Column]
     private array $save = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $ManyToMany = null;
-
     /**
      * @var Collection<int, Competence>
      */
@@ -114,6 +111,9 @@ class Classe
      */
     #[ORM\ManyToMany(targetEntity: Spell::class, mappedBy: 'classes2')]
     private Collection $spells2;
+
+    #[ORM\OneToOne(inversedBy: 'classe', cascade: ['persist', 'remove'])]
+    private ?ClasseSpellcasting $spellcasting = null;
 
     public function __construct()
     {
@@ -277,18 +277,6 @@ class Classe
         return $this;
     }
 
-    public function getManyToMany(): ?string
-    {
-        return $this->ManyToMany;
-    }
-
-    public function setManyToMany(string $ManyToMany): static
-    {
-        $this->ManyToMany = $ManyToMany;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Competence>
      */
@@ -396,13 +384,8 @@ class Classe
         return $this->specialty;
     }
 
-    public function setSpecialty(Specialty $specialty): static
+    public function setSpecialty(?Specialty $specialty): static
     {
-        // set the owning side of the relation if necessary
-        if ($specialty->getClasse() !== $this) {
-            $specialty->setClasse($this);
-        }
-
         $this->specialty = $specialty;
 
         return $this;
@@ -506,6 +489,18 @@ class Classe
         if ($this->spells2->removeElement($spells2)) {
             $spells2->removeClasses2($this);
         }
+
+        return $this;
+    }
+
+    public function getSpellcasting(): ?ClasseSpellcasting
+    {
+        return $this->spellcasting;
+    }
+
+    public function setSpellcasting(?ClasseSpellcasting $spellcasting): static
+    {
+        $this->spellcasting = $spellcasting;
 
         return $this;
     }

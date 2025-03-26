@@ -1,0 +1,127 @@
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#levels" aria-expanded="true" aria-controls="collapseOne">
+            Levels
+        </button>
+    </h2>
+    <div id="levels" class="accordion-collapse collapse" data-bs-parent="#classe">
+        <div class="accordion-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>action</th>
+                        <th>Lvl</th>
+                        <th>Bm</th>
+                        {% if classe.slug == 'artificier' %}
+                            <th>Infu-know</th>
+                            <th>Infu-item</th>
+                        {% endif %}
+                        {% if classe.slug == 'barbare' %}
+                            <th>Rage</th>
+                            <th>Rage-dmg</th>
+                        {% endif %}
+                        {% if classe.slug == 'ensorceleur' %}
+                            <th>sorc-pt</th>
+                        {% endif %}
+                        {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
+                            or classe.slug == 'artificier' or classe.slug == 'occultiste' or classe.slug == 'magicien' 
+                         %}                                   
+                            <th>Can-know</th>
+                        {% endif %}
+                        {% if classe.slug == 'barde' or classe.slug == 'ensorceleur' or classe.slug == 'rodeur' or classe.slug == 'occultiste' %}                                   
+                            <th>Spell-know</th>
+                        {% endif %}
+                        {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
+                            or classe.slug == 'artificier' or classe.slug == 'paladin' or classe.slug == 'rodeur' or classe.slug == 'magicien'
+                         %}                                   
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                        {% endif %}
+                        {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
+                            or classe.slug == 'magicien'
+                         %} 
+                            <th>6</th>
+                            <th>7</th>
+                            <th>8</th>
+                            <th>9</th>
+                        {% endif %}
+                        {% if classe.slug == 'moine' %}
+                            <th>Mart-art</th>
+                            <th>Ki</th>
+                            <th>Unar-mov</th>
+                        {% endif %}
+                        {% if classe.slug == 'roublard' %}
+                            <th>Sneak_att</th>
+                        {% endif %}
+                        {% if classe.slug == 'occultiste' %}
+                            <th>Spell-slot</th>
+                            <th>Slot-lvl</th>
+                            <th>Invoc-know</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for l in classe.levels|sort((a, b) => a.level <=> b.level) %}
+                        <tr>
+                            <th>{{ include ('classes/classe_level/_delete_form.html.twig') }}</th>
+                            <th><a href="{{ path('classe_level_edit', {'id': l.id}) }}">{{ l.level }}</a></th>
+                            <th>{{ l.bm }}</th>
+                            {% if classe.slug == 'artificier' %}
+                                <th>{{ l.infusion_know }}</th>
+                                <th>{{ l.infused_item }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'barbare' %}
+                                <th>{{ l.rage }}</th>
+                                <th>{{ l.rage_damage }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'ensorceleur' %}
+                                <th>{{ l.sorcery_point }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
+                                or classe.slug == 'artificier' or classe.slug == 'occultiste' or classe.slug == 'magicien' 
+                            %}                                   
+                                <th>{{ l.cantrip_know }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'barde' or classe.slug == 'ensorceleur' or classe.slug == 'rodeur' or classe.slug == 'occultiste' %}                                   
+                                <th>{{ l.spell_know }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
+                                or classe.slug == 'artificier' or classe.slug == 'paladin' or classe.slug == 'rodeur' or classe.slug == 'magicien'
+                            %}                                   
+                                <th>{{ l.s1 }}</th>
+                                <th>{{ l.s2 }}</th>
+                                <th>{{ l.s3 }}</th>
+                                <th>{{ l.s4 }}</th>
+                                <th>{{ l.s5 }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
+                                or classe.slug == 'magicien'
+                            %} 
+                                <th>{{ l.s6 }}</th>
+                                <th>{{ l.s7 }}</th>
+                                <th>{{ l.s8 }}</th>
+                                <th>{{ l.s9 }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'moine' %}
+                                <th>{{ l.martial_art }}</th>
+                                <th>{{ l.ki }}</th>
+                                <th>{{ l.unarmored.move }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'roublard' %}
+                                <th>{{ l.sneak_attack }}</th>
+                            {% endif %}
+                            {% if classe.slug == 'occultiste' %}
+                                <th>{{ l.spell_slot }}</th>
+                                <th>{{ l.slot_level }}</th>
+                                <th>{{ l.invocation_know }}</th>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

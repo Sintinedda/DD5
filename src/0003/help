@@ -1,0 +1,1 @@
+$ = $entityManager->getRepository(::class)->findOneBy(['id' => $id]);

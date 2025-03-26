@@ -7,5 +7,5 @@
 
     {{ include('classes/specialty_table/_form.html.twig') }}
 
-    <a href="{{ path('app_classes_specialty_table_index') }}">back to list</a>
+    <a href="{{ path('specialties_show', {'id': id, 'id2': id2}) }}">back to list</a>
 {% endblock %}

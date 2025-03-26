@@ -2,12 +2,9 @@
 
 namespace App\Form\Classes;
 
-use App\Entity\Classes\Classe;
 use App\Entity\Classes\ClasseLevel;
-use App\Entity\Classes\ClasseSkill;
-use App\Entity\Classes\ClasseSpellcasting;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,43 +13,76 @@ class ClasseLevelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('level')
-            ->add('bm')
-            ->add('cantrip_know')
-            ->add('spell_know')
-            ->add('s1')
-            ->add('s2')
-            ->add('s3')
-            ->add('s4')
-            ->add('s5')
-            ->add('s6')
-            ->add('s7')
-            ->add('s8')
-            ->add('s9')
-            ->add('infusion_know')
-            ->add('infused_item')
-            ->add('rage')
-            ->add('rage_damage')
-            ->add('martial_art')
-            ->add('ki')
-            ->add('unarmored_move')
-            ->add('sneak_attack')
-            ->add('sorcery_point')
-            ->add('spell_slot')
-            ->add('slot_level')
-            ->add('invocation_know')
-            ->add('classe', EntityType::class, [
-                'class' => Classe::class,
-                'choice_label' => 'id',
+            ->add('level', IntegerType::class)
+            ->add('bm', IntegerType::class)
+            ->add('cantrip_know', IntegerType::class, [
+                'required' => false
             ])
-            ->add('skills', EntityType::class, [
-                'class' => ClasseSkill::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+            ->add('spell_know', IntegerType::class, [
+                'required' => false
             ])
-            ->add('spellcasting', EntityType::class, [
-                'class' => ClasseSpellcasting::class,
-                'choice_label' => 'id',
+            ->add('s1', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s2', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s3', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s4', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s5', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s6', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s7', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s8', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('s9', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('infusion_know', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('infused_item', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('rage', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('rage_damage', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('martial_art', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('ki', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('unarmored_move', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('sneak_attack', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('sorcery_point', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('spell_slot', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('slot_level', IntegerType::class, [
+                'required' => false
+            ])
+            ->add('invocation_know', IntegerType::class, [
+                'required' => false
             ])
         ;
     }

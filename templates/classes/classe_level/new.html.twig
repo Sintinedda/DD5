@@ -7,5 +7,5 @@
 
     {{ include('classes/classe_level/_form.html.twig') }}
 
-    <a href="{{ path('app_classes_classe_level_index') }}">back to list</a>
+    <a href="{{ path('classe_show', {'id': id}) }}">back to list</a>
 {% endblock %}

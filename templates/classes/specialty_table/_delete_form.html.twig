@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_classes_specialty_table_delete', {'id': specialty_table.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ specialty_table.id) }}">
+<form method="post" action="{{ path('specialty_table_delete', {'id': id, 'id2': id2, 'id3': t.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ t.id) }}">
     <button class="btn">Delete</button>
 </form>

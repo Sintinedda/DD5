@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/source-part')]
 final class SourcePartController extends AbstractController
 {
-    #[Route('/new/{id}', name: 'source_part_new', methods: ['GET', 'POST'])]
+    #[Route('/source{id}/new', name: 'source_part_new', methods: ['GET', 'POST'])]
     public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $source = $entityManager->getRepository(Source::class)->findOneBy(['id' => $id]);

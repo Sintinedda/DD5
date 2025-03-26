@@ -1,0 +1,62 @@
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#skills" aria-expanded="true" aria-controls="collapseOne">
+            Skills
+        </button>
+    </h2>
+    <div id="skills" class="accordion-collapse collapse" data-bs-parent="#classe">
+        <div class="accordion-body">
+            <div class="accordion" id="skills">
+                {% set newArray = [] %}
+                {% for lvl in classe.levels %}
+                    {% for s in lvl.skills|sort((a, b) => a.level <=> b.level) %}
+                        {% if s.name not in newArray %}
+                            <div>
+                                <h2><a style="margin-right: 10px;" href="{{ path('classe_skill_edit', {'id':classe.id, 'id2': s.id}) }}">{{ s.name }}</a></h2>
+                                <div style="display:flex;">
+                                    {{ include ('classes/classe_skill/_delete_form.html.twig') }}
+                                    <a style="margin-right: 10px;" href="{{ path('classe_liste_new', {'id': classe.id, 'id2': s.id}) }}">new liste</a>
+                                    <a style="margin-right: 10px;" href="{{ path('classe_subskill_new', {'id': classe.id, 'id2': s.id}) }}">new subskill</a>
+                                    <a style="margin-right: 10px;" href="{{ path('classe_table_new', {'id': classe.id, 'id2': s.id}) }}">new table</a>
+                                </div>
+                                <br/>
+                                <table>
+                                    {% for l in s.listes %}
+                                        <tr>
+                                            <td><a href="{{ path('classe_liste_edit', {'id': classe.id, 'id2': l.id}) }}">Liste {{ l.number }}</a></td>
+                                            <td>{{ include ('classes/classe-liste/_delete_form.html.twig') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    {% for sub in s.subskills %}
+                                        <tr>
+                                            <td><a href="{{ path('classe_subskill_edit', {'id': classe.id, 'id2': sub.id}) }}">{{ sub.t1 }}</a></td>
+                                            <td>{{ include ('classes/classe-subskill/_delete_form.html.twig') }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                <table>
+                                    {% for t in s.tables %}
+                                        <tr>
+                                            <td><a href="{{ path('classe_table_edit', {'id': classe.id, 'id2': t.id}) }}">Table {{ t.number }}</a></td>
+                                            <td>{{ include ('classes/classe-table/_delete_form.html.twig') }}</td>
+                                            <td><a href="{{ path('classe_row_new', {'id': classe.id, 'id2': t.id}) }}">new row</a></td>
+                                            <td><ul>
+                                                {% for r in t.rows %}
+                                                    <li>
+                                                        <a href="{{ path('classe_row_edit', {'id': classe.id, 'id2': r.id}) }}">Row {{ r.number }}</a>
+                                                        {{ include ('classes/classe-row/_delete_form.html.twig') }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            {% set newArray = newArray|merge([s.name]) %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div> 
+    </div>
+</div>

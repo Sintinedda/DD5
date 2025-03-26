@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/bgtable')]
 final class BGTableController extends AbstractController
 {
-    #[Route('/new/carac={id}', name: 'bgtable_carac_new', methods: ['GET', 'POST'])]
+    #[Route('/carac{id}/new', name: 'bgtable_carac_new', methods: ['GET', 'POST'])]
     public function newTableCarac(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $carac = $entityManager->getRepository(BGCarac::class)->findOneBy(['id' => $id]);
@@ -37,7 +37,7 @@ final class BGTableController extends AbstractController
         ]);
     }
 
-    #[Route('/new/skill={id}', name: 'bgtable_skill_new', methods: ['GET', 'POST'])]
+    #[Route('/skill{id}/new', name: 'bgtable_skill_new', methods: ['GET', 'POST'])]
     public function newTableSkill(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $skill = $entityManager->getRepository(BGSkill::class)->findOneBy(['id' => $id]);

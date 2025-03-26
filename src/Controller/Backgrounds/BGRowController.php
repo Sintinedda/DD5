@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/bgrow')]
 final class BGRowController extends AbstractController
 {
-    #[Route('/new/{id}', name: 'bgrow_new', methods: ['GET', 'POST'])]
+    #[Route('/bg{id}/new', name: 'bgrow_new', methods: ['GET', 'POST'])]
     public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $table = $entityManager->getRepository(BGTable::class)->findOneBy(['id' => $id]); 
