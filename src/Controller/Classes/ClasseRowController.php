@@ -2,9 +2,9 @@
 
 namespace App\Controller\Classes;
 
-use App\Entity\Classes\ClasseRow;
-use App\Entity\Classes\ClasseTable;
-use App\Form\Classes\ClasseRowType;
+use App\Entity\Construct\Table;
+use App\Entity\Construct\TableRow;
+use App\Form\Construct\TableRowType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,21 +17,21 @@ final class ClasseRowController extends AbstractController
     #[Route('/classe{id}/skill{id2}/new', name: 'classe_row_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $table = $entityManager->getRepository(ClasseTable::class)->findOneBy(['id' => $id2]);
-        $classeRow = new ClasseRow();
-        $form = $this->createForm(ClasseRowType::class, $classeRow);
+        $table = $entityManager->getRepository(Table::class)->findOneBy(['id' => $id2]);
+        $row = new TableRow();
+        $form = $this->createForm(TableRowType::class, $row);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $classeRow->setTableau($table);
-            $entityManager->persist($classeRow);
+            $row->setTableau($table);
+            $entityManager->persist($row);
             $entityManager->flush();
 
             return $this->redirectToRoute('classe_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('classes/classe_row/new.html.twig', [
-            'classe_row' => $classeRow,
+            'classe_row' => $row,
             'form' => $form,
             'id' => $id
         ]);
@@ -40,8 +40,8 @@ final class ClasseRowController extends AbstractController
     #[Route('/classe{id}/{id2}/edit', name: 'classe_row_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $classeRow = $entityManager->getRepository(ClasseRow::class)->findOneBy(['id' => $id2]);
-        $form = $this->createForm(ClasseRowType::class, $classeRow);
+        $row = $entityManager->getRepository(TableRow::class)->findOneBy(['id' => $id2]);
+        $form = $this->createForm(TableRowType::class, $row);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ final class ClasseRowController extends AbstractController
         }
 
         return $this->render('classes/classe_row/edit.html.twig', [
-            'classe_row' => $classeRow,
+            'classe_row' => $row,
             'form' => $form,
             'id' => $id
         ]);
@@ -60,10 +60,10 @@ final class ClasseRowController extends AbstractController
     #[Route('/classe{id}/{id2}', name: 'classe_row_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $classeRow = $entityManager->getRepository(ClasseRow::class)->findOneBy(['id' => $id2]);
+        $row = $entityManager->getRepository(TableRow::class)->findOneBy(['id' => $id2]);
         
-        if ($this->isCsrfTokenValid('delete'.$classeRow->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($classeRow);
+        if ($this->isCsrfTokenValid('delete'.$row->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($row);
             $entityManager->flush();
         }
 

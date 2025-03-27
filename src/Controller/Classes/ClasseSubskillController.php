@@ -2,9 +2,9 @@
 
 namespace App\Controller\Classes;
 
-use App\Entity\Classes\ClasseSkill;
-use App\Entity\Classes\ClasseSubskill;
-use App\Form\Classes\ClasseSubskillType;
+use App\Entity\Construct\Skill;
+use App\Entity\Construct\Subskill;
+use App\Form\Construct\SubskillType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,21 +17,21 @@ final class ClasseSubskillController extends AbstractController
     #[Route('/classe{id}/skill{id2}/new', name: 'classe_subskill_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $skill = $entityManager->getRepository(ClasseSkill::class)->findOneBy(['id' => $id2]);
-        $classeSubskill = new ClasseSubskill();
-        $form = $this->createForm(ClasseSubskillType::class, $classeSubskill);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id2]);
+        $subskill = new Subskill();
+        $form = $this->createForm(SubskillType::class, $subskill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $classeSubskill->setSkill($skill);
-            $entityManager->persist($classeSubskill);
+            $subskill->setSkill($skill);
+            $entityManager->persist($subskill);
             $entityManager->flush();
 
             return $this->redirectToRoute('classe_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('classes/classe_subskill/new.html.twig', [
-            'classe_subskill' => $classeSubskill,
+            'classe_subskill' => $subskill,
             'form' => $form,
             'id' => $id
         ]);
@@ -40,8 +40,8 @@ final class ClasseSubskillController extends AbstractController
     #[Route('/classe{id}/{id2}/edit', name: 'classe_subskill_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $classeSubskill = $entityManager->getRepository(ClasseSubskill::class)->findOneBy(['id' => $id2]);
-        $form = $this->createForm(ClasseSubskillType::class, $classeSubskill);
+        $subskill = $entityManager->getRepository(Subskill::class)->findOneBy(['id' => $id2]);
+        $form = $this->createForm(SubskillType::class, $subskill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ final class ClasseSubskillController extends AbstractController
         }
 
         return $this->render('classes/classe_subskill/edit.html.twig', [
-            'classe_subskill' => $classeSubskill,
+            'classe_subskill' => $subskill,
             'form' => $form,
         ]);
     }
@@ -59,10 +59,10 @@ final class ClasseSubskillController extends AbstractController
     #[Route('/classe{id}/{id2}', name: 'classe_subskill_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $classeSubskill = $entityManager->getRepository(ClasseSubskill::class)->findOneBy(['id' => $id2]);
+        $subskill = $entityManager->getRepository(Subskill::class)->findOneBy(['id' => $id2]);
         
-        if ($this->isCsrfTokenValid('delete'.$classeSubskill->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($classeSubskill);
+        if ($this->isCsrfTokenValid('delete'.$subskill->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($subskill);
             $entityManager->flush();
         }
 

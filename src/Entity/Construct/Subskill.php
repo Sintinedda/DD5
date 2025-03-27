@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity\Classes;
+namespace App\Entity\Construct;
 
-use App\Repository\Classes\ClasseSubskillRepository;
+use App\Repository\Construct\SubskillRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ClasseSubskillRepository::class)]
-class ClasseSubskill
+#[ORM\Entity(repositoryClass: SubskillRepository::class)]
+class Subskill
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,8 +26,7 @@ class ClasseSubskill
     private ?string $d3 = null;
 
     #[ORM\ManyToOne(inversedBy: 'subskills')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?ClasseSkill $skill = null;
+    private ?Skill $skill = null;
 
     public function getId(): ?int
     {
@@ -82,12 +81,12 @@ class ClasseSubskill
         return $this;
     }
 
-    public function getSkill(): ?ClasseSkill
+    public function getSkill(): ?Skill
     {
         return $this->skill;
     }
 
-    public function setSkill(?ClasseSkill $skill): static
+    public function setSkill(?Skill $skill): static
     {
         $this->skill = $skill;
 

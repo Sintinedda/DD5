@@ -40,7 +40,7 @@ class TableRow
     #[ORM\Column(length: 1000)]
     private ?string $d8 = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tableRows')]
+    #[ORM\ManyToOne(inversedBy: 'rows')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Table $tableau = null;
 

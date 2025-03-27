@@ -3,10 +3,10 @@
 namespace App\Entity\Items;
 
 use App\Entity\Classes\Classe;
+use App\Entity\Construct\Liste;
+use App\Entity\Construct\Skill;
+use App\Entity\Construct\Table;
 use App\Entity\Items\ItemCategory;
-use App\Entity\Items\ItemListe;
-use App\Entity\Items\ItemSkill;
-use App\Entity\Items\ItemTable;
 use App\Repository\Items\ItemSubcategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,24 +49,6 @@ class ItemSubcategory
     private ?string $d5 = null;
 
     /**
-     * @var Collection<int, ItemSkill>
-     */
-    #[ORM\ManyToMany(targetEntity: ItemSkill::class, inversedBy: 'subcategories')]
-    private Collection $skills;
-
-    /**
-     * @var Collection<int, ItemTable>
-     */
-    #[ORM\ManyToMany(targetEntity: ItemTable::class, inversedBy: 'subcategories')]
-    private Collection $tables;
-
-    /**
-     * @var Collection<int, ItemListe>
-     */
-    #[ORM\ManyToMany(targetEntity: ItemListe::class, inversedBy: 'subcategories')]
-    private Collection $listes;
-
-    /**
      * @var Collection<int, Classe>
      */
     #[ORM\ManyToMany(targetEntity: Classe::class, mappedBy: 'armor2')]
@@ -84,14 +66,32 @@ class ItemSubcategory
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'subcategory')]
     private Collection $items;
 
+    /**
+     * @var Collection<int, Liste>
+     */
+    #[ORM\ManyToMany(targetEntity: Liste::class, mappedBy: 'item_subcategories')]
+    private Collection $listes;
+
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'item_subcategories')]
+    private Collection $skills;
+
+    /**
+     * @var Collection<int, Table>
+     */
+    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'item_subcategories')]
+    private Collection $tables;
+
     public function __construct()
     {
-        $this->skills = new ArrayCollection();
-        $this->tables = new ArrayCollection();
-        $this->listes = new ArrayCollection();
         $this->armorclasses = new ArrayCollection();
         $this->weaponclasses = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->listes = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->tables = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,78 +208,6 @@ class ItemSubcategory
     }
 
     /**
-     * @return Collection<int, ItemSkill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(ItemSkill $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(ItemSkill $skill): static
-    {
-        $this->skills->removeElement($skill);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ItemTable>
-     */
-    public function getTables(): Collection
-    {
-        return $this->tables;
-    }
-
-    public function addTable(ItemTable $table): static
-    {
-        if (!$this->tables->contains($table)) {
-            $this->tables->add($table);
-        }
-
-        return $this;
-    }
-
-    public function removeTable(ItemTable $table): static
-    {
-        $this->tables->removeElement($table);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ItemListe>
-     */
-    public function getListes(): Collection
-    {
-        return $this->listes;
-    }
-
-    public function addListe(ItemListe $liste): static
-    {
-        if (!$this->listes->contains($liste)) {
-            $this->listes->add($liste);
-        }
-
-        return $this;
-    }
-
-    public function removeListe(ItemListe $liste): static
-    {
-        $this->listes->removeElement($liste);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Classe>
      */
     public function getArmorclasses(): Collection
@@ -358,6 +286,87 @@ class ItemSubcategory
             if ($item->getSubcategory() === $this) {
                 $item->setSubcategory(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Liste>
+     */
+    public function getListes(): Collection
+    {
+        return $this->listes;
+    }
+
+    public function addListe(Liste $liste): static
+    {
+        if (!$this->listes->contains($liste)) {
+            $this->listes->add($liste);
+            $liste->addItemSubcategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListe(Liste $liste): static
+    {
+        if ($this->listes->removeElement($liste)) {
+            $liste->removeItemSubcategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->addItemSubcategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeItemSubcategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Table>
+     */
+    public function getTables(): Collection
+    {
+        return $this->tables;
+    }
+
+    public function addTable(Table $table): static
+    {
+        if (!$this->tables->contains($table)) {
+            $this->tables->add($table);
+            $table->addItemSubcategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTable(Table $table): static
+    {
+        if ($this->tables->removeElement($table)) {
+            $table->removeItemSubcategory($this);
         }
 
         return $this;

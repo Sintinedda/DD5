@@ -4,6 +4,8 @@ namespace App\Entity\Classes;
 
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
+use App\Entity\Construct\Skill;
+use App\Entity\Construct\Table;
 use App\Repository\Classes\SpecialtyItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -60,27 +62,27 @@ class SpecialtyItem
      * @var Collection<int, SourcePart>
      */
     #[ORM\ManyToMany(targetEntity: SourcePart::class, inversedBy: 'specialties')]
-    private Collection $soucre_part;
+    private Collection $source_part;
 
     /**
-     * @var Collection<int, SpecialtySkill>
+     * @var Collection<int, Table>
      */
-    #[ORM\ManyToMany(targetEntity: SpecialtySkill::class, inversedBy: 'specialties')]
-    private Collection $skills;
-
-    /**
-     * @var Collection<int, SpecialtyTable>
-     */
-    #[ORM\ManyToMany(targetEntity: SpecialtyTable::class, inversedBy: 'specialties')]
+    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'specialty_items')]
     private Collection $tables;
+
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'specialty_items')]
+    private Collection $skills;
 
     public function __construct()
     {
         $this->specialty = new ArrayCollection();
         $this->source = new ArrayCollection();
-        $this->soucre_part = new ArrayCollection();
-        $this->skills = new ArrayCollection();
+        $this->source_part = new ArrayCollection();
         $this->tables = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,71 +249,77 @@ class SpecialtyItem
     /**
      * @return Collection<int, SourcePart>
      */
-    public function getSoucrePart(): Collection
+    public function getSourcePart(): Collection
     {
-        return $this->soucre_part;
+        return $this->source_part;
     }
 
-    public function addSoucrePart(SourcePart $soucrePart): static
+    public function addSourcePart(SourcePart $sourcePart): static
     {
-        if (!$this->soucre_part->contains($soucrePart)) {
-            $this->soucre_part->add($soucrePart);
+        if (!$this->source_part->contains($sourcePart)) {
+            $this->source_part->add($sourcePart);
         }
 
         return $this;
     }
 
-    public function removeSoucrePart(SourcePart $soucrePart): static
+    public function removeSourcePart(SourcePart $sourcePart): static
     {
-        $this->soucre_part->removeElement($soucrePart);
+        $this->source_part->removeElement($sourcePart);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, SpecialtySkill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(SpecialtySkill $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(SpecialtySkill $skill): static
-    {
-        $this->skills->removeElement($skill);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, SpecialtyTable>
+     * @return Collection<int, Table>
      */
     public function getTables(): Collection
     {
         return $this->tables;
     }
 
-    public function addTable(SpecialtyTable $table): static
+    public function addTable(Table $table): static
     {
         if (!$this->tables->contains($table)) {
             $this->tables->add($table);
+            $table->addSpecialtyItem($this);
         }
 
         return $this;
     }
 
-    public function removeTable(SpecialtyTable $table): static
+    public function removeTable(Table $table): static
     {
-        $this->tables->removeElement($table);
+        if ($this->tables->removeElement($table)) {
+            $table->removeSpecialtyItem($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->addSpecialtyItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeSpecialtyItem($this);
+        }
 
         return $this;
     }

@@ -3,8 +3,8 @@
 namespace App\Controller\Classes;
 
 use App\Entity\Classes\SpecialtyItem;
-use App\Entity\Classes\SpecialtySkill;
-use App\Form\Classes\SpecialtySkillType;
+use App\Entity\Construct\Skill;
+use App\Form\Construct\SkillType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,20 +18,20 @@ final class SpecialtySkillController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
         $spe = $entityManager->getRepository(SpecialtyItem::class)->findOneBy(['id' => $id2]);
-        $specialtySkill = new SpecialtySkill();
-        $form = $this->createForm(SpecialtySkillType::class, $specialtySkill);
+        $skill = new Skill();
+        $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $specialtySkill->addSpecialty($spe);
-            $entityManager->persist($specialtySkill);
+            $skill->addSpecialtyItem($spe);
+            $entityManager->persist($skill);
             $entityManager->flush();
 
             return $this->redirectToRoute('specialties_show', ['id' => $id, 'id2' => $id2], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('classes/specialty_skill/new.html.twig', [
-            'specialty_skill' => $specialtySkill,
+            'specialty_skill' => $skill,
             'form' => $form,
             'id' => $id,
             'id2' => $id2
@@ -42,19 +42,19 @@ final class SpecialtySkillController extends AbstractController
     public function edit(Request $request, EntityManagerInterface $entityManager, int $id, int $id2, int $id3): Response
     {
         $spe = $entityManager->getRepository(SpecialtyItem::class)->findOneBy(['id' => $id2]);
-        $specialtySkill = $entityManager->getRepository(SpecialtySkill::class)->findOneBy(['id' => $id3]);
-        $form = $this->createForm(SpecialtySkillType::class, $specialtySkill);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id3]);
+        $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $specialtySkill->addSpecialty($spe);
+            $skill->addSpecialtyItem($spe);
             $entityManager->flush();
 
             return $this->redirectToRoute('specialties_show', ['id' => $id, 'id2' => $id2], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('classes/specialty_skill/edit.html.twig', [
-            'specialty_skill' => $specialtySkill,
+            'specialty_skill' => $skill,
             'form' => $form,
             'id' => $id,
             'id2' => $id2
@@ -65,12 +65,12 @@ final class SpecialtySkillController extends AbstractController
     public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2, int $id3): Response
     {
         $spe = $entityManager->getRepository(SpecialtyItem::class)->findOneBy(['id' => $id2]);
-        $specialtySkill = $entityManager->getRepository(SpecialtySkill::class)->findOneBy(['id' => $id3]);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id3]);
 
-        if ($this->isCsrfTokenValid('delete'.$specialtySkill->getId(), $request->getPayload()->getString('_token'))) {
-            $specialtySkill->removeSpecialty($spe);
-            if ($specialtySkill->getSpecialties()->count() == 0) {
-                $entityManager->remove($specialtySkill);    
+        if ($this->isCsrfTokenValid('delete'.$skill->getId(), $request->getPayload()->getString('_token'))) {
+            $skill->removeSpecialtyItem($spe);
+            if ($skill->getSpecialtyItems()->count() == 0) {
+                $entityManager->remove($skill);    
             }
             $entityManager->flush();
         }

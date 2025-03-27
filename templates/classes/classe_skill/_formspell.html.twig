@@ -1,7 +1,10 @@
 {{ form_start(form) }}
     {{ form_errors(form) }}
     <div>
-        {{ form_row(form.number) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.level) }}
+        {{ form_row(form.show_skill) }}
+        {{ form_row(form.optional) }}
     </div>
     <div>
         {{ form_row(form.d1) }}
@@ -27,5 +30,12 @@
     <div>
         {{ form_row(form.d8) }}
     </div>
+    <div>
+        {{ form_row(form.d9) }}
+    </div>
+    <div>
+        {{ form_row(form.d10) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    {{ form_widget(formView._token) }}
+{{ form_end(form, {render_rest: false}) }}

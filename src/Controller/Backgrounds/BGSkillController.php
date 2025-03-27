@@ -3,8 +3,8 @@
 namespace App\Controller\Backgrounds;
 
 use App\Entity\Backgrounds\BG;
-use App\Entity\Backgrounds\BGSkill;
-use App\Form\Backgrounds\BGSkillType;
+use App\Entity\Construct\Skill;
+use App\Form\Construct\SkillType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,20 +18,20 @@ final class BGSkillController extends AbstractController
     public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
-        $bGSkill = new BGSkill();
-        $form = $this->createForm(BGSkillType::class, $bGSkill);
+        $skill = new Skill();
+        $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bGSkill->addBG($bg);
-            $entityManager->persist($bGSkill);
+            $skill->addBg($bg);
+            $entityManager->persist($skill);
             $entityManager->flush();
 
             return $this->redirectToRoute('background', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backgrounds/bg_skill/new.html.twig', [
-            'b_g_skill' => $bGSkill,
+            'b_g_skill' => $skill,
             'form' => $form,
         ]);
     }
@@ -40,19 +40,19 @@ final class BGSkillController extends AbstractController
     public function edit(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
         $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
-        $bGSkill = $entityManager->getRepository(BGSkill::class)->findOneBy(['id' => $id2]);
-        $form = $this->createForm(BGSkillType::class, $bGSkill);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id2]);
+        $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bGSkill->addBG($bg);
+            $skill->addBg($bg);
             $entityManager->flush();
 
             return $this->redirectToRoute('background', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backgrounds/bg_skill/edit.html.twig', [
-            'b_g_skill' => $bGSkill,
+            'b_g_skill' => $skill,
             'form' => $form,
         ]);
     }
@@ -61,12 +61,12 @@ final class BGSkillController extends AbstractController
     public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
         $bg = $entityManager->getRepository(BG::class)->findOneBy(['id' => $id]);
-        $bGSkill = $entityManager->getRepository(BGSkill::class)->findOneBy(['id' => $id2]);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id2]);
 
-        if ($this->isCsrfTokenValid('delete'.$bGSkill->getId(), $request->getPayload()->getString('_token'))) {
-            $bGSkill->removeBG($bg);
-            if ($bGSkill->getBGs()->count() == 0) {
-                $entityManager->remove($bGSkill);
+        if ($this->isCsrfTokenValid('delete'.$skill->getId(), $request->getPayload()->getString('_token'))) {
+            $skill->removeBg($bg);
+            if ($skill->getBgs()->count() == 0) {
+                $entityManager->remove($skill);
             }
             $entityManager->flush();
         }

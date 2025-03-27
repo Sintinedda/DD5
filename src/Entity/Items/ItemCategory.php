@@ -5,6 +5,7 @@ namespace App\Entity\Items;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
 use App\Entity\Classes\Classe;
+use App\Entity\Construct\Skill;
 use App\Entity\Items\ItemSubcategory;
 use App\Repository\Items\ItemCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -59,12 +60,6 @@ class ItemCategory
     private Collection $source_part;
 
     /**
-     * @var Collection<int, ItemSkill>
-     */
-    #[ORM\ManyToMany(targetEntity: ItemSkill::class, inversedBy: 'itemCategories')]
-    private Collection $skills;
-
-    /**
      * @var Collection<int, ItemSubcategory>
      */
     #[ORM\OneToMany(targetEntity: ItemSubcategory::class, mappedBy: 'category')]
@@ -76,14 +71,20 @@ class ItemCategory
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'category')]
     private Collection $items;
 
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'item_categories')]
+    private Collection $skills;
+
     public function __construct()
     {
         $this->toolclasses = new ArrayCollection();
         $this->source = new ArrayCollection();
         $this->source_part = new ArrayCollection();
-        $this->skills = new ArrayCollection();
         $this->subcategories = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,30 +255,6 @@ class ItemCategory
     }
 
     /**
-     * @return Collection<int, ItemSkill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(ItemSkill $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(ItemSkill $skill): static
-    {
-        $this->skills->removeElement($skill);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, ItemSubcategory>
      */
     public function getSubcategories(): Collection
@@ -332,6 +309,33 @@ class ItemCategory
             if ($item->getCategory() === $this) {
                 $item->setCategory(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->addItemCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeItemCategory($this);
         }
 
         return $this;

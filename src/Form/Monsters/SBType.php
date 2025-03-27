@@ -8,7 +8,7 @@ use App\Entity\Assets\Sense;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
 use App\Entity\Assets\Speed;
-use App\Entity\Classes\SpecialtySkill;
+use App\Entity\Construct\Skill;
 use App\Entity\Monsters\SB;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -154,8 +154,8 @@ class SBType extends AbstractType
                 'choice_label' => 'abbreviation',
                 'required' => false
             ])
-            ->add('specialties', EntityType::class, [
-                'class' => SpecialtySkill::class,
+            ->add('skill', EntityType::class, [
+                'class' => Skill::class,
                 'multiple' => true,
                 'choice_label' => 'name',
                 'required' => false,
