@@ -1,4 +1,65 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+    <div>
+        {{ form_row(form.name_fr) }}
+        {{ form_row(form.name_eng) }}
+        {{ form_row(form.slug) }}
+        {{ form_row(form.level) }}
+        {{ form_row(form.school) }}
+    </div>
+    <div>
+        {{ form_row(form.ritual) }}
+        {{ form_row(form.casting) }}
+        {{ form_row(form.range1) }}
+        {{ form_row(form.range2) }}
+    </div>
+    <div>
+        {{ form_row(form.components) }}
+        {{ form_row(form.materials) }}
+        {{ form_row(form.duration) }}
+        {{ form_row(form.concentration) }}
+    </div>
+    <div>
+        {{ form_row(form.short) }}
+    </div>
+    <div>
+        {{ form_row(form.d1) }}
+    </div>
+    <div>
+        {{ form_row(form.d2) }}
+    </div>
+    <div>
+        {{ form_row(form.d3) }}
+    </div>
+    <div>
+        {{ form_row(form.d4) }}
+    </div>
+    <div>
+        {{ form_row(form.d5) }}
+    </div>
+    <div>
+        {{ form_row(form.d6) }}
+    </div>
+    <div>
+        {{ form_row(form.d7) }}
+    </div>
+    <div>
+        {{ form_row(form.d8) }}
+    </div>
+    <div>
+        {{ form_row(form.d9) }}
+    </div>
+    <div>
+        {{ form_row(form.d10) }}
+    </div>
+    <div>
+        {{ form_row(form.higher) }}
+    </div>
+    <div>
+        {{ form_row(form.source) }}
+        {{ form_row(form.source_part) }}
+        {{ form_row(form.classes) }}
+        {{ form_row(form.classes2) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

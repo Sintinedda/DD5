@@ -17,21 +17,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for competence in competences %}
-                    <tr>
-                        <td>{{ competence.id }}</td>
-                        <td>{{ competence.name }}</td>
-                        <td>{{ competence.category }}</td>
-                        <td>
-                            <a href="{{ path('competence_edit', {'id': competence.id}) }}">edit</a>
-                            {{ include('assets/competence/_delete_form.html.twig') }}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="3">no records found</td>
-                    </tr>
-                {% endfor %}
+                    {% for competence in competences %}
+                        <tr>
+                            <td>{{ competence.id }}</td>
+                            <td><a href="{{ path('competence_edit', {'id': competence.id}) }}">{{ competence.name }}</a></td>
+                            <td>{{ competence.category }}</td>
+                            <td>{{ include('assets/competence/_delete_form.html.twig') }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

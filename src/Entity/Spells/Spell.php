@@ -2,9 +2,12 @@
 
 namespace App\Entity\Spells;
 
+use App\Entity\Assets\School;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
 use App\Entity\Classes\Classe;
+use App\Entity\Construct\Liste;
+use App\Entity\Construct\Table;
 use App\Repository\Spells\SpellRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,7 +35,7 @@ class Spell
 
     #[ORM\ManyToOne(inversedBy: 'spells')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?SpellSchool $school = null;
+    private ?School $school = null;
 
     #[ORM\Column]
     private ?bool $ritual = null;
@@ -113,16 +116,24 @@ class Spell
     #[ORM\ManyToOne(inversedBy: 'spells')]
     private ?SourcePart $source_part = null;
 
-    #[ORM\ManyToOne(inversedBy: 'spells')]
-    private ?SpellListe $lists = null;
+    /**
+     * @var Collection<int, Liste>
+     */
+    #[ORM\OneToMany(targetEntity: Liste::class, mappedBy: 'spell')]
+    private Collection $listes;
 
-    #[ORM\ManyToOne(inversedBy: 'spells')]
-    private ?SpellTable $tables = null;
+    /**
+     * @var Collection<int, Table>
+     */
+    #[ORM\OneToMany(targetEntity: Table::class, mappedBy: 'spell')]
+    private Collection $tables;
 
     public function __construct()
     {
         $this->classes = new ArrayCollection();
         $this->classes2 = new ArrayCollection();
+        $this->listes = new ArrayCollection();
+        $this->tables = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,12 +189,12 @@ class Spell
         return $this;
     }
 
-    public function getSchool(): ?SpellSchool
+    public function getSchool(): ?School
     {
         return $this->school;
     }
 
-    public function setSchool(?SpellSchool $school): static
+    public function setSchool(?School $school): static
     {
         $this->school = $school;
 
@@ -502,26 +513,62 @@ class Spell
         return $this;
     }
 
-    public function getLists(): ?SpellListe
+    /**
+     * @return Collection<int, Liste>
+     */
+    public function getListes(): Collection
     {
-        return $this->lists;
+        return $this->listes;
     }
 
-    public function setLists(?SpellListe $lists): static
+    public function addListe(Liste $liste): static
     {
-        $this->lists = $lists;
+        if (!$this->listes->contains($liste)) {
+            $this->listes->add($liste);
+            $liste->setSpell($this);
+        }
 
         return $this;
     }
 
-    public function getTables(): ?SpellTable
+    public function removeListe(Liste $liste): static
+    {
+        if ($this->listes->removeElement($liste)) {
+            // set the owning side to null (unless already changed)
+            if ($liste->getSpell() === $this) {
+                $liste->setSpell(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Table>
+     */
+    public function getTables(): Collection
     {
         return $this->tables;
     }
 
-    public function setTables(?SpellTable $tables): static
+    public function addTable(Table $table): static
     {
-        $this->tables = $tables;
+        if (!$this->tables->contains($table)) {
+            $this->tables->add($table);
+            $table->setSpell($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTable(Table $table): static
+    {
+        if ($this->tables->removeElement($table)) {
+            // set the owning side to null (unless already changed)
+            if ($table->getSpell() === $this) {
+                $table->setSpell(null);
+            }
+        }
 
         return $this;
     }

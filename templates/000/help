@@ -1,12 +1,13 @@
     {{ form_errors(form) }}
-
+    <div>
+        {{ form_row(form.) }}
+    </div>
+    
     {{ form_widget(formView._token) }}
 {{ form_end(form, {render_rest: false}) }}
     
     
-    <div>
-        {{ form_row(form.) }}
-    </div>
+    
 
     <a href="{{ path('', {'id': id, 'id2': id, 'id': id}) }}"></a>
 

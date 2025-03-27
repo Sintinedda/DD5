@@ -1,4 +1,38 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+    <div>
+        {{ form_row(form.number) }}
+        {{ form_row(form.place) }}
+    </div>
+    <div>
+        {{ form_row(form.l1) }}
+    </div>
+    <div>
+        {{ form_row(form.l2) }}
+    </div>
+    <div>
+        {{ form_row(form.l3) }}
+    </div>
+    <div>
+        {{ form_row(form.l4) }}
+    </div>
+    <div>
+        {{ form_row(form.l5) }}
+    </div>
+    <div>
+        {{ form_row(form.l6) }}
+    </div>
+    <div>
+        {{ form_row(form.l7) }}
+    </div>
+    <div>
+        {{ form_row(form.l8) }}
+    </div>
+    <div>
+        {{ form_row(form.l9) }}
+    </div>
+    <div>
+        {{ form_row(form.l10) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
