@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Repository\Classes;
+namespace App\Repository\Construct;
 
-use App\Entity\Classes\ClasseSubskill;
+use App\Entity\Construct\Subskill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ClasseSubskill>
+ * @extends ServiceEntityRepository<Subskill>
  */
-class ClasseSubskillRepository extends ServiceEntityRepository
+class SubskillRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ClasseSubskill::class);
+        parent::__construct($registry, Subskill::class);
     }
 
 //    /**

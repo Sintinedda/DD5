@@ -4,9 +4,8 @@ namespace App\Controller\Classes;
 
 use App\Entity\Classes\Classe;
 use App\Entity\Classes\ClasseLevel;
-use App\Entity\Classes\ClasseSkill;
-use App\Form\Classes\ClasseSkillType;
-use App\Form\Classes\ClasseSpellcastingSkillType;
+use App\Entity\Construct\Skill;
+use App\Form\Construct\SkillType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,24 +19,24 @@ final class ClasseSkillController extends AbstractController
     public function newLevels(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
         $classe = $entityManager->getRepository(Classe::class)->findOneBy(['id' => $id]);
-        $classeSkill = new ClasseSkill();
-        $form = $this->createForm(ClasseSkillType::class, $classeSkill);
+        $skill = new Skill();
+        $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $lvls = $form->get('lvls')->getData();
             foreach ($lvls as $lvl) {
                 $level = $entityManager->getRepository(ClasseLevel::class)->findOneBy(['classe' => $classe, 'level' => $lvl]);
-                $classeSkill->addClasseLevel($level);
+                $skill->addClasseLevel($level);
             }
-            $entityManager->persist($classeSkill);
+            $entityManager->persist($skill);
             $entityManager->flush();
 
             return $this->redirectToRoute('classe_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('classes/classe_skill/new.html.twig', [
-            'classe_skill' => $classeSkill,
+            'classe_skill' => $skill,
             'form' => $form,
             'id' => $id
         ]);
@@ -48,22 +47,22 @@ final class ClasseSkillController extends AbstractController
     {
         $spellcasting = $entityManager->getRepository(Classe::class)->findOneBy(['id' => $id]);
         $classe = $spellcasting->getClasse();
-        $classeSkill = new ClasseSkill();
-        $form = $this->createForm(ClasseSpellcastingSkillType::class, $classeSkill);
+        $skill = new Skill();
+        $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $classeSkill->setSpellcasting($spellcasting);
+            $skill->setSpellcasting($spellcasting);
             $level = $entityManager->getRepository(ClasseLevel::class)->findOneBy(['classe' => $classe, 'level' => 1]);
-            $classeSkill->addClasseLevel($level);
-            $entityManager->persist($classeSkill);
+            $skill->addClasseLevel($level);
+            $entityManager->persist($skill);
             $entityManager->flush();
 
             return $this->redirectToRoute('classe_show', ['id' => $classe->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('classes/classe_skill/new.html.twig', [
-            'classe_skill' => $classeSkill,
+        return $this->render('classes/classe_skill/newspell.html.twig', [
+            'classe_skill' => $skill,
             'form' => $form,
             'id' => $classe->getId()
         ]);
@@ -73,20 +72,20 @@ final class ClasseSkillController extends AbstractController
     public function editLevels(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
         $classe = $entityManager->getRepository(Classe::class)->findOneBy(['id' => $id]); 
-        $classeSkill = $entityManager->getRepository(ClasseSkill::class)->findOneBy(['id' => $id2]); 
-        $form = $this->createForm(ClasseSkillType::class, $classeSkill);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id2]); 
+        $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($classeSkill->getClasseLevels->count() != 0) {
+            if ($skill->getClasseLevels->count() != 0) {
                 $dels = $entityManager->getRepository(ClasseLevel::class)->findBy(['classe' => $classe]);
                 foreach ($dels as $del) {
-                    $classeSkill->removeClasseLevel($del);
+                    $skill->removeClasseLevel($del);
                 }
                 $lvls = $form->get('lvls')->getData();
                 foreach ($lvls as $lvl) {
                     $level = $entityManager->getRepository(ClasseLevel::class)->findOneBy(['classe' => $classe, 'level' => $lvl]);
-                    $classeSkill->addClasseLevel($level);
+                    $skill->addClasseLevel($level);
                 }
             }
             $entityManager->flush();
@@ -94,30 +93,40 @@ final class ClasseSkillController extends AbstractController
             return $this->redirectToRoute('classe_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('classes/classe_skill/edit.html.twig', [
-            'classe_skill' => $classeSkill,
-            'form' => $form,
-            'id' => $id
-        ]);
+        if ($skill->getSpellcasting()->count() == 1) {
+            
+            return $this->render('classes/classe_skill/editspell.html.twig', [
+                'classe_skill' => $skill,
+                'form' => $form,
+                'id' => $id
+            ]);
+        } else {
+
+            return $this->render('classes/classe_skill/edit.html.twig', [
+                'classe_skill' => $skill,
+                'form' => $form,
+                'id' => $id
+            ]);
+        }
     }
 
     #[Route('/classe{id}/{id2}', name: 'classe_skill_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
         $classe = $entityManager->getRepository(Classe::class)->findOneBy(['id' => $id]); 
-        $classeSkill = $entityManager->getRepository(ClasseSkill::class)->findOneBy(['id' => $id2]);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id2]);
 
-        if ($this->isCsrfTokenValid('delete'.$classeSkill->getId(), $request->getPayload()->getString('_token'))) {
-            if ($classeSkill->getClasseLevels()->count() != 0) {
+        if ($this->isCsrfTokenValid('delete'.$skill->getId(), $request->getPayload()->getString('_token'))) {
+            if ($skill->getClasseLevels()->count() != 0) {
                 $dels = $entityManager->getRepository(ClasseLevel::class)->findBy(['classe' => $classe]);
                 foreach ($dels as $del) {
-                    $classeSkill->removeClasseLevel($del);
+                    $skill->removeClasseLevel($del);
                 }
-                if ($classeSkill->getClasseLevels()->count() == 0) {
-                    $entityManager->remove($classeSkill);
+                if ($skill->getClasseLevels()->count() == 0) {
+                    $entityManager->remove($skill);
                 }
             } else {
-                $entityManager->remove($classeSkill);
+                $entityManager->remove($skill);
             }
             $entityManager->flush();
         }

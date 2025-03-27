@@ -2,6 +2,7 @@
 
 namespace App\Entity\Classes;
 
+use App\Entity\Construct\Skill;
 use App\Repository\Classes\ClasseSpellcastingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,14 +19,14 @@ class ClasseSpellcasting
     #[ORM\Column(length: 1000)]
     private ?string $d = null;
 
-    /**
-     * @var Collection<int, ClasseSkill>
-     */
-    #[ORM\OneToMany(targetEntity: ClasseSkill::class, mappedBy: 'spellcasting')]
-    private Collection $skills;
-
     #[ORM\OneToOne(mappedBy: 'spellcasting', cascade: ['persist'])]
     private ?Classe $classe = null;
+
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'spellcasting')]
+    private Collection $skills;
 
     public function __construct()
     {
@@ -49,36 +50,6 @@ class ClasseSpellcasting
         return $this;
     }
 
-    /**
-     * @return Collection<int, ClasseSkill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(ClasseSkill $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-            $skill->setSpellcasting($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(ClasseSkill $skill): static
-    {
-        if ($this->skills->removeElement($skill)) {
-            // set the owning side to null (unless already changed)
-            if ($skill->getSpellcasting() === $this) {
-                $skill->setSpellcasting(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getClasse(): ?Classe
     {
         return $this->classe;
@@ -97,6 +68,36 @@ class ClasseSpellcasting
         }
 
         $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->setSpellcasting($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            // set the owning side to null (unless already changed)
+            if ($skill->getSpellcasting() === $this) {
+                $skill->setSpellcasting(null);
+            }
+        }
 
         return $this;
     }

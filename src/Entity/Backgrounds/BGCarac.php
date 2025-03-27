@@ -2,6 +2,7 @@
 
 namespace App\Entity\Backgrounds;
 
+use App\Entity\Construct\Table;
 use App\Repository\Backgrounds\BGCaracRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,9 +30,9 @@ class BGCarac
     private ?string $d3 = null;
 
     /**
-     * @var Collection<int, BGTable>
+     * @var Collection<int, Table>
      */
-    #[ORM\OneToMany(targetEntity: BGTable::class, mappedBy: 'bGCarac', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Table::class, mappedBy: 'bg_carac')]
     private Collection $tables;
 
     public function __construct()
@@ -93,29 +94,29 @@ class BGCarac
     }
 
     /**
-     * @return Collection<int, BGTable>
+     * @return Collection<int, Table>
      */
     public function getTables(): Collection
     {
         return $this->tables;
     }
 
-    public function addTable(BGTable $table): static
+    public function addTable(Table $table): static
     {
         if (!$this->tables->contains($table)) {
             $this->tables->add($table);
-            $table->setBGCarac($this);
+            $table->setBgCarac($this);
         }
 
         return $this;
     }
 
-    public function removeTable(BGTable $table): static
+    public function removeTable(Table $table): static
     {
         if ($this->tables->removeElement($table)) {
             // set the owning side to null (unless already changed)
-            if ($table->getBGCarac() === $this) {
-                $table->setBGCarac(null);
+            if ($table->getBgCarac() === $this) {
+                $table->setBgCarac(null);
             }
         }
 

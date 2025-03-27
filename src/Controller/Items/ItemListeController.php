@@ -2,10 +2,10 @@
 
 namespace App\Controller\Items;
 
-use App\Entity\Items\ItemListe;
-use App\Entity\Items\ItemSkill;
+use App\Entity\Construct\Liste;
+use App\Entity\Construct\Skill;
 use App\Entity\Items\ItemSubcategory;
-use App\Form\Items\ItemListeType;
+use App\Form\Construct\ListeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,21 +18,21 @@ final class ItemListeController extends AbstractController
     #[Route('/new/cat={id}/skill={id2}', name: 'item_liste_skill_cat_new', methods: ['GET', 'POST'])]
     public function newSkillCategory(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $skill =$entityManager->getRepository(ItemSkill::class)->findOneBy(['id' => $id2]);
-        $itemListe = new ItemListe();
-        $form = $this->createForm(ItemListeType::class, $itemListe);
+        $skill =$entityManager->getRepository(Skill::class)->findOneBy(['id' => $id2]);
+        $liste = new Liste();
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $itemListe->setSkill($skill);
-            $entityManager->persist($itemListe);
+            $liste->setSkill($skill);
+            $entityManager->persist($liste);
             $entityManager->flush();
 
             return $this->redirectToRoute('items_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_liste/new/cat.html.twig', [
-            'item_liste' => $itemListe,
+            'item_liste' => $liste,
             'form' => $form,
             'id' => $id
         ]);
@@ -41,21 +41,21 @@ final class ItemListeController extends AbstractController
     #[Route('/new/sub={id}/skill={id2}', name: 'item_liste_skill_sub_new', methods: ['GET', 'POST'])]
     public function newSkillSubcategory(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $skill =$entityManager->getRepository(ItemSkill::class)->findOneBy(['id' => $id2]);
-        $itemListe = new ItemListe();
-        $form = $this->createForm(ItemListeType::class, $itemListe);
+        $skill =$entityManager->getRepository(Skill::class)->findOneBy(['id' => $id2]);
+        $liste = new Liste();
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $itemListe->setSkill($skill);
-            $entityManager->persist($itemListe);
+            $liste->setSkill($skill);
+            $entityManager->persist($liste);
             $entityManager->flush();
 
             return $this->redirectToRoute('item_sub_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_liste/new/sub.html.twig', [
-            'item_liste' => $itemListe,
+            'item_liste' => $liste,
             'form' => $form,
             'id' => $id
         ]);
@@ -65,29 +65,29 @@ final class ItemListeController extends AbstractController
     public function newSubcategory(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
         $sub =$entityManager->getRepository(ItemSubcategory::class)->findOneBy(['id' => $id]);
-        $itemListe = new ItemListe();
-        $form = $this->createForm(ItemListeType::class, $itemListe);
+        $liste = new Liste();
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $itemListe->addSubcategory($sub);
-            $entityManager->persist($itemListe);
+            $liste->addItemSubcategory($sub);
+            $entityManager->persist($liste);
             $entityManager->flush();
 
             return $this->redirectToRoute('item_sub_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_liste/new/sub.html.twig', [
-            'item_liste' => $itemListe,
+            'item_liste' => $liste,
             'form' => $form,
             'id' => $id
         ]);
     }
 
     #[Route('/{id}/edit/cat={id2}/skill', name: 'item_liste_skill_cat_edit', methods: ['GET', 'POST'])]
-    public function editSkillCategory(Request $request, ItemListe $itemListe, EntityManagerInterface $entityManager, int $id2): Response
+    public function editSkillCategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
-        $form = $this->createForm(ItemListeType::class, $itemListe);
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,16 +97,16 @@ final class ItemListeController extends AbstractController
         }
 
         return $this->render('items/item_liste/edit/cat.html.twig', [
-            'item_liste' => $itemListe,
+            'item_liste' => $liste,
             'form' => $form,
             'id' => $id2
         ]);
     }
 
     #[Route('/{id}/edit/sub={id2}/skill', name: 'item_liste_skill_sub_edit', methods: ['GET', 'POST'])]
-    public function editSkillSubcategory(Request $request, ItemListe $itemListe, EntityManagerInterface $entityManager, int $id2): Response
+    public function editSkillSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
-        $form = $this->createForm(ItemListeType::class, $itemListe);
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -116,38 +116,38 @@ final class ItemListeController extends AbstractController
         }
 
         return $this->render('items/item_liste/edit/sub.html.twig', [
-            'item_liste' => $itemListe,
+            'item_liste' => $liste,
             'form' => $form,
             'id' => $id2
         ]);
     }
 
     #[Route('/{id}/edit/sub={id2}', name: 'item_liste_sub_edit', methods: ['GET', 'POST'])]
-    public function editSubcategory(Request $request, ItemListe $itemListe, EntityManagerInterface $entityManager, int $id2): Response
+    public function editSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
         $sub = $entityManager->getRepository(ItemSubcategory::class)->findOneBy(['id' => $id2]);
-        $form = $this->createForm(ItemListeType::class, $itemListe);
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $itemListe->addSubcategory($sub);
+            $liste->addItemSubcategory($sub);
             $entityManager->flush();
 
             return $this->redirectToRoute('item_sub_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_liste/edit/sub.html.twig', [
-            'item_liste' => $itemListe,
+            'item_liste' => $liste,
             'form' => $form,
             'id' => $id2
         ]);
     }
 
     #[Route('/{id}/cat={id2}/skill', name: 'item_liste_skill_cat_delete', methods: ['POST'])]
-    public function deleteSkillCategory(Request $request, ItemListe $itemListe, EntityManagerInterface $entityManager, int $id2): Response
+    public function deleteSkillCategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$itemListe->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($itemListe);
+        if ($this->isCsrfTokenValid('delete'.$liste->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($liste);
             $entityManager->flush();
         }
 
@@ -155,10 +155,10 @@ final class ItemListeController extends AbstractController
     }
 
     #[Route('/{id}/sub={id2}/skill', name: 'item_liste_skill_sub_delete', methods: ['POST'])]
-    public function deleteSkillSubcategory(Request $request, ItemListe $itemListe, EntityManagerInterface $entityManager, int $id2): Response
+    public function deleteSkillSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$itemListe->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($itemListe);
+        if ($this->isCsrfTokenValid('delete'.$liste->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($liste);
             $entityManager->flush();
         }
 
@@ -166,14 +166,14 @@ final class ItemListeController extends AbstractController
     }
 
     #[Route('/{id}/sub={id2}', name: 'item_liste_sub_delete', methods: ['POST'])]
-    public function deleteSubcategory(Request $request, ItemListe $itemListe, EntityManagerInterface $entityManager, int $id2): Response
+    public function deleteSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
         $sub = $entityManager->getRepository(ItemSubcategory::class)->findOneBy([ 'id' => $id2]);
 
-        if ($this->isCsrfTokenValid('delete'.$itemListe->getId(), $request->getPayload()->getString('_token'))) {
-            $itemListe->removeSubcategory($sub);
-            if ($itemListe->getSubcategories()->count() == 0) {
-                $entityManager->remove($itemListe);
+        if ($this->isCsrfTokenValid('delete'.$liste->getId(), $request->getPayload()->getString('_token'))) {
+            $liste->removeItemSubcategory($sub);
+            if ($liste->getItemSubcategories()->count() == 0) {
+                $entityManager->remove($liste);
             }
             $entityManager->flush();
         }

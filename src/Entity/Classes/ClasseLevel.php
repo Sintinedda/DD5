@@ -2,6 +2,7 @@
 
 namespace App\Entity\Classes;
 
+use App\Entity\Construct\Skill;
 use App\Repository\Classes\ClasseLevelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -95,9 +96,9 @@ class ClasseLevel
     private ?int $invocation_know = null;
 
     /**
-     * @var Collection<int, ClasseSkill>
+     * @var Collection<int, Skill>
      */
-    #[ORM\ManyToMany(targetEntity: ClasseSkill::class, inversedBy: 'classeLevels')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'classe_levels')]
     private Collection $skills;
 
     public function __construct()
@@ -423,25 +424,28 @@ class ClasseLevel
     }
 
     /**
-     * @return Collection<int, ClasseSkill>
+     * @return Collection<int, Skill>
      */
     public function getSkills(): Collection
     {
         return $this->skills;
     }
 
-    public function addSkill(ClasseSkill $skill): static
+    public function addSkill(Skill $skill): static
     {
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
+            $skill->addClasseLevel($this);
         }
 
         return $this;
     }
 
-    public function removeSkill(ClasseSkill $skill): static
+    public function removeSkill(Skill $skill): static
     {
-        $this->skills->removeElement($skill);
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeClasseLevel($this);
+        }
 
         return $this;
     }

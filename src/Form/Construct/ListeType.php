@@ -3,9 +3,9 @@
 namespace App\Form\Construct;
 
 use App\Entity\Construct\Liste;
-use App\Entity\Construct\Skill;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,21 +14,37 @@ class ListeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number')
-            ->add('place')
-            ->add('l1')
-            ->add('l2')
-            ->add('l3')
-            ->add('l4')
-            ->add('l5')
-            ->add('l6')
-            ->add('l7')
-            ->add('l8')
-            ->add('l9')
-            ->add('l10')
-            ->add('skill', EntityType::class, [
-                'class' => Skill::class,
-                'choice_label' => 'id',
+            ->add('number', IntegerType::class)
+            ->add('place', IntegerType::class)
+            ->add('l1', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l2', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l3', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l4', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l5', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l6', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l7', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l8', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l9', TextareaType::class, [
+                'required' => false
+            ])
+            ->add('l10', TextareaType::class, [
+                'required' => false
             ])
         ;
     }

@@ -9,6 +9,7 @@ use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
 use App\Entity\Assets\Speed;
 use App\Entity\Classes\SpecialtySkill;
+use App\Entity\Construct\Skill;
 use App\Entity\Monsters\SBSkill;
 use App\Repository\Monsters\SBRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -135,9 +136,6 @@ class SB
     #[ORM\ManyToOne(inversedBy: 'sBs')]
     private ?SourcePart $source_part = null;
 
-    #[ORM\OneToOne(inversedBy: 'sB', cascade: ['persist'])]
-    private ?SpecialtySkill $specialty = null;
-
     /**
      * @var Collection<int, SBSkill>
      */
@@ -158,6 +156,9 @@ class SB
      */
     #[ORM\ManyToMany(targetEntity: Speed::class, inversedBy: 'sBs')]
     private Collection $speeds;
+
+    #[ORM\OneToOne(mappedBy: 'monster', cascade: ['persist'])]
+    private ?Skill $skill = null;
 
     public function __construct()
     {
@@ -616,18 +617,6 @@ class SB
         return $this;
     }
 
-    public function getSpecialty(): ?SpecialtySkill
-    {
-        return $this->specialty;
-    }
-
-    public function setSpecialty(?SpecialtySkill $specialty): static
-    {
-        $this->specialty = $specialty;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, SBSkill>
      */
@@ -717,6 +706,28 @@ class SB
     public function removeSpeed(Speed $speed): static
     {
         $this->speeds->removeElement($speed);
+
+        return $this;
+    }
+
+    public function getSkill(): ?Skill
+    {
+        return $this->skill;
+    }
+
+    public function setSkill(?Skill $skill): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($skill === null && $this->skill !== null) {
+            $this->skill->setMonster(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($skill !== null && $skill->getMonster() !== $this) {
+            $skill->setMonster($this);
+        }
+
+        $this->skill = $skill;
 
         return $this;
     }

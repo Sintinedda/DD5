@@ -1,3 +1,9 @@
+    {{ form_errors(form) }}
+
+    {{ form_widget(formView._token) }}
+{{ form_end(form, {render_rest: false}) }}
+    
+    
     <div>
         {{ form_row(form.) }}
     </div>

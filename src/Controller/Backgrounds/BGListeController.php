@@ -2,9 +2,9 @@
 
 namespace App\Controller\Backgrounds;
 
-use App\Entity\Backgrounds\BGListe;
-use App\Entity\Backgrounds\BGSkill;
-use App\Form\Backgrounds\BGListeType;
+use App\Entity\Construct\Liste;
+use App\Entity\Construct\Skill;
+use App\Form\Construct\ListeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,29 +17,29 @@ final class BGListeController extends AbstractController
     #[Route('/bg{id}/new', name: 'bgliste_new', methods: ['GET', 'POST'])]
     public function new(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $skill = $entityManager->getRepository(BGSkill::class)->findOneBy(['id' => $id]);
-        $bGListe = new BGListe();
-        $form = $this->createForm(BGListeType::class, $bGListe);
+        $skill = $entityManager->getRepository(Skill::class)->findOneBy(['id' => $id]);
+        $liste = new Liste();
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bGListe->setSkill($skill);
-            $entityManager->persist($bGListe);
+            $liste->setSkill($skill);
+            $entityManager->persist($liste);
             $entityManager->flush();
             
             return $this->redirectToRoute('background', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backgrounds/bg_liste/new.html.twig', [
-            'b_g_liste' => $bGListe,
+            'b_g_liste' => $liste,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'bgliste_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, BGListe $bGListe, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Liste $liste, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(BGListeType::class, $bGListe);
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,16 +49,16 @@ final class BGListeController extends AbstractController
         }
 
         return $this->render('backgrounds/bg_liste/edit.html.twig', [
-            'b_g_liste' => $bGListe,
+            'b_g_liste' => $liste,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'bgliste_delete', methods: ['POST'])]
-    public function delete(Request $request, BGListe $bGListe, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Liste $liste, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$bGListe->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($bGListe);
+        if ($this->isCsrfTokenValid('delete'.$liste->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($liste);
             $entityManager->flush();
         }
 

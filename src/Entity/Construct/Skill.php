@@ -3,6 +3,13 @@
 namespace App\Entity\Construct;
 
 use App\Entity\Assets\Feat;
+use App\Entity\Backgrounds\BG;
+use App\Entity\Classes\ClasseLevel;
+use App\Entity\Classes\ClasseSpellcasting;
+use App\Entity\Classes\SpecialtyItem;
+use App\Entity\Items\ItemCategory;
+use App\Entity\Items\ItemSubcategory;
+use App\Entity\Monsters\SB;
 use App\Repository\Construct\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -88,10 +95,58 @@ class Skill
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $target = null;
 
+    /**
+     * @var Collection<int, BG>
+     */
+    #[ORM\ManyToMany(targetEntity: BG::class, inversedBy: 'skills')]
+    private Collection $bgs;
+
+    /**
+     * @var Collection<int, ItemCategory>
+     */
+    #[ORM\ManyToMany(targetEntity: ItemCategory::class, inversedBy: 'skills')]
+    private Collection $item_categories;
+
+    /**
+     * @var Collection<int, ItemSubcategory>
+     */
+    #[ORM\ManyToMany(targetEntity: ItemSubcategory::class, inversedBy: 'skills')]
+    private Collection $item_subcategories;
+
+    #[ORM\ManyToOne(inversedBy: 'skills')]
+    private ?ClasseSpellcasting $spellcasting = null;
+
+    /**
+     * @var Collection<int, Subskill>
+     */
+    #[ORM\OneToMany(targetEntity: Subskill::class, mappedBy: 'skill')]
+    private Collection $subskills;
+
+    /**
+     * @var Collection<int, ClasseLevel>
+     */
+    #[ORM\ManyToMany(targetEntity: ClasseLevel::class, inversedBy: 'skills')]
+    private Collection $classe_levels;
+
+    /**
+     * @var Collection<int, SpecialtyItem>
+     */
+    #[ORM\ManyToMany(targetEntity: SpecialtyItem::class, inversedBy: 'skills')]
+    private Collection $specialty_items;
+
+    #[ORM\OneToOne(inversedBy: 'skill', cascade: ['persist', 'remove'])]
+    private ?SB $monster = null;
+
     public function __construct()
     {
         $this->listes = new ArrayCollection();
         $this->tables = new ArrayCollection();
+        $this->bgs = new ArrayCollection();
+        $this->item_categories = new ArrayCollection();
+        $this->item_subcategories = new ArrayCollection();
+        $this->subskills = new ArrayCollection();
+        $this->classe_levels = new ArrayCollection();
+        $this->specialty_items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -395,6 +450,180 @@ class Skill
     public function setTarget(?string $target): static
     {
         $this->target = $target;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BG>
+     */
+    public function getBgs(): Collection
+    {
+        return $this->bgs;
+    }
+
+    public function addBg(BG $bg): static
+    {
+        if (!$this->bgs->contains($bg)) {
+            $this->bgs->add($bg);
+        }
+
+        return $this;
+    }
+
+    public function removeBg(BG $bg): static
+    {
+        $this->bgs->removeElement($bg);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemCategory>
+     */
+    public function getItemCategories(): Collection
+    {
+        return $this->item_categories;
+    }
+
+    public function addItemCategory(ItemCategory $itemCategory): static
+    {
+        if (!$this->item_categories->contains($itemCategory)) {
+            $this->item_categories->add($itemCategory);
+        }
+
+        return $this;
+    }
+
+    public function removeItemCategory(ItemCategory $itemCategory): static
+    {
+        $this->item_categories->removeElement($itemCategory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemSubcategory>
+     */
+    public function getItemSubcategories(): Collection
+    {
+        return $this->item_subcategories;
+    }
+
+    public function addItemSubcategory(ItemSubcategory $itemSubcategory): static
+    {
+        if (!$this->item_subcategories->contains($itemSubcategory)) {
+            $this->item_subcategories->add($itemSubcategory);
+        }
+
+        return $this;
+    }
+
+    public function removeItemSubcategory(ItemSubcategory $itemSubcategory): static
+    {
+        $this->item_subcategories->removeElement($itemSubcategory);
+
+        return $this;
+    }
+
+    public function getSpellcasting(): ?ClasseSpellcasting
+    {
+        return $this->spellcasting;
+    }
+
+    public function setSpellcasting(?ClasseSpellcasting $spellcasting): static
+    {
+        $this->spellcasting = $spellcasting;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subskill>
+     */
+    public function getSubskills(): Collection
+    {
+        return $this->subskills;
+    }
+
+    public function addSubskill(Subskill $subskill): static
+    {
+        if (!$this->subskills->contains($subskill)) {
+            $this->subskills->add($subskill);
+            $subskill->setSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubskill(Subskill $subskill): static
+    {
+        if ($this->subskills->removeElement($subskill)) {
+            // set the owning side to null (unless already changed)
+            if ($subskill->getSkill() === $this) {
+                $subskill->setSkill(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ClasseLevel>
+     */
+    public function getClasseLevels(): Collection
+    {
+        return $this->classe_levels;
+    }
+
+    public function addClasseLevel(ClasseLevel $classeLevel): static
+    {
+        if (!$this->classe_levels->contains($classeLevel)) {
+            $this->classe_levels->add($classeLevel);
+        }
+
+        return $this;
+    }
+
+    public function removeClasseLevel(ClasseLevel $classeLevel): static
+    {
+        $this->classe_levels->removeElement($classeLevel);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SpecialtyItem>
+     */
+    public function getSpecialtyItems(): Collection
+    {
+        return $this->specialty_items;
+    }
+
+    public function addSpecialtyItem(SpecialtyItem $specialtyItem): static
+    {
+        if (!$this->specialty_items->contains($specialtyItem)) {
+            $this->specialty_items->add($specialtyItem);
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialtyItem(SpecialtyItem $specialtyItem): static
+    {
+        $this->specialty_items->removeElement($specialtyItem);
+
+        return $this;
+    }
+
+    public function getMonster(): ?SB
+    {
+        return $this->monster;
+    }
+
+    public function setMonster(?SB $monster): static
+    {
+        $this->monster = $monster;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\Assets\Damage;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
 use App\Entity\Classes\Classe;
+use App\Entity\Construct\Table;
 use App\Repository\Items\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -120,24 +121,24 @@ class Item
     private ?SourcePart $source_part = null;
 
     /**
-     * @var Collection<int, ItemTable>
-     */
-    #[ORM\ManyToMany(targetEntity: ItemTable::class, inversedBy: 'items')]
-    private Collection $tables;
-
-    /**
      * @var Collection<int, ItemProperty>
      */
     #[ORM\ManyToMany(targetEntity: ItemProperty::class, mappedBy: 'items')]
     private Collection $properties;
+
+    /**
+     * @var Collection<int, Table>
+     */
+    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'items')]
+    private Collection $tables;
 
     public function __construct()
     {
         $this->armorclasses = new ArrayCollection();
         $this->weaponclasses = new ArrayCollection();
         $this->toolclasses = new ArrayCollection();
-        $this->tables = new ArrayCollection();
         $this->properties = new ArrayCollection();
+        $this->tables = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -551,30 +552,6 @@ class Item
     }
 
     /**
-     * @return Collection<int, ItemTable>
-     */
-    public function getTables(): Collection
-    {
-        return $this->tables;
-    }
-
-    public function addTable(ItemTable $table): static
-    {
-        if (!$this->tables->contains($table)) {
-            $this->tables->add($table);
-        }
-
-        return $this;
-    }
-
-    public function removeTable(ItemTable $table): static
-    {
-        $this->tables->removeElement($table);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, ItemProperty>
      */
     public function getProperties(): Collection
@@ -596,6 +573,33 @@ class Item
     {
         if ($this->properties->removeElement($property)) {
             $property->removeItem($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Table>
+     */
+    public function getTables(): Collection
+    {
+        return $this->tables;
+    }
+
+    public function addTable(Table $table): static
+    {
+        if (!$this->tables->contains($table)) {
+            $this->tables->add($table);
+            $table->addItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTable(Table $table): static
+    {
+        if ($this->tables->removeElement($table)) {
+            $table->removeItem($this);
         }
 
         return $this;

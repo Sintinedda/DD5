@@ -2,7 +2,10 @@
 
 namespace App\Entity\Construct;
 
+use App\Entity\Items\ItemSubcategory;
 use App\Repository\Construct\ListeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ListeRepository::class)]
@@ -51,6 +54,17 @@ class Liste
 
     #[ORM\ManyToOne(inversedBy: 'listes')]
     private ?Skill $skill = null;
+
+    /**
+     * @var Collection<int, ItemSubcategory>
+     */
+    #[ORM\ManyToMany(targetEntity: ItemSubcategory::class, inversedBy: 'listes')]
+    private Collection $item_subcategories;
+
+    public function __construct()
+    {
+        $this->item_subcategories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -209,6 +223,30 @@ class Liste
     public function setSkill(?Skill $skill): static
     {
         $this->skill = $skill;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemSubcategory>
+     */
+    public function getItemSubcategories(): Collection
+    {
+        return $this->item_subcategories;
+    }
+
+    public function addItemSubcategory(ItemSubcategory $itemSubcategory): static
+    {
+        if (!$this->item_subcategories->contains($itemSubcategory)) {
+            $this->item_subcategories->add($itemSubcategory);
+        }
+
+        return $this;
+    }
+
+    public function removeItemSubcategory(ItemSubcategory $itemSubcategory): static
+    {
+        $this->item_subcategories->removeElement($itemSubcategory);
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\Assets\Competence;
 use App\Entity\Assets\Language;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
+use App\Entity\Construct\Skill;
 use App\Repository\Backgrounds\BGRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -56,14 +57,14 @@ class BG
     #[ORM\Column(length: 1000)]
     private ?string $equipment = null;
 
-    /**
-     * @var Collection<int, BGSkill>
-     */
-    #[ORM\ManyToMany(targetEntity: BGSkill::class, inversedBy: 'bGs')]
-    private Collection $skills;
-
     #[ORM\OneToOne(mappedBy: 'bg', cascade: ['persist', 'remove'])]
     private ?BGCarac $carac = null;
+
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'bgs')]
+    private Collection $skills;
 
     public function __construct()
     {
@@ -221,30 +222,6 @@ class BG
         return $this;
     }
 
-    /**
-     * @return Collection<int, BGSkill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(BGSkill $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(BGSkill $skill): static
-    {
-        $this->skills->removeElement($skill);
-
-        return $this;
-    }
-
     public function getCarac(): ?BGCarac
     {
         return $this->carac;
@@ -258,6 +235,33 @@ class BG
         }
 
         $this->carac = $carac;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->addBg($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeBg($this);
+        }
 
         return $this;
     }

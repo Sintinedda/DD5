@@ -72,7 +72,7 @@ final class SBController extends AbstractController
     public function delete(Request $request, SB $sB, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$sB->getId(), $request->getPayload()->getString('_token'))) {
-            $sB->setSpecialty(NULL);
+            $sB->setSkill(NULL);
             $entityManager->remove($sB);
             $entityManager->flush();
         }
