@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Entity\Spells;
+namespace App\Entity\Assets;
 
-use App\Repository\Spells\SpellSchoolRepository;
+use App\Entity\Spells\Spell;
+use App\Repository\Assets\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SpellSchoolRepository::class)]
-class SpellSchool
+#[ORM\Entity(repositoryClass: SchoolRepository::class)]
+class School
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

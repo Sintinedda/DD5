@@ -1,0 +1,32 @@
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#school" aria-expanded="true" aria-controls="collapseOne">
+                Écoles de magie
+        </button>
+    </h2>
+    <a href="{{ path('school_new') }}">Create new</a>
+    <div id="school" class="accordion-collapse collapse" data-bs-parent="#divers">
+        <div class="accordion-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for school in schools %}
+                        <tr>
+                            <td>{{ school.id }}</td>
+                            <td><a href="{{ path('school_edit', {'id': school.id}) }}">{{ school.name }}</a></td>
+                            <td>{{ school.slug }}</td>
+                            <td>{{ include('assets/school/_delete_form.html.twig') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ use App\Entity\Backgrounds\BGCarac;
 use App\Entity\Classes\SpecialtyItem;
 use App\Entity\Items\Item;
 use App\Entity\Items\ItemSubcategory;
+use App\Entity\Spells\Spell;
 use App\Repository\Construct\TableRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -58,6 +59,9 @@ class Table
      */
     #[ORM\ManyToMany(targetEntity: SpecialtyItem::class, inversedBy: 'tables')]
     private Collection $specialty_items;
+
+    #[ORM\ManyToOne(inversedBy: 'tables')]
+    private ?Spell $spell = null;
 
     public function __construct()
     {
@@ -230,6 +234,18 @@ class Table
     public function removeSpecialtyItem(SpecialtyItem $specialtyItem): static
     {
         $this->specialty_items->removeElement($specialtyItem);
+
+        return $this;
+    }
+
+    public function getSpell(): ?Spell
+    {
+        return $this->spell;
+    }
+
+    public function setSpell(?Spell $spell): static
+    {
+        $this->spell = $spell;
 
         return $this;
     }

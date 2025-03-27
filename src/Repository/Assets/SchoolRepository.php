@@ -1,40 +1,40 @@
 <?php
 
-namespace App\Repository\Spells;
+namespace App\Repository\Assets;
 
-use App\Entity\Spells\SpellListe;
+use App\Entity\Assets\School;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<SpellListe>
+ * @extends ServiceEntityRepository<School>
  */
-class SpellListeRepository extends ServiceEntityRepository
+class SchoolRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SpellListe::class);
+        parent::__construct($registry, School::class);
     }
 
     //    /**
-    //     * @return Liste[] Returns an array of Liste objects
+    //     * @return SpellSchool[] Returns an array of SpellSchool objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('l')
-    //            ->andWhere('l.exampleField = :val')
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('l.id', 'ASC')
+    //            ->orderBy('s.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Liste
+    //    public function findOneBySomeField($value): ?SpellSchool
     //    {
-    //        return $this->createQueryBuilder('l')
-    //            ->andWhere('l.exampleField = :val')
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

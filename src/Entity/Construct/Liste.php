@@ -3,6 +3,7 @@
 namespace App\Entity\Construct;
 
 use App\Entity\Items\ItemSubcategory;
+use App\Entity\Spells\Spell;
 use App\Repository\Construct\ListeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -60,6 +61,9 @@ class Liste
      */
     #[ORM\ManyToMany(targetEntity: ItemSubcategory::class, inversedBy: 'listes')]
     private Collection $item_subcategories;
+
+    #[ORM\ManyToOne(inversedBy: 'listes')]
+    private ?Spell $spell = null;
 
     public function __construct()
     {
@@ -250,4 +254,16 @@ class Liste
 
         return $this;
     }
+
+    public function getSpell(): ?Spell
+    {
+        return $this->spell;
+    }
+
+    public function setSpell(?Spell $spell): static
+    {
+        $this->spell = $spell;
+
+        return $this;
+    } 
 }

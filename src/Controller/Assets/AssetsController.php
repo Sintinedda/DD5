@@ -8,6 +8,7 @@ use App\Entity\Assets\Condition;
 use App\Entity\Assets\CreatureType;
 use App\Entity\Assets\Damage;
 use App\Entity\Assets\Language;
+use App\Entity\Assets\School;
 use App\Entity\Assets\Sense;
 use App\Entity\Assets\Speed;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,6 +29,7 @@ final class AssetsController extends AbstractController
             'creatureTypes' => $em->getRepository(CreatureType::class)->findAll(),
             'damages' => $em->getRepository(Damage::class)->findAll(),
             'languages' => $em->getRepository(Language::class)->findAll(),
+            'schools' => $em->getRepository(School::class)->findAll(),
             'senses' => $em->getRepository(Sense::class)->findAll(),
             'speeds' => $em->getRepository(Speed::class)->findAll(),
         ]);

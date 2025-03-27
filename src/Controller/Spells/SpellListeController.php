@@ -2,80 +2,66 @@
 
 namespace App\Controller\Spells;
 
-use App\Entity\Spells\SpellListe;
-use App\Form\Spells\SpellListeType;
-use App\Repository\Spells\SpellListeRepository;
+use App\Entity\Construct\Liste;
+use App\Entity\Spells\Spell;
+use App\Form\Construct\ListeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/spells/spell/liste')]
+#[Route('/admin/spell-liste')]
 final class SpellListeController extends AbstractController
 {
-    #[Route(name: 'app_spells_spell_liste_index', methods: ['GET'])]
-    public function index(SpellListeRepository $spellListeRepository): Response
+    #[Route('/spell{id}/new', name: 'spell_liste_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
-        return $this->render('spells/spell_liste/index.html.twig', [
-            'spell_listes' => $spellListeRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_spells_spell_liste_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $spellListe = new SpellListe();
-        $form = $this->createForm(SpellListeType::class, $spellListe);
+        $spell = $entityManager->getRepository(Spell::class)->findOneBy(['id' => $id]);
+        $liste = new Liste();
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($spellListe);
+            $liste->setSpell($spell);
+            $entityManager->persist($liste);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_spells_spell_liste_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('spells', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('spells/spell_liste/new.html.twig', [
-            'spell_liste' => $spellListe,
+            'spell_liste' => $liste,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_spells_spell_liste_show', methods: ['GET'])]
-    public function show(SpellListe $spellListe): Response
+    #[Route('/{id}/edit', name: 'spell_liste_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Liste $liste, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('spells/spell_liste/show.html.twig', [
-            'spell_liste' => $spellListe,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_spells_spell_liste_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, SpellListe $spellListe, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(SpellListeType::class, $spellListe);
+        $form = $this->createForm(ListeType::class, $liste);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_spells_spell_liste_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('spells', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('spells/spell_liste/edit.html.twig', [
-            'spell_liste' => $spellListe,
+            'spell_liste' => $liste,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_spells_spell_liste_delete', methods: ['POST'])]
-    public function delete(Request $request, SpellListe $spellListe, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'spell_liste_delete', methods: ['POST'])]
+    public function delete(Request $request, Liste $liste, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$spellListe->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($spellListe);
+        if ($this->isCsrfTokenValid('delete'.$liste->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($liste);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_spells_spell_liste_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('spells', [], Response::HTTP_SEE_OTHER);
     }
 }

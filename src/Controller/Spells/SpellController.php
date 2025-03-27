@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/spells/spell')]
+#[Route('/admin/spell')]
 final class SpellController extends AbstractController
 {
-    #[Route(name: 'app_spells_spell_index', methods: ['GET'])]
+    #[Route(name: 'spells', methods: ['GET'])]
     public function index(SpellRepository $spellRepository): Response
     {
         return $this->render('spells/spell/index.html.twig', [
@@ -22,7 +22,7 @@ final class SpellController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_spells_spell_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'spell_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $spell = new Spell();
@@ -33,7 +33,7 @@ final class SpellController extends AbstractController
             $entityManager->persist($spell);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_spells_spell_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('spells', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('spells/spell/new.html.twig', [
@@ -42,15 +42,7 @@ final class SpellController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_spells_spell_show', methods: ['GET'])]
-    public function show(Spell $spell): Response
-    {
-        return $this->render('spells/spell/show.html.twig', [
-            'spell' => $spell,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_spells_spell_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'spell_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Spell $spell, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(SpellType::class, $spell);
@@ -59,7 +51,7 @@ final class SpellController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_spells_spell_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('spells', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('spells/spell/edit.html.twig', [
@@ -68,7 +60,7 @@ final class SpellController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_spells_spell_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'spell_delete', methods: ['POST'])]
     public function delete(Request $request, Spell $spell, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$spell->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +68,6 @@ final class SpellController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_spells_spell_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('spells', [], Response::HTTP_SEE_OTHER);
     }
 }
