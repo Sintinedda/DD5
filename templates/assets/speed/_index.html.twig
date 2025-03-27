@@ -1,11 +1,11 @@
 <div class="accordion-item">
     <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#language" aria-expanded="true" aria-controls="collapseOne">
-                Langues
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#speed" aria-expanded="true" aria-controls="collapseOne">
+                Speed
         </button>
     </h2>
-    <a href="{{ path('language_new') }}">Create new</a>
-    <div id="language" class="accordion-collapse collapse" data-bs-parent="#divers">
+    <a href="{{ path('speed_new') }}">Create new</a>
+    <div id="speed" class="accordion-collapse collapse" data-bs-parent="#divers">
         <div class="accordion-body">
             <table class="table">
                 <thead>
@@ -16,13 +16,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for language in languages %}
+                {% for speed in speeds %}
                     <tr>
-                        <td>{{ language.id }}</td>
-                        <td>{{ language.abbreviation }}</td>
+                        <td>{{ speed.id }}</td>
+                        <td>{{ speed.abbreviation }}</td>
                         <td>
-                            <a href="{{ path('language_edit', {'id': language.id}) }}">edit</a>
-                            {{ include('assets/language/_delete_form.html.twig') }}
+                            <a href="{{ path('speed_edit', {'id': speed.id}) }}">edit</a>
+                            {{ include('assets/speed/_delete_form.html.twig') }}
                         </td>
                     </tr>
                 {% else %}

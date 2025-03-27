@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Speed{% endblock %}
+
+{% block body %}
+    <h1>Create new Speed</h1>
+
+    {{ include('assets/speed/_form.html.twig') }}
+
+    <a href="{{ path('assets') }}">back to list</a>
+{% endblock %}
