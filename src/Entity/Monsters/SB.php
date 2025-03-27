@@ -2,10 +2,12 @@
 
 namespace App\Entity\Monsters;
 
+use App\Entity\Assets\Alignment;
 use App\Entity\Assets\CreatureType;
 use App\Entity\Assets\Sense;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
+use App\Entity\Assets\Speed;
 use App\Entity\Classes\SpecialtySkill;
 use App\Entity\Monsters\SBSkill;
 use App\Repository\Monsters\SBRepository;
@@ -60,9 +62,6 @@ class SB
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $dv = null;
-
-    #[ORM\Column]
-    private array $speeds = [];
 
     #[ORM\Column]
     private ?int $strenght = null;
@@ -151,11 +150,21 @@ class SB
     #[ORM\OneToMany(targetEntity: SBSpecialty::class, mappedBy: 'monster', orphanRemoval: true)]
     private Collection $specialties;
 
+    #[ORM\ManyToOne(inversedBy: 'sBs')]
+    private ?Alignment $alignment = null;
+
+    /**
+     * @var Collection<int, Speed>
+     */
+    #[ORM\ManyToMany(targetEntity: Speed::class, inversedBy: 'sBs')]
+    private Collection $speeds;
+
     public function __construct()
     {
         $this->sens = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->specialties = new ArrayCollection();
+        $this->speeds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -315,18 +324,6 @@ class SB
     public function setDv(?string $dv): static
     {
         $this->dv = $dv;
-
-        return $this;
-    }
-
-    public function getSpeeds(): array
-    {
-        return $this->speeds;
-    }
-
-    public function setSpeeds(array $speeds): static
-    {
-        $this->speeds = $speeds;
 
         return $this;
     }
@@ -684,6 +681,42 @@ class SB
                 $specialty->setMonster(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAlignment(): ?Alignment
+    {
+        return $this->alignment;
+    }
+
+    public function setAlignment(?Alignment $alignment): static
+    {
+        $this->alignment = $alignment;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Speed>
+     */
+    public function getSpeeds(): Collection
+    {
+        return $this->speeds;
+    }
+
+    public function addSpeed(Speed $speed): static
+    {
+        if (!$this->speeds->contains($speed)) {
+            $this->speeds->add($speed);
+        }
+
+        return $this;
+    }
+
+    public function removeSpeed(Speed $speed): static
+    {
+        $this->speeds->removeElement($speed);
 
         return $this;
     }

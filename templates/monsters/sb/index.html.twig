@@ -4,96 +4,11 @@
 
 {% block body %}
     <h1>SB index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name_fr</th>
-                <th>Name_eng</th>
-                <th>Slug</th>
-                <th>Category</th>
-                <th>Type2</th>
-                <th>Sizes</th>
-                <th>Size_inf</th>
-                <th>Size_sup</th>
-                <th>Ca</th>
-                <th>Armor</th>
-                <th>Pv</th>
-                <th>Dv</th>
-                <th>Speeds</th>
-                <th>Strenght</th>
-                <th>Dexterity</th>
-                <th>Constitution</th>
-                <th>Intelligence</th>
-                <th>Wisdow</th>
-                <th>Charisma</th>
-                <th>Save</th>
-                <th>Competence</th>
-                <th>Pp</th>
-                <th>Pp2</th>
-                <th>Fp</th>
-                <th>Xp</th>
-                <th>Bm</th>
-                <th>D</th>
-                <th>Cac_t</th>
-                <th>Cac_r</th>
-                <th>Cac_d</th>
-                <th>Range_t</th>
-                <th>Range_r</th>
-                <th>Range_d</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for s_b in s_bs %}
-            <tr>
-                <td>{{ s_b.id }}</td>
-                <td>{{ s_b.nameFr }}</td>
-                <td>{{ s_b.nameEng }}</td>
-                <td>{{ s_b.slug }}</td>
-                <td>{{ s_b.category }}</td>
-                <td>{{ s_b.type2 }}</td>
-                <td>{{ s_b.sizes ? s_b.sizes|json_encode : '' }}</td>
-                <td>{{ s_b.sizeInf ? 'Yes' : 'No' }}</td>
-                <td>{{ s_b.sizeSup ? 'Yes' : 'No' }}</td>
-                <td>{{ s_b.ca }}</td>
-                <td>{{ s_b.armor }}</td>
-                <td>{{ s_b.pv }}</td>
-                <td>{{ s_b.dv }}</td>
-                <td>{{ s_b.speeds ? s_b.speeds|json_encode : '' }}</td>
-                <td>{{ s_b.strenght }}</td>
-                <td>{{ s_b.dexterity }}</td>
-                <td>{{ s_b.constitution }}</td>
-                <td>{{ s_b.intelligence }}</td>
-                <td>{{ s_b.wisdow }}</td>
-                <td>{{ s_b.charisma }}</td>
-                <td>{{ s_b.save }}</td>
-                <td>{{ s_b.competence }}</td>
-                <td>{{ s_b.pp }}</td>
-                <td>{{ s_b.pp2 }}</td>
-                <td>{{ s_b.fp }}</td>
-                <td>{{ s_b.xp }}</td>
-                <td>{{ s_b.bm }}</td>
-                <td>{{ s_b.d }}</td>
-                <td>{{ s_b.cacT }}</td>
-                <td>{{ s_b.cacR }}</td>
-                <td>{{ s_b.cacD }}</td>
-                <td>{{ s_b.rangeT }}</td>
-                <td>{{ s_b.rangeR }}</td>
-                <td>{{ s_b.rangeD }}</td>
-                <td>
-                    <a href="{{ path('app_monsters_s_b_show', {'id': s_b.id}) }}">show</a>
-                    <a href="{{ path('app_monsters_s_b_edit', {'id': s_b.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="35">no records found</td>
-            </tr>
+    <a href="{{ path('monster_new') }}">Create new</a>
+    <br/><br/>
+    <ul>
+        {% for sb in sbs %}
+            <li><a href="{{ path('monster_show', {'id': sb.id}) }}">{{ sb.name }}</a></li>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_monsters_s_b_new') }}">Create new</a>
+    </ul>
 {% endblock %}
