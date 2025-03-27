@@ -3,13 +3,13 @@
 namespace App\Entity\Assets;
 
 use App\Entity\Monsters\SB;
-use App\Repository\Assets\AlignmentRepository;
+use App\Repository\Assets\SpeedRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AlignmentRepository::class)]
-class Alignment
+#[ORM\Entity(repositoryClass: SpeedRepository::class)]
+class Speed
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,13 +19,13 @@ class Alignment
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 255)]
     private ?string $abbreviation = null;
 
     /**
      * @var Collection<int, SB>
      */
-    #[ORM\OneToMany(targetEntity: SB::class, mappedBy: 'alignment')]
+    #[ORM\ManyToMany(targetEntity: SB::class, mappedBy: 'speeds')]
     private Collection $sBs;
 
     public function __construct()
@@ -74,7 +74,7 @@ class Alignment
     {
         if (!$this->sBs->contains($sB)) {
             $this->sBs->add($sB);
-            $sB->setAlignment($this);
+            $sB->addSpeed($this);
         }
 
         return $this;
@@ -83,10 +83,7 @@ class Alignment
     public function removeSB(SB $sB): static
     {
         if ($this->sBs->removeElement($sB)) {
-            // set the owning side to null (unless already changed)
-            if ($sB->getAlignment() === $this) {
-                $sB->setAlignment(null);
-            }
+            $sB->removeSpeed($this);
         }
 
         return $this;

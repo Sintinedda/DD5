@@ -2,80 +2,77 @@
 
 namespace App\Controller\Monsters;
 
+use App\Entity\Monsters\SB;
 use App\Entity\Monsters\SBSkill;
 use App\Form\Monsters\SBSkillType;
-use App\Repository\Monsters\SBSkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/monsters/s/b/skill')]
+#[Route('/admin/monster-skill')]
 final class SBSkillController extends AbstractController
 {
-    #[Route(name: 'app_monsters_s_b_skill_index', methods: ['GET'])]
-    public function index(SBSkillRepository $sBSkillRepository): Response
+    #[Route('/sb{id}/new', name: 'monster_skill_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
-        return $this->render('monsters/sb_skill/index.html.twig', [
-            's_b_skills' => $sBSkillRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_monsters_s_b_skill_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+        $sb = $entityManager->getRepository(SB::class)->findOneBy(['id' => $id]);
         $sBSkill = new SBSkill();
         $form = $this->createForm(SBSkillType::class, $sBSkill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $sBSkill->addMonster($sb);
             $entityManager->persist($sBSkill);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_monsters_s_b_skill_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('monster_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('monsters/sb_skill/new.html.twig', [
             's_b_skill' => $sBSkill,
             'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}', name: 'app_monsters_s_b_skill_show', methods: ['GET'])]
-    public function show(SBSkill $sBSkill): Response
+    #[Route('/sb{id}/{id2}/edit', name: 'monster_skill_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        return $this->render('monsters/sb_skill/show.html.twig', [
-            's_b_skill' => $sBSkill,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_monsters_s_b_skill_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, SBSkill $sBSkill, EntityManagerInterface $entityManager): Response
-    {
+        $sb = $entityManager->getRepository(SB::class)->findOneBy(['id' => $id]);
+        $sBSkill = $entityManager->getRepository(SBSkill::class)->findOneBy(['id' => $id2]);
         $form = $this->createForm(SBSkillType::class, $sBSkill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $sBSkill->addMonster($sb);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_monsters_s_b_skill_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('monster_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('monsters/sb_skill/edit.html.twig', [
             's_b_skill' => $sBSkill,
             'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}', name: 'app_monsters_s_b_skill_delete', methods: ['POST'])]
-    public function delete(Request $request, SBSkill $sBSkill, EntityManagerInterface $entityManager): Response
+    #[Route('/sb{id}/{id2}', name: 'monster_skill_delete', methods: ['POST'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
+        $sb = $entityManager->getRepository(SB::class)->findOneBy(['id' => $id]);
+        $sBSkill = $entityManager->getRepository(SBSkill::class)->findOneBy(['id' => $id2]);
+
         if ($this->isCsrfTokenValid('delete'.$sBSkill->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($sBSkill);
+            $sBSkill->removeMonster($sb);
+            if ($sBSkill->getMonsters == 0) {
+                $entityManager->remove($sBSkill);
+            }
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_monsters_s_b_skill_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('monster_show', ['id' => $id], Response::HTTP_SEE_OTHER);
     }
 }

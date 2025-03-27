@@ -1,4 +1,72 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <h2>Names/Source</h2>
+    <div>
+        {{ form_row(form.name_fr) }}
+        {{ form_row(form.name_eng) }}
+        {{ form_row(form.slug) }}
+        {{ form_row(form.source) }}
+        {{ form_row(form.source_part) }}
+    </div>
+    <h2>Type/Size/Alignment</h2>
+    <div>
+        {{ form_row(form.category) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.type2) }}
+        {{ form_row(form.sizes) }}
+        {{ form_row(form.size_inf) }}
+        {{ form_row(form.size_sup) }}
+        {{ form_row(form.alignment) }}
+    </div>
+    <h2>CA/DV/Speed</h2>
+    <div>
+        {{ form_row(form.ca) }}
+        {{ form_row(form.armor) }}
+        {{ form_row(form.pv) }}
+        {{ form_row(form.dv) }}
+        {{ form_row(form.speeds) }}
+    </div>
+    <h2>Carac</h2>
+    <div>
+        {{ form_row(form.strenght) }}
+        {{ form_row(form.dexterity) }}
+        {{ form_row(form.constitution) }}
+        {{ form_row(form.intelligence) }}
+        {{ form_row(form.wisdow) }}
+        {{ form_row(form.charisma) }}
+    </div>
+    <h2>Save/Comp/Sens</h2>
+    <div>
+        {{ form_row(form.save) }}
+        {{ form_row(form.competence) }}
+        {{ form_row(form.sens) }}
+        {{ form_row(form.pp) }}
+        {{ form_row(form.pp2) }}
+    </div>
+    <h2>FP/BM</h2>
+    <div>
+        {{ form_row(form.fp) }}
+        {{ form_row(form.xp) }}
+        {{ form_row(form.bm) }}
+    </div>
+    <h2>CAC</h2>
+    <div>
+        {{ form_row(form.cac_t) }}
+        {{ form_row(form.cac_r) }}
+        {{ form_row(form.cac_d) }}
+    </div>
+    <h2>FP/BM</h2>
+    <div>
+        {{ form_row(form.range_t) }}
+        {{ form_row(form.range_r) }}
+        {{ form_row(form.range_d) }}
+    </div>
+    <h2>Descr</h2>
+    <div>
+        {{ form_row(form.d) }}
+    </div>
+    <h2>Spé</h2>
+    <div>
+        {{ form_row(form.specialties) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
