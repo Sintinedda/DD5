@@ -1,27 +1,37 @@
-<div class="accordion-body">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for creature_type in creatureTypes %}
-            <tr>
-                <td>{{ creature_type.id }}</td>
-                <td>{{ creature_type.name }}</td>
-                <td>
-                    <a href="{{ path('creature_type_edit', {'id': creature_type.id}) }}">edit</a>
-                    {{ include('assets/creature_type/_delete_form.html.twig') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#type" aria-expanded="true" aria-controls="collapseOne">
+            Types de créature
+        </button>
+    </h2>
+    <a href="{{ path('creature_type_new') }}">Create new</a>
+    <div id="type" class="accordion-collapse collapse" data-bs-parent="#divers">
+        <div class="accordion-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for creature_type in creatureTypes %}
+                    <tr>
+                        <td>{{ creature_type.id }}</td>
+                        <td>{{ creature_type.name }}</td>
+                        <td>
+                            <a href="{{ path('creature_type_edit', {'id': creature_type.id}) }}">edit</a>
+                            {{ include('assets/creature_type/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div> 
+    </div>
 </div>

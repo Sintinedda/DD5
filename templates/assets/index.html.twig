@@ -19,83 +19,14 @@
     <br/><br/>
 
     <div class="accordion" id="divers">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#alignment" aria-expanded="true" aria-controls="collapseOne">
-                     Alignements
-                </button>
-            </h2>
-            <a href="{{ path('alignment_new') }}">Create new</a>
-            <div id="alignment" class="accordion-collapse collapse" data-bs-parent="#divers">
-                {% include "assets/alignment/_index.html.twig" %}
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#competence" aria-expanded="true" aria-controls="collapseOne">
-                     Compétences
-                </button>
-            </h2>
-            <a href="{{ path('competence_new') }}">Create new</a>
-            <div id="competence" class="accordion-collapse collapse" data-bs-parent="#divers">
-                {% include "assets/competence/_index.html.twig" %}
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#condition" aria-expanded="true" aria-controls="collapseOne">
-                     Conditions
-                </button>
-            </h2>
-            <a href="{{ path('condition_new') }}">Create new</a>
-            <div id="condition" class="accordion-collapse collapse" data-bs-parent="#divers">
-                {% include "assets/condition/_index.html.twig" %}
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#type" aria-expanded="true" aria-controls="collapseOne">
-                    Types de créature
-                </button>
-            </h2>
-            <a href="{{ path('creature_type_new') }}">Create new</a>
-            <div id="type" class="accordion-collapse collapse" data-bs-parent="#divers">
-                {% include "assets/creature_type/_index.html.twig" %}
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#damage" aria-expanded="true" aria-controls="collapseOne">
-                    Types de dégâts    
-                </button>
-            </h2>
-            <a href="{{ path('damage_new') }}">Create new</a>
-            <div id="damage" class="accordion-collapse collapse" data-bs-parent="#divers">
-                {% include "assets/damage/_index.html.twig" %}
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#language" aria-expanded="true" aria-controls="collapseOne">
-                     Langues
-                </button>
-            </h2>
-            <a href="{{ path('language_new') }}">Create new</a>
-            <div id="language" class="accordion-collapse collapse" data-bs-parent="#divers">
-                {% include "assets/language/_index.html.twig" %}
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sense" aria-expanded="true" aria-controls="collapseOne">
-                    Sens  
-                </button>
-            </h2>
-            <a href="{{ path('sense_new') }}">Create new</a>
-            <div id="sense" class="accordion-collapse collapse" data-bs-parent="#divers">
-                {% include "assets/sense/_index.html.twig" %}
-            </div>
-        </div>
+        {% include "assets/alignment/_index.html.twig" %}
+        {% include "assets/competence/_index.html.twig" %}
+        {% include "assets/condition/_index.html.twig" %}
+        {% include "assets/creature_type/_index.html.twig" %}
+        {% include "assets/damage/_index.html.twig" %}
+        {% include "assets/language/_index.html.twig" %}
+        {% include "assets/sense/_index.html.twig" %}
+        {% include "assets/sense/_index.html.twig" %}
     </div>
 
 {% endblock %}

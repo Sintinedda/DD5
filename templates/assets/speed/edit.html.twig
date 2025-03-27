@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Speed{% endblock %}
+
+{% block body %}
+    <h1>Edit Speed</h1>
+
+    {{ include('assets/speed/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('assets') }}">back to list</a>
+{% endblock %}
