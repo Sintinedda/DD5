@@ -205,7 +205,7 @@ class SourcePart
     {
         if (!$this->specialties->contains($specialty)) {
             $this->specialties->add($specialty);
-            $specialty->addSoucrePart($this);
+            $specialty->addSourcePart($this);
         }
 
         return $this;
@@ -214,7 +214,7 @@ class SourcePart
     public function removeSpecialty(SpecialtyItem $specialty): static
     {
         if ($this->specialties->removeElement($specialty)) {
-            $specialty->removeSoucrePart($this);
+            $specialty->removeSourcePart($this);
         }
 
         return $this;
