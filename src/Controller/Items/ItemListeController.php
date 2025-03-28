@@ -103,25 +103,6 @@ final class ItemListeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit/sub={id2}/skill', name: 'item_liste_skill_sub_edit', methods: ['GET', 'POST'])]
-    public function editSkillSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
-    {
-        $form = $this->createForm(ListeType::class, $liste);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('item_sub_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('items/item_liste/edit/sub.html.twig', [
-            'item_liste' => $liste,
-            'form' => $form,
-            'id' => $id2
-        ]);
-    }
-
     #[Route('/{id}/edit/sub={id2}', name: 'item_liste_sub_edit', methods: ['GET', 'POST'])]
     public function editSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
@@ -130,7 +111,9 @@ final class ItemListeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $liste->addItemSubcategory($sub);
+            if ($liste->getItemSubcategories()->count() != 0) {
+                $liste->addItemSubcategory($sub); 
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('item_sub_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
@@ -154,25 +137,18 @@ final class ItemListeController extends AbstractController
         return $this->redirectToRoute('items_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/sub={id2}/skill', name: 'item_liste_skill_sub_delete', methods: ['POST'])]
-    public function deleteSkillSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$liste->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($liste);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('item_sub_show', ['id' => $id2], Response::HTTP_SEE_OTHER);
-    }
-
     #[Route('/{id}/sub={id2}', name: 'item_liste_sub_delete', methods: ['POST'])]
     public function deleteSubcategory(Request $request, Liste $liste, EntityManagerInterface $entityManager, int $id2): Response
     {
         $sub = $entityManager->getRepository(ItemSubcategory::class)->findOneBy([ 'id' => $id2]);
 
         if ($this->isCsrfTokenValid('delete'.$liste->getId(), $request->getPayload()->getString('_token'))) {
-            $liste->removeItemSubcategory($sub);
-            if ($liste->getItemSubcategories()->count() == 0) {
+            if ($liste->getItemSubcategories()->count() != 0) {
+                $liste->removeItemSubcategory($sub);
+                if ($liste->getItemSubcategories()->count() == 0) {
+                    $entityManager->remove($liste);
+                }
+            } else {
                 $entityManager->remove($liste);
             }
             $entityManager->flush();
