@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}admin{% endblock %}
+
+{% block body %}
+    <h1>Liste Utilisateurs</h1>
+
+    <table>
+        {% for user in users %}
+            {% if user.id != 1 %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{% for r in user.roles %}{{ r }} {% endfor %}</td>
+                    <td>{{ include('bo/user/_change-role_form.html.twig')}}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+{% endblock %}
