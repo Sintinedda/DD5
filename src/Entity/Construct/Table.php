@@ -6,6 +6,8 @@ use App\Entity\Backgrounds\BGCarac;
 use App\Entity\Classes\SpecialtyItem;
 use App\Entity\Items\Item;
 use App\Entity\Items\ItemSubcategory;
+use App\Entity\Races\RaceSource;
+use App\Entity\Races\RaceSubrace;
 use App\Entity\Spells\Spell;
 use App\Repository\Construct\TableRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -63,12 +65,26 @@ class Table
     #[ORM\ManyToOne(inversedBy: 'tables')]
     private ?Spell $spell = null;
 
+    /**
+     * @var Collection<int, RaceSource>
+     */
+    #[ORM\ManyToMany(targetEntity: RaceSource::class, inversedBy: 'tables')]
+    private Collection $race_source;
+
+    /**
+     * @var Collection<int, RaceSubrace>
+     */
+    #[ORM\ManyToMany(targetEntity: RaceSubrace::class, inversedBy: 'tables')]
+    private Collection $race_subrace;
+
     public function __construct()
     {
         $this->rows = new ArrayCollection();
         $this->items = new ArrayCollection();
         $this->item_subcategories = new ArrayCollection();
         $this->specialty_items = new ArrayCollection();
+        $this->race_source = new ArrayCollection();
+        $this->race_subrace = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -246,6 +262,54 @@ class Table
     public function setSpell(?Spell $spell): static
     {
         $this->spell = $spell;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RaceSource>
+     */
+    public function getRaceSource(): Collection
+    {
+        return $this->race_source;
+    }
+
+    public function addRaceSource(RaceSource $raceSource): static
+    {
+        if (!$this->race_source->contains($raceSource)) {
+            $this->race_source->add($raceSource);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceSource(RaceSource $raceSource): static
+    {
+        $this->race_source->removeElement($raceSource);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RaceSubrace>
+     */
+    public function getRaceSubrace(): Collection
+    {
+        return $this->race_subrace;
+    }
+
+    public function addRaceSubrace(RaceSubrace $raceSubrace): static
+    {
+        if (!$this->race_subrace->contains($raceSubrace)) {
+            $this->race_subrace->add($raceSubrace);
+        }
+
+        return $this;
+    }
+
+    public function removeRaceSubrace(RaceSubrace $raceSubrace): static
+    {
+        $this->race_subrace->removeElement($raceSubrace);
 
         return $this;
     }

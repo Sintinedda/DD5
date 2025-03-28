@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RaceRow{% endblock %}
+
+{% block body %}
+    <h1>Create new RaceRow</h1>
+
+    {{ include('races/race_row/_form.html.twig') }}
+
+    <a href="{{ path('ssrace_show', {'id': id}) }}">back to list</a>
+{% endblock %}

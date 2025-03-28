@@ -3,52 +3,74 @@
 {% block title %}RaceSource{% endblock %}
 
 {% block body %}
-    <h1>RaceSource</h1>
-
-    <table class="table">
-        <tbody>
+    <h1>{{ race_source.source }}</h1>
+    <div style="display:flex;">
+        <a style="margin-right: 20px;" href="{{ path('race_show', {'id': race_source.race.id}) }}">back to list</a>
+        <a style="margin-right: 20px;" href="{{ path('srace_edit', {'id': race_source.id}) }}">edit</a>
+        {{ include('races/race_source/_delete_form.html.twig') }}
+    </div>
+    <br/><br/>
+    <div style="display:flex;">
+        <a style="margin-right: 20px;" href="{{ path('ssrace_new', {'id': race_source.id}) }}">new subrace</a>
+        <a style="margin-right: 20px;" href="{{ path('srace_table_new', {'id': race_source.id}) }}">new table</a>
+        <a style="margin-right: 20px;" href="{{ path('srace_skill_new', {'id': race_source.id}) }}">new skill</a>
+    </div>
+    <br/><br/>
+    <h2>Subraces</h2>
+    <table>
+        {% for sub in race_source.subraces %}
             <tr>
-                <th>Id</th>
-                <td>{{ race_source.id }}</td>
+                <td><a href="{{ path('ssrace_show', {'id': sub.id}) }}">{{ sub.name }}</a></td>
             </tr>
-            <tr>
-                <th>D1</th>
-                <td>{{ race_source.d1 }}</td>
-            </tr>
-            <tr>
-                <th>D2</th>
-                <td>{{ race_source.d2 }}</td>
-            </tr>
-            <tr>
-                <th>D3</th>
-                <td>{{ race_source.d3 }}</td>
-            </tr>
-            <tr>
-                <th>Ability</th>
-                <td>{{ race_source.ability }}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ race_source.age }}</td>
-            </tr>
-            <tr>
-                <th>Alignment</th>
-                <td>{{ race_source.alignment }}</td>
-            </tr>
-            <tr>
-                <th>Size</th>
-                <td>{{ race_source.size }}</td>
-            </tr>
-            <tr>
-                <th>Speed</th>
-                <td>{{ race_source.speed }}</td>
-            </tr>
-        </tbody>
+        {% endfor %}
     </table>
-
-    <a href="{{ path('app_races_race_source_index') }}">back to list</a>
-
-    <a href="{{ path('app_races_race_source_edit', {'id': race_source.id}) }}">edit</a>
-
-    {{ include('races/race_source/_delete_form.html.twig') }}
+    <h2>Tables</h2>
+    <table>
+        {% for t in race_source.tables|sort((a, b) => a.number <=> b.number) %}
+            <tr>
+                <td><a href="{{ path('srace_table_edit', {'id': race_source.id, 'id2': t.id}) }}">T{{ t.number }}</a></td>
+                <td>{{ include('races/race_table/delete/_srace_form.html.twig') }}</td>
+                <td><a href="{{ path('srace_row_new', {'id': race_source.id, 'id2': t.id}) }}">new row</a></td>
+                {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
+                    <td>
+                        <a href="{{ path('srace_row_edit', {'id': race_source.id, 'id2': r.id}) }}">R{{ r.number }}</a>
+                        {{ include('races/race_row/delete/_srace_form.html.twig') }}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <h2>Skills</h2>
+    <table>
+        {% for s in race_source.skills %}
+            <tr>
+                <td><a href="{{ path('srace_skill_edit', {'id': race_source.id, 'id2': s.id}) }}">{{ s.name }}</a></td>
+                <td>{{ include('races/race_skill/delete/_srace_form.html.twig') }}</td>
+                <td><a href="{{ path('srace_liste_new', {'id': race_source.id, 'id2': s.id}) }}">new liste</a></td>
+                {% for l in s.listes|sort((a, b) => a.number <=> b.number) %}
+                    <td>
+                        <a href="{{ path('srace_liste_edit', {'id': race_source.id, 'id2': l.id}) }}">L{{ l.number }}</a>
+                        {{ include('races/race_liste/delete/_srace_form.html.twig') }}
+                    </td>
+                {% endfor %}
+                <td><a href="{{ path('srace_table_skill_new', {'id': race_source.id, 'id2': s.id}) }}">new table</a></td>
+                {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
+                    <td>
+                        <a href="{{ path('srace_table_skill_edit', {'id': race_source.id, 'id2': t.id}) }}">T{{ t.number }}</a>
+                        {{ include('races/race_table/delete/_srace_form.html.twig') }}
+                        <a href="{{ path('srace_row_new', {'id': race_source.id, 'id2': t.id}) }}">new row</a>
+                        <ul>
+                            {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
+                                <li>
+                                    <a href="{{ path('srace_row_edit', {'id': race_source.id, 'id2': r.id}) }}">R{{ r.number }}</a>
+                                    {{ include('races/race_row/delete/_srace_form.html.twig') }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    
 {% endblock %}

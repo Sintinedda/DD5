@@ -5,6 +5,8 @@ namespace App\Entity\Races;
 use App\Entity\Assets\Language;
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
+use App\Entity\Construct\Skill;
+use App\Entity\Construct\Table;
 use App\Repository\Races\RaceSourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -60,29 +62,29 @@ class RaceSource
     private Collection $languages;
 
     /**
-     * @var Collection<int, RaceSkill>
-     */
-    #[ORM\ManyToMany(targetEntity: RaceSkill::class, inversedBy: 'sources')]
-    private Collection $skills;
-
-    /**
-     * @var Collection<int, RaceTable>
-     */
-    #[ORM\ManyToMany(targetEntity: RaceTable::class, inversedBy: 'sources')]
-    private Collection $tables;
-
-    /**
      * @var Collection<int, RaceSubrace>
      */
     #[ORM\OneToMany(targetEntity: RaceSubrace::class, mappedBy: 'source')]
     private Collection $subraces;
 
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'race_source')]
+    private Collection $skills;
+
+    /**
+     * @var Collection<int, Table>
+     */
+    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'race_source')]
+    private Collection $tables;
+
     public function __construct()
     {
         $this->languages = new ArrayCollection();
+        $this->subraces = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->tables = new ArrayCollection();
-        $this->subraces = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,54 +249,6 @@ class RaceSource
     }
 
     /**
-     * @return Collection<int, RaceSkill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(RaceSkill $skill): static
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills->add($skill);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(RaceSkill $skill): static
-    {
-        $this->skills->removeElement($skill);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, RaceTable>
-     */
-    public function getTables(): Collection
-    {
-        return $this->tables;
-    }
-
-    public function addTable(RaceTable $table): static
-    {
-        if (!$this->tables->contains($table)) {
-            $this->tables->add($table);
-        }
-
-        return $this;
-    }
-
-    public function removeTable(RaceTable $table): static
-    {
-        $this->tables->removeElement($table);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, RaceSubrace>
      */
     public function getSubraces(): Collection
@@ -319,6 +273,60 @@ class RaceSource
             if ($subrace->getSource() === $this) {
                 $subrace->setSource(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->addRaceSource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeRaceSource($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Table>
+     */
+    public function getTables(): Collection
+    {
+        return $this->tables;
+    }
+
+    public function addTable(Table $table): static
+    {
+        if (!$this->tables->contains($table)) {
+            $this->tables->add($table);
+            $table->addRaceSource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTable(Table $table): static
+    {
+        if ($this->tables->removeElement($table)) {
+            $table->removeRaceSource($this);
         }
 
         return $this;

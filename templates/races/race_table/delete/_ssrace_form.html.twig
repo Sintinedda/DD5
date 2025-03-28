@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('ssrace_table_delete', {'id': race_subcategory.id, 'id2': t.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ t.id) }}">
+    <button class="btn">Delete</button>
+</form>

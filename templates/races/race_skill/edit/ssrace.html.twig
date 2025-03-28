@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RaceSkill{% endblock %}
+
+{% block body %}
+    <h1>Edit RaceSkill</h1>
+
+    {{ include('races/race_skill/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('ssrace_show', 'id': id) }}">back to list</a>
+
+{% endblock %}
