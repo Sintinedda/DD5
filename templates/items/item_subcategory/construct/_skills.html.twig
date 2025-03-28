@@ -28,15 +28,15 @@
                     <td><a href="{{ path('item_liste_skill_sub_new', {'id': s.id, 'id2': item_subcategory.id}) }}">new liste</a></td>
                     {% for l in s.listes|sort((a, b) => a.number <=> b.number) %}
                         <td>
-                            <a href="{{ path('item_liste_skill_sub_edit', {'id': l.id, 'id2': item_subcategory.id}) }}">Liste {{ l.number }}</a>
-                            {{ include 'items/item_liste/delete/_sub-skill_form.html.twig' }}
+                            <a href="{{ path('item_liste_sub_edit', {'id': l.id, 'id2': item_subcategory.id}) }}">Liste {{ l.number }}</a>
+                            {{ include 'items/item_liste/delete/_sub_form.html.twig' }}
                         </td>
                     {% endfor %}
                     <td><a href="{{ path('item_table_skill_sub_new', {'id': item_subcategory.id, 'id2': s.id}) }}">new table</a></td>
                     {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
                         <td>
-                            <a href="{{ path('item_table_skill_sub_edit', {'id': t.id, 'id2': item_subcategory.id}) }}">Table {{ t.number }}</a>
-                            {{ include 'items/item_table/delete/_sub-skill_form.html.twig' }}
+                            <a href="{{ path('item_table_sub_edit', {'id': t.id, 'id2': item_subcategory.id}) }}">Table {{ t.number }}</a>
+                            {{ include 'items/item_table/delete/_sub_form.html.twig' }}
                         </td>
                     {% endfor %}
                     {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
