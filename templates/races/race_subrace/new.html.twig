@@ -7,5 +7,5 @@
 
     {{ include('races/race_subrace/_form.html.twig') }}
 
-    <a href="{{ path('app_races_race_subrace_index') }}">back to list</a>
+    <a href="{{ path('srace_show', {'id': id}) }}">back to list</a>
 {% endblock %}

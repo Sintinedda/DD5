@@ -2,6 +2,8 @@
 
 namespace App\Entity\Races;
 
+use App\Entity\Construct\Skill;
+use App\Entity\Construct\Table;
 use App\Repository\Races\RaceSubraceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -38,15 +40,15 @@ class RaceSubrace
     private ?string $ability = null;
 
     /**
-     * @var Collection<int, RaceSkill>
+     * @var Collection<int, Skill>
      */
-    #[ORM\ManyToMany(targetEntity: RaceSkill::class, inversedBy: 'subraces')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'race_subrace')]
     private Collection $skills;
 
     /**
-     * @var Collection<int, RaceTable>
+     * @var Collection<int, Table>
      */
-    #[ORM\ManyToMany(targetEntity: RaceTable::class, inversedBy: 'subraces')]
+    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'race_subrace')]
     private Collection $tables;
 
     public function __construct()
@@ -145,49 +147,55 @@ class RaceSubrace
     }
 
     /**
-     * @return Collection<int, RaceSkill>
+     * @return Collection<int, Skill>
      */
     public function getSkills(): Collection
     {
         return $this->skills;
     }
 
-    public function addSkill(RaceSkill $skill): static
+    public function addSkill(Skill $skill): static
     {
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
+            $skill->addRaceSubrace($this);
         }
 
         return $this;
     }
 
-    public function removeSkill(RaceSkill $skill): static
+    public function removeSkill(Skill $skill): static
     {
-        $this->skills->removeElement($skill);
+        if ($this->skills->removeElement($skill)) {
+            $skill->removeRaceSubrace($this);
+        }
 
         return $this;
     }
 
     /**
-     * @return Collection<int, RaceTable>
+     * @return Collection<int, Table>
      */
     public function getTables(): Collection
     {
         return $this->tables;
     }
 
-    public function addTable(RaceTable $table): static
+    public function addTable(Table $table): static
     {
         if (!$this->tables->contains($table)) {
             $this->tables->add($table);
+            $table->addRaceSubrace($this);
         }
 
         return $this;
     }
 
-    public function removeTable(RaceTable $table): static
+    public function removeTable(Table $table): static
     {
-        $this->tables->removeElement($table);
+        if ($this->tables->removeElement($table)) {
+            $table->removeRaceSubrace($this);
+        }
 
         return $this;
     }

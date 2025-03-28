@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/races/race')]
+#[Route('/admin/race')]
 final class RaceController extends AbstractController
 {
-    #[Route(name: 'app_races_race_index', methods: ['GET'])]
+    #[Route(name: 'races', methods: ['GET'])]
     public function index(RaceRepository $raceRepository): Response
     {
         return $this->render('races/race/index.html.twig', [
@@ -22,7 +22,7 @@ final class RaceController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_races_race_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'race_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $race = new Race();
@@ -33,7 +33,7 @@ final class RaceController extends AbstractController
             $entityManager->persist($race);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_races_race_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('race_show', ['id' => $race->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('races/race/new.html.twig', [
@@ -42,7 +42,7 @@ final class RaceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_races_race_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'race_show', methods: ['GET'])]
     public function show(Race $race): Response
     {
         return $this->render('races/race/show.html.twig', [
@@ -50,7 +50,7 @@ final class RaceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_races_race_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'race_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Race $race, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(RaceType::class, $race);
@@ -59,7 +59,7 @@ final class RaceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_races_race_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('race_show', ['id' => $race->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('races/race/edit.html.twig', [
@@ -68,7 +68,7 @@ final class RaceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_races_race_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'race_delete', methods: ['POST'])]
     public function delete(Request $request, Race $race, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$race->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +76,6 @@ final class RaceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_races_race_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('races', [], Response::HTTP_SEE_OTHER);
     }
 }

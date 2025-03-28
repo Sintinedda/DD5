@@ -2,80 +2,127 @@
 
 namespace App\Controller\Races;
 
-use App\Entity\Races\RaceRow;
-use App\Form\Races\RaceRowType;
-use App\Repository\Races\RaceRowRepository;
+use App\Entity\Construct\Table;
+use App\Entity\Construct\TableRow;
+use App\Form\Construct\TableRowType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/races/race/row')]
+#[Route('/admin/race-row')]
 final class RaceRowController extends AbstractController
 {
-    #[Route(name: 'app_races_race_row_index', methods: ['GET'])]
-    public function index(RaceRowRepository $raceRowRepository): Response
+    #[Route('/srace{id}/table{id2}/new', name: 'srace_row_new', methods: ['GET', 'POST'])]
+    public function newSrace(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        return $this->render('races/race_row/index.html.twig', [
-            'race_rows' => $raceRowRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_races_race_row_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $raceRow = new RaceRow();
-        $form = $this->createForm(RaceRowType::class, $raceRow);
+        $table = $entityManager->getRepository(Table::class)->findOneBy(['id' => $id2]);
+        $row = new TableRow();
+        $form = $this->createForm(TableRowType::class, $row);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($raceRow);
+            $row->setTableau($table);
+            $entityManager->persist($row);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_races_race_row_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('srace_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('races/race_row/new.html.twig', [
-            'race_row' => $raceRow,
+        return $this->render('races/race_row/new/srace.html.twig', [
+            'row' => $row,
             'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}', name: 'app_races_race_row_show', methods: ['GET'])]
-    public function show(RaceRow $raceRow): Response
+    #[Route('/ssrace{id}/table{id2}/new', name: 'ssrace_row_new', methods: ['GET', 'POST'])]
+    public function newSsrace(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        return $this->render('races/race_row/show.html.twig', [
-            'race_row' => $raceRow,
+        $table = $entityManager->getRepository(Table::class)->findOneBy(['id' => $id2]);
+        $row = new TableRow();
+        $form = $this->createForm(TableRowType::class, $row);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $row->setTableau($table);
+            $entityManager->persist($row);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('ssrace_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('races/race_row/new/ssrace.html.twig', [
+            'row' => $row,
+            'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_races_race_row_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, RaceRow $raceRow, EntityManagerInterface $entityManager): Response
+    #[Route('/srace{id}/{id2}/edit', name: 'srace_row_edit', methods: ['GET', 'POST'])]
+    public function editSrace(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        $form = $this->createForm(RaceRowType::class, $raceRow);
+        $row = $entityManager->getRepository(TableRow::class)->findOneBy(['id' => $id2]);
+        $form = $this->createForm(TableRowType::class, $row);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_races_race_row_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('srace_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('races/race_row/edit.html.twig', [
-            'race_row' => $raceRow,
+        return $this->render('races/race_row/edit/srace.html.twig', [
+            'row' => $row,
             'form' => $form,
+            'id' => $id
         ]);
     }
 
-    #[Route('/{id}', name: 'app_races_race_row_delete', methods: ['POST'])]
-    public function delete(Request $request, RaceRow $raceRow, EntityManagerInterface $entityManager): Response
+    #[Route('/ssrace{id}/{id2}/edit', name: 'ssrace_row_edit', methods: ['GET', 'POST'])]
+    public function editSsrace(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$raceRow->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($raceRow);
+        $row = $entityManager->getRepository(TableRow::class)->findOneBy(['id' => $id2]);
+        $form = $this->createForm(TableRowType::class, $row);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('ssrace_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('races/race_row/edit/ssrace.html.twig', [
+            'row' => $row,
+            'form' => $form,
+            'id' => $id
+        ]);
+    }
+
+    #[Route('/srace{id}/{id2}', name: 'srace_row_delete', methods: ['POST'])]
+    public function deleteSrace(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
+    {
+        $row = $entityManager->getRepository(TableRow::class)->findOneBy(['id' => $id2]);
+
+        if ($this->isCsrfTokenValid('delete'.$row->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($row);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_races_race_row_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('srace_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/ssrace{id}/{id2}', name: 'ssrace_row_delete', methods: ['POST'])]
+    public function deleteSsrace(Request $request, EntityManagerInterface $entityManager, int $id, int $id2): Response
+    {
+        $row = $entityManager->getRepository(TableRow::class)->findOneBy(['id' => $id2]);
+
+        if ($this->isCsrfTokenValid('delete'.$row->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($row);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('ssrace_show', ['id' => $id], Response::HTTP_SEE_OTHER);
     }
 }

@@ -7,7 +7,6 @@
 
     {{ include('races/race/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_races_race_index') }}">back to list</a>
+    <a href="{{ path('race_show', {'id': race.id}) }}">back to list</a>
 
-    {{ include('races/race/_delete_form.html.twig') }}
 {% endblock %}

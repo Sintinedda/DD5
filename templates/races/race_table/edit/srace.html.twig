@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RaceTable{% endblock %}
+
+{% block body %}
+    <h1>Edit RaceTable</h1>
+
+    {{ include('races/race_table/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('srace_show', {'id': id}) }}">back to list</a>
+
+{% endblock %}

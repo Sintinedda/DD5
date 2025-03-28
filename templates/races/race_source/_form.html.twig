@@ -1,4 +1,33 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+    <div>
+        {{ form_row(form.source) }}
+        {{ form_row(form.source_part) }}
+        {{ form_row(form.languages) }}
+    </div>
+    <div>
+        {{ form_row(form.d1) }}
+    </div>
+    <div>
+        {{ form_row(form.d2) }}
+    </div>
+    <div>
+        {{ form_row(form.d3) }}
+    </div>
+    <div>
+        {{ form_row(form.ability) }}
+    </div>
+    <div>
+        {{ form_row(form.age) }}
+    </div>
+    <div>
+        {{ form_row(form.alignment) }}
+    </div>
+    <div>
+        {{ form_row(form.size) }}
+    </div>
+    <div>
+        {{ form_row(form.speed) }}
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
