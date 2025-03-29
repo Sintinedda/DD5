@@ -35,7 +35,7 @@ class Classe
     /**
      * @var Collection<int, Item>
      */
-    #[ORM\ManyToMany(targetEntity: Item::class, inversedBy: 'classes')]
+    #[ORM\ManyToMany(targetEntity: Item::class, inversedBy: 'armorclasses')]
     #[ORM\JoinTable(name: '`classe_armor`')]
     private Collection $armor1;
 
