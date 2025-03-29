@@ -47,7 +47,7 @@ class SourcePart
     /**
      * @var Collection<int, SpecialtyItem>
      */
-    #[ORM\ManyToMany(targetEntity: SpecialtyItem::class, mappedBy: 'soucre_part')]
+    #[ORM\ManyToMany(targetEntity: SpecialtyItem::class, mappedBy: 'source_part')]
     private Collection $specialties;
 
     /**

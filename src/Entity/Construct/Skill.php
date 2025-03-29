@@ -79,9 +79,6 @@ class Skill
     #[ORM\OneToMany(targetEntity: Table::class, mappedBy: 'skill')]
     private Collection $tables;
 
-    #[ORM\ManyToOne(inversedBy: 'skills')]
-    private ?Feat $feat = null;
-
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $type = null;
 
@@ -394,18 +391,6 @@ class Skill
                 $table->setSkill(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getFeat(): ?Feat
-    {
-        return $this->feat;
-    }
-
-    public function setFeat(?Feat $feat): static
-    {
-        $this->feat = $feat;
 
         return $this;
     }

@@ -1,5 +1,14 @@
-body {
-    background-color: skyblue;
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-size: 1rem;
+    color: black;
+    text-align: justify;
+}
+
+main {
+    background-color: rgb(211, 163, 43);
 }
 
 form > div {

@@ -27,6 +27,9 @@ class Race
     #[ORM\OneToMany(targetEntity: RaceSource::class, mappedBy: 'race')]
     private Collection $sources;
 
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
     public function __construct()
     {
         $this->sources = new ArrayCollection();
@@ -87,6 +90,18 @@ class Race
                 $source->setRace(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

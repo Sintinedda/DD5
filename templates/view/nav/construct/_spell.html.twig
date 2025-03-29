@@ -1,0 +1,61 @@
+<li class="nav-item">
+    <button class="nav-item-btn" onclick="showSubmenu('menu-spells', 'nav-lists', 'nav-item-list')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+        </svg>
+    </button>
+    <a class="nav-link" href="">Sorts</a>
+    <ul class="nav-lists" id="menu-spells">
+        <li class="nav-spell-item">
+            <a class="nav-spell-link" href="">Tous les sorts</a>
+        </li>
+        <li class="nav-spell-item">
+            <button class="nav-items-btn" onclick="showSubsubmenu('menu-spells-level', 'nav-item-list')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+                </svg>
+            </button>
+            <a class="nav-spell-link" href="">Par niveau</a>
+            <ul class="nav-item-list" id="menu-spells-level">
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Cantrips</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 1</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 2</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 3</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 4</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 5</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 6</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 7</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 8</a></li>
+                <li class="nav-spell-items"><a class="nav-spell-links" href="">Niveau 9</a></li>
+            </ul>
+        </li>
+        <li class="nav-spell-item">
+            <button class="nav-items-btn" onclick="showSubsubmenu('menu-spells-classe', 'nav-item-list')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+                </svg>
+            </button>
+            <a class="nav-spell-link" href="">Par classe</a>
+            <ul class="nav-item-list" id="menu-spells-classe">
+                {% for classe in classes %}
+                    {% if classe.spells|length >= 1 %}
+                        <li class="nav-spell-items"><a  class="nav-spell-links" href="">{{ classe.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="nav-spell-item">
+            <button class="nav-items-btn" onclick="showSubsubmenu('menu-spells-school', 'nav-item-list')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+                </svg>
+            </button>
+            <a class="nav-spell-link" href="">Par école</a>
+            <ul class="nav-item-list" id="menu-spells-school">
+                {% for school in schools %}
+                    <li class="nav-spell-items"><a  class="nav-spell-links" href="">{{ school.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</li>
