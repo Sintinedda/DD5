@@ -2,6 +2,7 @@
     {{ form_errors(form) }}
     <div>
         {{ form_row(form.t1) }}
+        {{ form_row(form.number) }}
     </div>
     <div>
         {{ form_row(form.d1) }}
@@ -14,18 +15,6 @@
     </div>
     <div>
         {{ form_row(form.d4) }}
-    </div>
-    <div>
-        {{ form_row(form.d5) }}
-    </div>
-    <div>
-        {{ form_row(form.d6) }}
-    </div>
-    <div>
-        {{ form_row(form.d7) }}
-    </div>
-    <div>
-        {{ form_row(form.d8) }}
     </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

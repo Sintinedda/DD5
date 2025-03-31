@@ -37,7 +37,7 @@ class TableRow
     #[ORM\Column(length: 1000, nullable: true)]
     private ?string $d7 = null;
 
-    #[ORM\Column(length: 1000)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $d8 = null;
 
     #[ORM\ManyToOne(inversedBy: 'rows')]
@@ -150,7 +150,7 @@ class TableRow
         return $this->d8;
     }
 
-    public function setD8(string $d8): static
+    public function setD8(?string $d8): static
     {
         $this->d8 = $d8;
 

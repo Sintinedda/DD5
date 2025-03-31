@@ -42,7 +42,6 @@ class Item
     private ?ItemSubcategory $subcategory = null;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?ItemCategory $category = null;
 
     #[ORM\Column(length: 50)]
@@ -64,7 +63,7 @@ class Item
     private ?int $cost = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $weight = null;
+    private ?float $weight = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $ca = null;
@@ -323,12 +322,12 @@ class Item
         return $this;
     }
 
-    public function getWeight(): ?int
+    public function getWeight(): ?float
     {
         return $this->weight;
     }
 
-    public function setWeight(?int $weight): static
+    public function setWeight(?float $weight): static
     {
         $this->weight = $weight;
 

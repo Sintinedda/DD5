@@ -4,10 +4,12 @@
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
         </svg>
     </button>
-    <a class="nav-link" href="">Classes</a>
+    <a class="nav-link" href="{{ path('view_classes') }}">Classes</a>
     <ul class="nav-lists" id="menu-classes">
         {% for classe in classes %}
-            <li class="nav-classe-items"><a class="nav-classe-links" href="">{{ classe.name }}</a></li>
+            <li class="nav-classe-items">
+                <a class="nav-classe-links" href="{{ path('view_classe', {'slug': classe.slug}) }}">{{ classe.name }}</a>
+            </li>
         {% endfor %}
     </ul>
 </li>

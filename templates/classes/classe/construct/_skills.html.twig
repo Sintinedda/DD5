@@ -8,7 +8,7 @@
         <div class="accordion-body">
             <div class="accordion" id="skills">
                 {% set newArray = [] %}
-                {% for lvl in classe.levels %}
+                {% for lvl in classe.levels|sort((a, b) => a.level <=> b.level) %}
                     {% for s in lvl.skills|sort((a, b) => a.level <=> b.level) %}
                         {% if s.name not in newArray %}
                             <div>
@@ -24,13 +24,13 @@
                                     {% for l in s.listes %}
                                         <tr>
                                             <td><a href="{{ path('classe_liste_edit', {'id': classe.id, 'id2': l.id}) }}">Liste {{ l.number }}</a></td>
-                                            <td>{{ include ('classes/classe-liste/_delete_form.html.twig') }}</td>
+                                            <td>{{ include ('classes/classe_liste/_delete_form.html.twig') }}</td>
                                         </tr>
                                     {% endfor %}
                                     {% for sub in s.subskills %}
                                         <tr>
                                             <td><a href="{{ path('classe_subskill_edit', {'id': classe.id, 'id2': sub.id}) }}">{{ sub.t1 }}</a></td>
-                                            <td>{{ include ('classes/classe-subskill/_delete_form.html.twig') }}</td>
+                                            <td>{{ include ('classes/classe_subskill/_delete_form.html.twig') }}</td>
                                         </tr>
                                     {% endfor %}
                                 </table>
@@ -38,13 +38,13 @@
                                     {% for t in s.tables %}
                                         <tr>
                                             <td><a href="{{ path('classe_table_edit', {'id': classe.id, 'id2': t.id}) }}">Table {{ t.number }}</a></td>
-                                            <td>{{ include ('classes/classe-table/_delete_form.html.twig') }}</td>
+                                            <td>{{ include ('classes/classe_table/_delete_form.html.twig') }}</td>
                                             <td><a href="{{ path('classe_row_new', {'id': classe.id, 'id2': t.id}) }}">new row</a></td>
                                             <td><ul>
                                                 {% for r in t.rows %}
                                                     <li>
                                                         <a href="{{ path('classe_row_edit', {'id': classe.id, 'id2': r.id}) }}">Row {{ r.number }}</a>
-                                                        {{ include ('classes/classe-row/_delete_form.html.twig') }}
+                                                        {{ include ('classes/classe_row/_delete_form.html.twig') }}
                                                     </li>
                                                 {% endfor %}
                                             </ul></td>

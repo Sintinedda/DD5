@@ -84,6 +84,12 @@ class ItemSubcategory
     #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'item_subcategories')]
     private Collection $tables;
 
+    /**
+     * @var Collection<int, Classe>
+     */
+    #[ORM\ManyToMany(targetEntity: Classe::class, mappedBy: 'tool2')]
+    private Collection $toolclasses;
+
     public function __construct()
     {
         $this->armorclasses = new ArrayCollection();
@@ -92,6 +98,7 @@ class ItemSubcategory
         $this->listes = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->tables = new ArrayCollection();
+        $this->toolclasses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -367,6 +374,33 @@ class ItemSubcategory
     {
         if ($this->tables->removeElement($table)) {
             $table->removeItemSubcategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Classe>
+     */
+    public function getToolclasses(): Collection
+    {
+        return $this->toolclasses;
+    }
+
+    public function addToolclass(Classe $toolclass): static
+    {
+        if (!$this->toolclasses->contains($toolclass)) {
+            $this->toolclasses->add($toolclass);
+            $toolclass->addTool2($this);
+        }
+
+        return $this;
+    }
+
+    public function removeToolclass(Classe $toolclass): static
+    {
+        if ($this->toolclasses->removeElement($toolclass)) {
+            $toolclass->removeTool2($this);
         }
 
         return $this;

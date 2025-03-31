@@ -1,0 +1,11 @@
+<div class="classe-div">
+    <h2>Équipement</h2>
+    <p>Vous commencez avec l'équipement suivant, en plus de l'équipement accordé par votre historique :</p>
+    <ul class="classe-equipment">
+        <li>{{ classe.equipment1 }}</li>
+        {% if classe.equipment2 %}<li>{{ classe.equipment2 }}</li>{% endif %}
+        {% if classe.equipment3 %}<li>{{ classe.equipment3 }}</li>{% endif %}
+        {% if classe.equipment4 %}<li>{{ classe.equipment4 }}</li>{% endif %}
+    </ul>
+    <p>Vous pouvez également commencer avec {{ classe.gold }} pièces d'or de départ</p>
+</div>

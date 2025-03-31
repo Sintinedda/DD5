@@ -1,0 +1,47 @@
+<div class="specialty-div">
+    {% for s in specialty.skills|sort((a, b) => a.level <=> b.level) %}
+        <div class="skills">
+            <h2>{{ s.name }}</h2>
+            <p>{{ s.d1|raw }}</p>
+            {% set place = 1 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d2 %}<p>{{ s.d2|raw }}</p>{% endif %}
+            {% set place = 2 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d3 %}<p>{{ s.d3|raw }}</p>{% endif %}
+            {% set place = 3 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d4 %}<p>{{ s.d4|raw }}</p>{% endif %}
+            {% set place = 4 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d5 %}<p>{{ s.d5|raw }}</p>{% endif %}
+            {% set place = 5 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d6 %}<p>{{ s.d6|raw }}</p>{% endif %}
+            {% set place = 6 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d7 %}<p>{{ s.d7|raw }}</p>{% endif %}
+            {% set place = 7 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d8 %}<p>{{ s.d8|raw }}</p>{% endif %}
+            {% set place = 8 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d9 %}<p>{{ s.d9|raw }}</p>{% endif %}
+            {% set place = 9 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+            {% if s.d10 %}<p>{{ s.d10|raw }}</p>{% endif %}
+            {% set place = 10 %}
+            {% include('view/construct/_skill-listes.html.twig') %}
+            {% include('view/construct/_skill-tables.html.twig') %}
+        </div>
+    {% endfor %}
+</div>

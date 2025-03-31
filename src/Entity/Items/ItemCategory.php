@@ -4,7 +4,6 @@ namespace App\Entity\Items;
 
 use App\Entity\Assets\Source;
 use App\Entity\Assets\SourcePart;
-use App\Entity\Classes\Classe;
 use App\Entity\Construct\Skill;
 use App\Entity\Items\ItemSubcategory;
 use App\Repository\Items\ItemCategoryRepository;
@@ -19,12 +18,6 @@ class ItemCategory
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    /**
-     * @var Collection<int, Classe>
-     */
-    #[ORM\OneToMany(targetEntity: Classe::class, mappedBy: 'tool2')]
-    private Collection $toolclasses;
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
@@ -79,7 +72,6 @@ class ItemCategory
 
     public function __construct()
     {
-        $this->toolclasses = new ArrayCollection();
         $this->source = new ArrayCollection();
         $this->source_part = new ArrayCollection();
         $this->subcategories = new ArrayCollection();
@@ -90,36 +82,6 @@ class ItemCategory
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Classe>
-     */
-    public function getToolclasses(): Collection
-    {
-        return $this->toolclasses;
-    }
-
-    public function addToolclass(Classe $toolclass): static
-    {
-        if (!$this->toolclasses->contains($toolclass)) {
-            $this->toolclasses->add($toolclass);
-            $toolclass->setTool2($this);
-        }
-
-        return $this;
-    }
-
-    public function removeToolclass(Classe $toolclass): static
-    {
-        if ($this->toolclasses->removeElement($toolclass)) {
-            // set the owning side to null (unless already changed)
-            if ($toolclass->getTool2() === $this) {
-                $toolclass->setTool2(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getName(): ?string

@@ -23,6 +23,7 @@ class SpecialtyItemType extends AbstractType
             ->add('part2', TextType::class, [
                 'required' => false
             ])
+            ->add('ua')
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
             ->add('d1', TextareaType::class, [
@@ -45,11 +46,10 @@ class SpecialtyItemType extends AbstractType
                 'choice_label' => 'abbreviation',
                 'multiple' => true,
             ])
-            ->add('soucre_part', EntityType::class, [
+            ->add('source_part', EntityType::class, [
                 'class' => SourcePart::class,
                 'required' => false,
                 'choice_label' => 'number',
-                'multiple' => true,
             ])
         ;
     }

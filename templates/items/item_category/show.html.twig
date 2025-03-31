@@ -17,8 +17,8 @@
         <a style="margin-right: 20px;" href="{{ path('item_cat_item_new', {'id': item_category.id}) }}">new item</a>   
     </div>
     <br/><br/>
-    {{ include 'items/item_category/construct/_skills.html.twig' }}
-    {{ include 'items/item_category/construct/_subcategories.html.twig' }}
-    {{ include 'items/item_category/construct/_items.html.twig' }}
+    {{ include ('items/item_category/construct/_skills.html.twig') }}
+    {{ include ('items/item_category/construct/_subcategories.html.twig') }}
+    {{ include ('items/item_category/construct/_items.html.twig') }}
     
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Construct;
 
+use App\Entity\Classes\Classe;
 use App\Repository\Construct\SubskillRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,6 +28,15 @@ class Subskill
 
     #[ORM\ManyToOne(inversedBy: 'subskills')]
     private ?Skill $skill = null;
+
+    #[ORM\ManyToOne(inversedBy: 'subskills')]
+    private ?Classe $classe = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $d4 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $number = null;
 
     public function getId(): ?int
     {
@@ -89,6 +99,42 @@ class Subskill
     public function setSkill(?Skill $skill): static
     {
         $this->skill = $skill;
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): static
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    public function getD4(): ?string
+    {
+        return $this->d4;
+    }
+
+    public function setD4(?string $d4): static
+    {
+        $this->d4 = $d4;
+
+        return $this;
+    }
+
+    public function getNumber(): ?int
+    {
+        return $this->number;
+    }
+
+    public function setNumber(?int $number): static
+    {
+        $this->number = $number;
 
         return $this;
     }

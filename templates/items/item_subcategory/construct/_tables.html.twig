@@ -1,4 +1,4 @@
-{% if item_subcategory.tables|count != 0 %}
+{% if item_subcategory.tables|length != 0 %}
     <h2>Tables</h2>
     <table class="table">
         <thead>
@@ -22,7 +22,7 @@
                     {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
                         <td>
                             <a href="{{ path('item_row_sub_edit', {'id': r.id, 'id2': item_subcategory.id}) }}">Row {{ r.number }}</a>
-                            {{ include 'items/item_row/delete/_sub_form.html.twig' }}
+                            {{ include ('items/item_row/delete/_sub_form.html.twig') }}
                         </td>
                     {% endfor %}
                 </tr>

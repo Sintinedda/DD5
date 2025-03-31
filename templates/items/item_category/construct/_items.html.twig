@@ -1,4 +1,4 @@
-{% if item_category.items|count != 0 %}
+{% if item_category.items|length != 0 %}
     <h2>Items</h2>
     <table class="table">
         <thead>
@@ -23,7 +23,7 @@
                     {% for t in i.tables|sort((a, b) => a.number <=> b.number) %}
                         <td>
                             <a href="{{ path('item_table_item_cat_edit', {'id': t.id, 'id2': item_category.id, 'id3': i.id}) }}">Table {{ t.number }}</a>
-                            {{ include 'items/item_table/delete/_cat-item_form.html.twig' }}
+                            {{ include ('items/item_table/delete/_cat-item_form.html.twig') }}
                         </td>
                     {% endfor %}
                     {% for t in i.tables|sort((a, b) => a.number <=> b.number) %}
@@ -32,7 +32,7 @@
                             {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
                                 <li>
                                     <a href="{{ path('item_row_cat_edit', {'id': r.id, 'id2': item_category.id}) }}">Row {{ r.number }}</a>
-                                    {{ include 'items/item_row/delete/_cat_form.html.twig' }}
+                                    {{ include ('items/item_row/delete/_cat_form.html.twig') }}
                                 </li>
                             {% endfor %}
                         </ul></td>

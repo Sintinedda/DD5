@@ -1,0 +1,9 @@
+<div class="classe-div">
+    {% for sub in classe.subskills|sort((a, b) => a.number <=> b.number) %}
+        <h2>{{ sub.t1 }}</h2>
+        <p>{{ sub.d1|raw }}</p>
+        {% if sub.d2 %}<p>{{ sub.d2|raw }}</p>{% endif %}
+        {% if sub.d3 %}<p>{{ sub.d3|raw }}</p>{% endif %}
+        {% if sub.d4 %}<p>{{ sub.d4|raw }}</p>{% endif %}
+    {% endfor %}
+</div>

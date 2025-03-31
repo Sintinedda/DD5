@@ -1,0 +1,19 @@
+{% if classe.spellcasting %}
+    <div class="classe-skill">
+        <h2>Incantation</h2>
+        <p>{{ classe.spellcasting.d }}</p>
+        {% for s in classe.spellcasting.skills %}
+            <h3>{{ s.name }}</h3>
+            <p>{{ s.d1|raw }}</p>
+            {% if s.d2 %}<p>{{ s.d2|raw }}</p>{% endif %}
+            {% if s.d3 %}<p>{{ s.d3|raw }}</p>{% endif %}
+            {% if s.d4 %}<p>{{ s.d4|raw }}</p>{% endif %}
+            {% if s.d5 %}<p>{{ s.d5|raw }}</p>{% endif %}
+            {% if s.d6 %}<p>{{ s.d6|raw }}</p>{% endif %}
+            {% if s.d7 %}<p>{{ s.d7|raw }}</p>{% endif %}
+            {% if s.d8 %}<p>{{ s.d8|raw }}</p>{% endif %}
+            {% if s.d9 %}<p>{{ s.d9|raw }}</p>{% endif %}
+            {% if s.d10 %}<p>{{ s.d10|raw }}</p>{% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

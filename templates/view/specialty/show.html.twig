@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ specialty.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent () }}
+    <link href="{{ asset('assets/css/classe/classe-spe.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/classe/specialty.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body_id 'specialty-item' %}
+
+
+{% block main %}
+
+    <div class="container specialty">
+        <h1>    
+            {% if specialty.part1 %}
+                {{ specialty.part1 }}
+                {% if specialty.part2 == "de l'" %}{{ specialty.part2 }}{{ specialty.name }}{% else %}{{ specialty.part2 }} {{ specialty.name }}{% endif %}
+            {% else %}
+                {{ specialty.name }}
+            {% endif %}
+            {% if specialty.ua == true %}(AD){% endif %}
+        </h1>
+        <div class="description">
+            <p>{{ specialty.d1|raw }}</p>
+            {% if specialty.d2 %}<p>{{ specialty.d2|raw }}</p>{% endif %}
+            {% if specialty.d3 %}<p>{{ specialty.d3|raw }}</p>{% endif %}
+            {% if specialty.d4 %}<p>{{ specialty.d4|raw }}</p>{% endif %}
+            {% if specialty.d5 %}<p>{{ specialty.d5|raw }}</p>{% endif %}
+        </div>
+        <p class="specialty-source">Source : 
+            {% for source in specialty.source %}
+                {{ source.name }}
+                {% if specialty.sourcePart %} {{ specialty.sourcePart.number}} - {{ specialty.sourcePart.name }}{% endif %}
+                {{ not loop.last ? '/' }}
+            {% endfor %}
+        </p>
+        {% include('view/specialty/construct/_skills.html.twig') %}
+    </div>
+
+{% endblock %}

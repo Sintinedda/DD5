@@ -42,34 +42,32 @@ final class ItemSubcategoryController extends AbstractController
     {
         return $this->render('items/item_subcategory/show.html.twig', [
             'item_subcategory' => $itemSubcategory,
-            'id' => $itemSubcategory->getCategory('id')
+            'id' => $itemSubcategory->getCategory()->getId()
         ]);
     }
 
     #[Route('/{id}/edit', name: 'item_sub_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ItemSubcategory $itemSubcategory, EntityManagerInterface $entityManager): Response
     {
-        $id = $itemSubcategory->getCategory('id');
         $form = $this->createForm(ItemSubcategoryType::class, $itemSubcategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('items_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('item_sub_show', ['id' => $itemSubcategory->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('items/item_subcategory/edit.html.twig', [
             'item_subcategory' => $itemSubcategory,
             'form' => $form,
-            'id' => $itemSubcategory->getCategory('id')
         ]);
     }
 
     #[Route('/{id}', name: 'item_sub_delete', methods: ['POST'])]
     public function delete(Request $request, ItemSubcategory $itemSubcategory, EntityManagerInterface $entityManager): Response
     {
-        $id = $itemSubcategory->getCategory('id');
+        $id = $itemSubcategory->getCategory()->getId();
 
         if ($this->isCsrfTokenValid('delete'.$itemSubcategory->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($itemSubcategory);

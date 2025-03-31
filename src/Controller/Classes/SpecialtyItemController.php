@@ -34,7 +34,7 @@ final class SpecialtyItemController extends AbstractController
         return $this->render('classes/specialty_item/new.html.twig', [
             'specialty_item' => $specialtyItem,
             'form' => $form,
-            'id' => $classeId
+            'classeId' => $classeId
         ]);
     }
 
@@ -83,7 +83,7 @@ final class SpecialtyItemController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete'.$specialtyItem->getId(), $request->getPayload()->getString('_token'))) {
             $specialtyItem->removeSpecialty($spe);
-            if ($specialtyItem->getSpecialties()->count() == 0) {
+            if ($specialtyItem->getSpecialty()->count() == 0) {
                 $entityManager->remove($specialtyItem);
             }
             $entityManager->flush();

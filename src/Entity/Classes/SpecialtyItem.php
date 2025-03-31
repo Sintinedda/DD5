@@ -59,12 +59,6 @@ class SpecialtyItem
     private Collection $source;
 
     /**
-     * @var Collection<int, SourcePart>
-     */
-    #[ORM\ManyToMany(targetEntity: SourcePart::class, inversedBy: 'specialties')]
-    private Collection $source_part;
-
-    /**
      * @var Collection<int, Table>
      */
     #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'specialty_items')]
@@ -76,11 +70,16 @@ class SpecialtyItem
     #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'specialty_items')]
     private Collection $skills;
 
+    #[ORM\Column]
+    private ?bool $ua = null;
+
+    #[ORM\ManyToOne(inversedBy: 'specialties')]
+    private ?SourcePart $source_part = null;
+
     public function __construct()
     {
         $this->specialty = new ArrayCollection();
         $this->source = new ArrayCollection();
-        $this->source_part = new ArrayCollection();
         $this->tables = new ArrayCollection();
         $this->skills = new ArrayCollection();
     }
@@ -247,30 +246,6 @@ class SpecialtyItem
     }
 
     /**
-     * @return Collection<int, SourcePart>
-     */
-    public function getSourcePart(): Collection
-    {
-        return $this->source_part;
-    }
-
-    public function addSourcePart(SourcePart $sourcePart): static
-    {
-        if (!$this->source_part->contains($sourcePart)) {
-            $this->source_part->add($sourcePart);
-        }
-
-        return $this;
-    }
-
-    public function removeSourcePart(SourcePart $sourcePart): static
-    {
-        $this->source_part->removeElement($sourcePart);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Table>
      */
     public function getTables(): Collection
@@ -320,6 +295,30 @@ class SpecialtyItem
         if ($this->skills->removeElement($skill)) {
             $skill->removeSpecialtyItem($this);
         }
+
+        return $this;
+    }
+
+    public function isUa(): ?bool
+    {
+        return $this->ua;
+    }
+
+    public function setUa(bool $ua): static
+    {
+        $this->ua = $ua;
+
+        return $this;
+    }
+
+    public function getSourcePart(): ?SourcePart
+    {
+        return $this->source_part;
+    }
+
+    public function setSourcePart(?SourcePart $source_part): static
+    {
+        $this->source_part = $source_part;
 
         return $this;
     }

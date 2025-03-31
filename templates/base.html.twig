@@ -8,6 +8,8 @@
 
         {% block stylesheets %}
             <link href="{{ asset('assets/css/nav.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('assets/css/construct/liste.css') }}" rel="stylesheet"/>
+            <link href="{{ asset('assets/css/construct/table.css') }}" rel="stylesheet"/>
         {% endblock %}
 
         {% block javascripts %}
@@ -21,6 +23,7 @@
                 {{ render(controller('App\\Controller\\View\\NavController::nav', { 'route': app.request.attributes.get('_route') })) }}
             {% endblock %}
         </header>
+        {% block body %}{% endblock %}
         <main>
             {% block main %}{% endblock %}
         </main>

@@ -4,7 +4,11 @@
 
 {% block body %}
     <h1>ItemCategory index</h1>
+    <a href="{{ path('admin') }}">Retour à l'accueil<a/>
+    <br/><br/>
     <a href="{{ path('items_new') }}">Create new</a>
+    <br/><br/>
+    <a href="{{ path('item_property') }}">Propriétés d'objets</a>
     <br/><br/>
 
     <table class="table">
@@ -23,9 +27,6 @@
                     <td>{{ item_category.slug }}</td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td colspan="4"><a href="{{ path('item_property') }}">Propriétés d'objets</a></td>
-            </tr>
         </tbody>
     </table>
  

@@ -4,6 +4,7 @@ namespace App\Controller\Classes;
 
 use App\Entity\Classes\Classe;
 use App\Entity\Classes\ClasseLevel;
+use App\Entity\Classes\ClasseSpellcasting;
 use App\Entity\Construct\Skill;
 use App\Form\Construct\SkillType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,7 +46,7 @@ final class ClasseSkillController extends AbstractController
     #[Route('/spellcast{id}/new', name: 'classe_skill_spellcasting_new', methods: ['GET', 'POST'])]
     public function newSpellcasting(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
-        $spellcasting = $entityManager->getRepository(Classe::class)->findOneBy(['id' => $id]);
+        $spellcasting = $entityManager->getRepository(ClasseSpellcasting::class)->findOneBy(['id' => $id]);
         $classe = $spellcasting->getClasse();
         $skill = new Skill();
         $form = $this->createForm(SkillType::class, $skill);
@@ -53,8 +54,6 @@ final class ClasseSkillController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $skill->setSpellcasting($spellcasting);
-            $level = $entityManager->getRepository(ClasseLevel::class)->findOneBy(['classe' => $classe, 'level' => 1]);
-            $skill->addClasseLevel($level);
             $entityManager->persist($skill);
             $entityManager->flush();
 
@@ -77,7 +76,7 @@ final class ClasseSkillController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($skill->getClasseLevels->count() != 0) {
+            if ($skill->getClasseLevels()->count() != 0) {
                 $dels = $entityManager->getRepository(ClasseLevel::class)->findBy(['classe' => $classe]);
                 foreach ($dels as $del) {
                     $skill->removeClasseLevel($del);
@@ -93,7 +92,7 @@ final class ClasseSkillController extends AbstractController
             return $this->redirectToRoute('classe_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
-        if ($skill->getSpellcasting()->count() == 1) {
+        if ($skill->getSpellcasting() != NULL) {
             
             return $this->render('classes/classe_skill/editspell.html.twig', [
                 'classe_skill' => $skill,

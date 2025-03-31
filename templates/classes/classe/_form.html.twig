@@ -4,6 +4,7 @@
         {{ form_row(form.name) }}
         {{ form_row(form.slug) }}
         {{ form_row(form.dv) }}
+        {{ form_row(form.gold) }}
         {{ form_row(form.save) }}
         {{ form_row(form.competences) }}
     </div>
@@ -19,6 +20,9 @@
         {{ form_row(form.d) }}
     </div>
     <div>
+        {{ form_row(form.d2) }}
+    </div>
+    <div>
         {{ form_row(form.equipment1) }}
     </div>
     <div>
@@ -29,6 +33,20 @@
     </div>
     <div>
         {{ form_row(form.equipment4) }}
+    </div>
+    <div>
+        {{ form_row(form.cantrip) }}
+        {{ form_row(form.spell) }}
+        {{ form_row(form.spell5) }}
+        {{ form_row(form.spell9) }}
+        {{ form_row(form.infusion) }}
+        {{ form_row(form.rage) }}
+        {{ form_row(form.martial) }}
+        {{ form_row(form.sneak) }}
+        {{ form_row(form.sorcery) }}
+        {{ form_row(form.slot) }}
+        {{ form_row(form.invocation) }}
+        {{ form_row(form.icon) }}
     </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

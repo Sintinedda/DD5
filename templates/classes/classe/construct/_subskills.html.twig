@@ -1,0 +1,21 @@
+{% if classe.subskills|length != 0 %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subskill" aria-expanded="true" aria-controls="collapseOne">
+                Subskill
+            </button>
+        </h2>
+        <div id="subskill" class="accordion-collapse collapse" data-bs-parent="#classe"> 
+            <div class="accordion-body">
+                <table>
+                    {% for sub in classe.subskills %}
+                        <tr>
+                            <td><a style="margin-right: 10px;" href="{{ path('classe_subskill_edit', {'id':classe.id, 'id2': sub.id}) }}">{{ sub.t1 }}</a></td>
+                            <td>{{ include ('classes/classe_subskill/_delete_form.html.twig') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}

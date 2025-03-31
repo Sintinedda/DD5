@@ -12,7 +12,7 @@
                         {% if spe.source != 'Arcanes Déterrés' %}
                             <tr>
                                 <td>{{ spe.id }}</td>
-                                <td><a href="{{ path('specialties_show', {'id': classe.specialty.id, 'id2': spe.id}) }}">{{ s.name }}</a></td>
+                                <td><a href="{{ path('specialties_show', {'id': classe.specialty.id, 'id2': spe.id}) }}">{{ spe.name }}</a></td>
                                 <td>{{ spe.slug }}</td>
                             </td>
                         {% endif %}
@@ -20,7 +20,7 @@
                         {% if spe.source == 'Arcanes Déterrés' %}
                             <tr>
                                 <td>{{ spe.id }}</td>
-                                <td><a href="{{ path('specialties_show', {'id': classe.specialty.id, 'id2': spe.id}) }}">{{ s.name }}</a></td>
+                                <td><a href="{{ path('specialties_show', {'id': classe.specialty.id, 'id2': spe.id}) }}">{{ spe.name }}</a></td>
                                 <td>{{ spe.slug }}</td>
                             </td>
                         {% endif %}

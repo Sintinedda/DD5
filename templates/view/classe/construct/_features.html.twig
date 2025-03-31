@@ -1,0 +1,41 @@
+<div class="classe-div">
+    <h2>Maîtrises</h2>
+    <p><b>Armures : </b>
+        {% for a in classe.armor1 %}
+            {{ a.name }}{{ not loop.last ? ',' }}
+        {% endfor %}
+        {% if classe.armor1|length != 0 and classe.armor2|length != 0 %}, {% endif %}
+        {% for a in classe.armor2 %}
+            {{ a.name }}{{ not loop.last ? ',' }}
+        {% endfor %}       
+    </p>
+    <p><b>Armes : </b>
+        {% for w in classe.weapon1 %}
+            {{ w.name }}{{ not loop.last ? ',' }}
+        {% endfor %}
+        {% if classe.weapon1|length != 0 and classe.weapon2|length != 0 %}, {% endif %}
+        {% for w in classe.weapon2 %}
+            {{ w.name }}{{ not loop.last ? ',' }}
+        {% endfor %}      
+    </p>
+    <p><b>Outils : </b>
+        {% for t in classe.tool1 %}
+            {{ t.name }}{{ not loop.last ? ',' }}
+        {% endfor %}
+        {% if classe.tool1|length != 0 and classe.tool2|length != 0 %}, {% endif %}
+        {% for t in classe.tool2 %}
+            un type d'{{ t.name }} de votre choix{{ not loop.last ? ',' }}
+        {% endfor %}       
+    </p>
+    <p><b>Jets de sauvegarde : </b>
+        {% for s in classe.save %}
+            {{ s[0] }}, {{ s[1] }}
+        {% endfor %}
+    </p>
+    <p><b>Compétences : </b>
+        Choisissez en deux entre
+        {% for c in classe.competences|sort((a, b) => a.name <=> b.name ) %}
+            {{ c.name }}{{ not loop.last ? ',' }}
+        {% endfor %}
+    </p>
+</div>

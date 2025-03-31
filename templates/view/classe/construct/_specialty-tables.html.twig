@@ -1,0 +1,29 @@
+<table class="classe-specialty">
+    <tr class="classe-no-border">
+        <th>{{ classe.specialty.name }}</th>
+        <th>Source</th>
+    </tr>
+    {% for spe in classe.specialty.items|filter(a => a.ua == false) %}
+        <tr>
+            <td><a href="{{ path('view_specialty', {'slug': classe.slug, 'slug2': spe.slug})}}">{{ spe.name }}</a></td>
+            <td>
+                {% for source in spe.source %}
+                    <span>{{ source.name }}<br/></span>
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+    <tr class="classe-no-border">
+        <th colspan="2">Arcanes Déterrés</th>
+    </tr>
+    {% for spe in classe.specialty.items|filter(a => a.ua == true)|sort((a, b) => a.slug <=> b.slug) %}
+        <tr>
+            <td><a href="{{ path('view_specialty', {'slug': classe.slug, 'slug2': spe.slug})}}">{{ spe.name }}</a></td>
+            <td>
+                {% for source in spe.source %}
+                    <span>{{ source.name }} {{ spe.sourcePart.number }} - {{ spe.sourcePart.name }}</span>
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

@@ -38,5 +38,5 @@
         {{ form_row(form.d10) }}
     </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
-    {{ form_widget(formView._token) }}
+    {{ form_widget(form._token) }}
 {{ form_end(form, {render_rest: false}) }}

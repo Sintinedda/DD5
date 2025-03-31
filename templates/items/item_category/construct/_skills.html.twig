@@ -1,4 +1,4 @@
-{% if item_category.skills|count != 0 %}
+{% if item_category.skills|length != 0 %}
     <h2>Skills</2>
     <table class="table">
         <thead>
@@ -29,14 +29,14 @@
                     {% for l in s.listes|sort((a, b) => a.number <=> b.number) %}
                         <td>
                             <a href="{{ path('item_liste_skill_cat_edit', {'id': l.id, 'id2': item_category.id}) }}">Liste {{ l.number }}</a>
-                            {{ include 'items/item_liste/delete/_cat_form.html.twig' }}
+                            {{ include ('items/item_liste/delete/_cat_form.html.twig') }}
                         </td>
                     {% endfor %}
                     <td><a href="{{ path('item_table_skill_cat_new', {'id': item_category.id, 'id2': s.id}) }}">new table</a></td>
                     {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
                         <td>
                             <a href="{{ path('item_table_skill_cat_edit', {'id': t.id, 'id2': item_category.id}) }}">Table {{ t.number }}</a>
-                            {{ include 'items/item_table/delete/_cat-skill_form.html.twig' }}
+                            {{ include ('items/item_table/delete/_cat-skill_form.html.twig') }}
                         </td>
                     {% endfor %}
                     {% for t in s.tables|sort((a, b) => a.number <=> b.number) %}
@@ -45,7 +45,7 @@
                             {% for r in t.rows|sort((a, b) => a.number <=> b.number) %}
                                 <li>
                                     <a href="{{ path('item_row_cat_edit', {'id': r.id, 'id2': item_category.id}) }}">Row {{ r.number }}</a>
-                                    {{ include 'items/item_row/delete/_cat_form.html.twig' }}
+                                    {{ include ('items/item_row/delete/_cat_form.html.twig') }}
                                 </li>
                             {% endfor %}
                         </ul></td>

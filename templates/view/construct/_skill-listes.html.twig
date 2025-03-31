@@ -1,0 +1,14 @@
+{% for l in s.listes|filter(a => a.place == place ) %}
+    <ul class="skill-liste">
+        <li>{{ l.l1 }}</li>
+        {% if l.l2 %}<li>{{ l.l2|raw }}</li>{% endif %}
+        {% if l.l3 %}<li>{{ l.l3|raw }}</li>{% endif %}
+        {% if l.l4 %}<li>{{ l.l4|raw }}</li>{% endif %}
+        {% if l.l5 %}<li>{{ l.l5|raw }}</li>{% endif %}
+        {% if l.l6 %}<li>{{ l.l6|raw }}</li>{% endif %}
+        {% if l.l7 %}<li>{{ l.l7|raw }}</li>{% endif %}
+        {% if l.l8 %}<li>{{ l.l8|raw }}</li>{% endif %}
+        {% if l.l9 %}<li>{{ l.l9|raw }}</li>{% endif %}
+        {% if l.l10 %}<li>{{ l.l10|raw }}</li>{% endif %}
+    </ul>
+{% endfor %}

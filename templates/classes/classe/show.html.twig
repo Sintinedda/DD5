@@ -25,6 +25,7 @@
         {% if classe.levels|length < 20 %}    
             <a style="margin-right: 10px;" href="{{ path('classe_level_new', {'id': classe.id}) }}">new level</a>
         {% endif %}
+        <a style="margin-right: 10px;" href="{{ path('classe_csubskill_new', {'id': classe.id}) }}">new subskill</a>
         {% if classe.spellcasting %}
             <a style="margin-right: 10px;" href="{{ path('classe_spellcasting_edit', {'id': classe.spellcasting.id}) }}">edit spellcasting</a>
         {% else %}
@@ -39,8 +40,10 @@
             <a href="{{ path('specialty_new', {'id': classe.id}) }}">new specialty</a>
         {% endif %}
     </div>
+    <br/><br/>
     <div class="accordion" id="classe">
         {{ include ('classes/classe/construct/_levels.html.twig') }}
+        {{ include ('classes/classe/construct/_subskills.html.twig') }}
         {{ include ('classes/classe/construct/_spellcasting.html.twig') }}
         {{ include ('classes/classe/construct/_skills.html.twig') }}
         {{ include ('classes/classe/construct/_specialties.html.twig') }}

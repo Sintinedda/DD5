@@ -1,0 +1,9 @@
+<div class="classe-div">
+    <h2>Points de vie</h2>
+    <p><b>DV : </b>1d{{ classe.dv }} par niveau 
+        {% if classe.slug in ['artificier', 'occultiste'] %} d'{% else %} de{% endif %} 
+        {{ classe.name }}
+    </p>
+    <p><b>Pv au niveau 1 : </b>{{ classe.dv }} + votre modificateur de Constitution</p>
+    <p><b>Pv aux niveaux suivants : </b>1d{{ classe.dv }} + votre modificateur de Constitution</p>
+</div>

@@ -1,0 +1,38 @@
+{% for t in s.tables|filter(a => a.place == place ) %}
+    <table class="skill-table">
+        <thead>
+            {% if t.name %}
+                <tr>
+                    <th colspan="2">{{ t.name }}</th>
+                </tr>
+            {% endif %}
+            {% for r in t.rows|filter(a => a.number == 0) %}
+                <tr>
+                    <th>{{ r.d1|raw }}</th>
+                    {% if r.d2 %}<th>{{ r.d2|raw }}</th>{% endif %}
+                    {% if r.d3 %}<th>{{ r.d3|raw }}</th>{% endif %}
+                    {% if r.d4 %}<th>{{ r.d4|raw }}</th>{% endif %}
+                    {% if r.d5 %}<th>{{ r.d5|raw }}</th>{% endif %}
+                    {% if r.d6 %}<th>{{ r.d6|raw }}</th>{% endif %}
+                    {% if r.d7 %}<th>{{ r.d7|raw }}</th>{% endif %}
+                    {% if r.d8 %}<th>{{ r.d8|raw }}</th>{% endif %}
+                </tr>
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for r in t.rows|filter(a => a.number != 0)|sort((a, b) => a.number <=> b.number) %}
+                <tr>
+                    <td>{{ r.d1|raw }}</td>
+                    {% if r.d2 %}<td>{{ r.d2|raw }}</td>{% endif %}
+                    {% if r.d3 %}<td>{{ r.d3|raw }}</td>{% endif %}
+                    {% if r.d4 %}<td>{{ r.d4|raw }}</td>{% endif %}
+                    {% if r.d5 %}<td>{{ r.d5|raw }}</td>{% endif %}
+                    {% if r.d6 %}<td>{{ r.d6|raw }}</td>{% endif %}
+                    {% if r.d7 %}<td>{{ r.d7|raw }}</td>{% endif %}
+                    {% if r.d8 %}<td>{{ r.d8|raw }}</td>{% endif %}
+                </tr>
+            {% endfor %}
+        <tbody>
+    </table>
+{% endfor %}
+                

@@ -78,7 +78,7 @@ class ClasseLevel
     private ?int $ki = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $unarmored_move = null;
+    private ?float $unarmored_move = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $sneak_attack = null;
@@ -351,12 +351,12 @@ class ClasseLevel
         return $this;
     }
 
-    public function getUnarmoredMove(): ?int
+    public function getUnarmoredMove(): ?float
     {
         return $this->unarmored_move;
     }
 
-    public function setUnarmoredMove(?int $unarmored_move): static
+    public function setUnarmoredMove(?float $unarmored_move): static
     {
         $this->unarmored_move = $unarmored_move;
 

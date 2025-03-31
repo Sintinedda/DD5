@@ -47,7 +47,7 @@ final class ItemController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->setCategory($sub);
+            $item->setSubcategory($sub);
             $entityManager->persist($item);
             $entityManager->flush();
 
@@ -84,7 +84,7 @@ final class ItemController extends AbstractController
     #[Route('/{id}/edit/sub', name: 'item_sub_item_edit', methods: ['GET', 'POST'])]
     public function editSubcategory(Request $request, Item $item, EntityManagerInterface $entityManager): Response
     {
-        $id = $item->getSubcategory('id');
+        $id = $item->getSubcategory()->getId();
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
 

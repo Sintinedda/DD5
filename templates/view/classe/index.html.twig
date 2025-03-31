@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des classes{% endblock %}
+
+{% block stylesheets %}
+    {{ parent () }}
+    <link href="{{ asset('assets/css/classe/index.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body_id 'classes' %}
+
+{% block main %}
+
+    <div class="container classes">
+        <h1>Liste des classes</h1>
+        <p class="classes-index">{% for classe in classes|sort((a, b) => a.slug <=> b.slug) %}<a href="#{{ classe.slug }}">{{ classe.name }}</a>{% endfor %}</p>
+        {% for classe in classes|sort((a, b) => a.slug <=> b.slug) %}
+            <div id="{{ classe.slug }}">
+                <div class="classes-show">
+                    <div>
+                        <div class="classes-img">
+                            <img src="{{ asset('assets/img/classe-icons/' ~ classe.icon)}}" alt="{{ classe.name }}"/>
+                        </div>
+                    </div>
+                    <div>
+                        <h2><a href="{{ path('view_classe', { 'slug': classe.slug }) }}">{{ classe.name }}</a></h2>
+                    </div>
+                </div>
+                <div class="classes-flex">
+                    <div>
+                        <h3>{{ classe.specialty.name }}</h3>
+                        <ul>
+                            {% for spe in classe.specialty.items|sort((a, b) => a.slug <=> b.slug)|filter(a => a.ua == false) %}
+                                <li>
+                                    <a href="{{ path('view_specialty', { 'slug': classe.slug, 'slug2': spe.slug }) }}">{{ spe.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Arcanes déterrées</h3>
+                        <ul>
+                            {% for spe in classe.specialty.items|sort((a, b) => a.slug <=> b.slug)|filter(a => a.ua == true) %}
+                                <li>
+                                    <a href="{{ path('view_specialty', { 'slug': classe.slug, 'slug2': spe.slug }) }}">{{ spe.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% if classe.spells|length >= 1 or classe.infusion %}
+                        <div>
+                            <h3>Liens rapides</h3>
+                            <ul>
+                                {% if classe.spells|length >= 1 %}
+                                    <li>
+                                        <a href="">Liste des sorts de {{ classe.name }}</a>
+                                    </li>
+                                {% endif %}
+                                {% if classe.infusion %}
+                                    <li>
+                                        <a href="">Infusions</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

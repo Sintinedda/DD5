@@ -70,23 +70,23 @@
                             <th><a href="{{ path('classe_level_edit', {'id': l.id}) }}">{{ l.level }}</a></th>
                             <th>{{ l.bm }}</th>
                             {% if classe.slug == 'artificier' %}
-                                <th>{{ l.infusion_know }}</th>
-                                <th>{{ l.infused_item }}</th>
+                                <th>{{ l.infusionKnow }}</th>
+                                <th>{{ l.infusedItem }}</th>
                             {% endif %}
                             {% if classe.slug == 'barbare' %}
                                 <th>{{ l.rage }}</th>
-                                <th>{{ l.rage_damage }}</th>
+                                <th>{{ l.rageDamage }}</th>
                             {% endif %}
                             {% if classe.slug == 'ensorceleur' %}
-                                <th>{{ l.sorcery_point }}</th>
+                                <th>{{ l.sorceryPoint }}</th>
                             {% endif %}
                             {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
                                 or classe.slug == 'artificier' or classe.slug == 'occultiste' or classe.slug == 'magicien' 
                             %}                                   
-                                <th>{{ l.cantrip_know }}</th>
+                                <th>{{ l.cantripKnow }}</th>
                             {% endif %}
                             {% if classe.slug == 'barde' or classe.slug == 'ensorceleur' or classe.slug == 'rodeur' or classe.slug == 'occultiste' %}                                   
-                                <th>{{ l.spell_know }}</th>
+                                <th>{{ l.spellKnow }}</th>
                             {% endif %}
                             {% if classe.slug == 'barde' or classe.slug == 'clerc' or classe.slug == 'druide' or classe.slug == 'ensorceleur'
                                 or classe.slug == 'artificier' or classe.slug == 'paladin' or classe.slug == 'rodeur' or classe.slug == 'magicien'
@@ -106,17 +106,17 @@
                                 <th>{{ l.s9 }}</th>
                             {% endif %}
                             {% if classe.slug == 'moine' %}
-                                <th>{{ l.martial_art }}</th>
+                                <th>{{ l.martialArt }}</th>
                                 <th>{{ l.ki }}</th>
-                                <th>{{ l.unarmored.move }}</th>
+                                <th>{{ l.unarmoredMove }}</th>
                             {% endif %}
                             {% if classe.slug == 'roublard' %}
-                                <th>{{ l.sneak_attack }}</th>
+                                <th>{{ l.sneakAttack }}</th>
                             {% endif %}
                             {% if classe.slug == 'occultiste' %}
-                                <th>{{ l.spell_slot }}</th>
-                                <th>{{ l.slot_level }}</th>
-                                <th>{{ l.invocation_know }}</th>
+                                <th>{{ l.spellSlot }}</th>
+                                <th>{{ l.slotLevel }}</th>
+                                <th>{{ l.invocationKnow }}</th>
                             {% endif %}
                         </tr>
                     {% endfor %}

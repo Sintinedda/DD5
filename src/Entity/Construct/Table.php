@@ -143,12 +143,12 @@ class Table
     /**
      * @return Collection<int, TableRow>
      */
-    public function getTableRows(): Collection
+    public function getRows(): Collection
     {
         return $this->rows;
     }
 
-    public function addTableRow(TableRow $row): static
+    public function addRow(TableRow $row): static
     {
         if (!$this->rows->contains($row)) {
             $this->rows->add($row);
@@ -158,7 +158,7 @@ class Table
         return $this;
     }
 
-    public function removeTableRow(TableRow $row): static
+    public function removeRow(TableRow $row): static
     {
         if ($this->rows->removeElement($row)) {
             // set the owning side to null (unless already changed)

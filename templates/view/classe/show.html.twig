@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ classe.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent () }}
+    <link href="{{ asset('assets/css/classe/show.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/classe/classe-spe.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body_id 'classe' %}
+
+{% block main %}
+
+    <div class="container classe">
+        <h1>{{ classe.name }}</h1>
+        <div class="description">
+            <p>{{ classe.d }}</p>
+            {% if classe.d2 %}<p>{{ classe.d2 }}</p>{% endif %}
+        </div>
+        {% include ("view/classe/construct/_pv.html.twig") %}
+        {% include ("view/classe/construct/_features.html.twig") %}
+        {% include ("view/classe/construct/_equipments.html.twig") %}
+        {% include ("view/classe/construct/_subskills.html.twig") %}
+        {% include ("view/classe/construct/_level-tables.html.twig") %}
+        {% include ("view/classe/construct/_skills.html.twig") %}
+    </div>
+
+{% endblock %}

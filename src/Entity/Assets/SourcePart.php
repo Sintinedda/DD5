@@ -45,12 +45,6 @@ class SourcePart
     private Collection $bGs;
 
     /**
-     * @var Collection<int, SpecialtyItem>
-     */
-    #[ORM\ManyToMany(targetEntity: SpecialtyItem::class, mappedBy: 'source_part')]
-    private Collection $specialties;
-
-    /**
      * @var Collection<int, ItemCategory>
      */
     #[ORM\ManyToMany(targetEntity: ItemCategory::class, mappedBy: 'source_part')]
@@ -80,16 +74,22 @@ class SourcePart
     #[ORM\OneToMany(targetEntity: RaceSource::class, mappedBy: 'source_part')]
     private Collection $races;
 
+    /**
+     * @var Collection<int, SpecialtyItem>
+     */
+    #[ORM\OneToMany(targetEntity: SpecialtyItem::class, mappedBy: 'source_part')]
+    private Collection $specialties;
+
     public function __construct()
     {
         $this->feats = new ArrayCollection();
         $this->bGs = new ArrayCollection();
-        $this->specialties = new ArrayCollection();
         $this->itemCategories = new ArrayCollection();
         $this->items = new ArrayCollection();
         $this->sBs = new ArrayCollection();
         $this->spells = new ArrayCollection();
         $this->races = new ArrayCollection();
+        $this->specialties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,33 +188,6 @@ class SourcePart
             if ($bG->getSourcePart() === $this) {
                 $bG->setSourcePart(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, SpecialtyItem>
-     */
-    public function getSpecialties(): Collection
-    {
-        return $this->specialties;
-    }
-
-    public function addSpecialty(SpecialtyItem $specialty): static
-    {
-        if (!$this->specialties->contains($specialty)) {
-            $this->specialties->add($specialty);
-            $specialty->addSourcePart($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSpecialty(SpecialtyItem $specialty): static
-    {
-        if ($this->specialties->removeElement($specialty)) {
-            $specialty->removeSourcePart($this);
         }
 
         return $this;
@@ -361,6 +334,36 @@ class SourcePart
             // set the owning side to null (unless already changed)
             if ($race->getSourcePart() === $this) {
                 $race->setSourcePart(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SpecialtyItem>
+     */
+    public function getSpecialties(): Collection
+    {
+        return $this->specialties;
+    }
+
+    public function addSpecialty(SpecialtyItem $specialty): static
+    {
+        if (!$this->specialties->contains($specialty)) {
+            $this->specialties->add($specialty);
+            $specialty->setSourcePart($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialty(SpecialtyItem $specialty): static
+    {
+        if ($this->specialties->removeElement($specialty)) {
+            // set the owning side to null (unless already changed)
+            if ($specialty->getSourcePart() === $this) {
+                $specialty->setSourcePart(null);
             }
         }
 

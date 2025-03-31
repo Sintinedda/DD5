@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>ItemSubcategory</h1>
+    <h1>{{ item_subcategory.name }}</h1>
     <div style="display:flex;">
         <a href="{{ path('items_show', {'id': id}) }}">back to list</a>
         <a href="{{ path('item_sub_edit', {'id': item_subcategory.id}) }}">edit</a>
@@ -18,9 +18,9 @@
         <a style="margin-right: 20px;" href="{{ path('item_sub_item_new', {'id': item_subcategory.id}) }}">new item</a>   
     </div>
     <br/><br/>
-    {{ include 'items/item_subcategory/construct/_skills.html.twig' }}
-    {{ include 'items/item_subcategory/construct/_listes.html.twig' }}
-    {{ include 'items/item_subcategory/construct/_tables.html.twig' }}
-    {{ include 'items/item_subcategory/construct/_items.html.twig' }}   
+    {{ include ('items/item_subcategory/construct/_skills.html.twig') }}
+    {{ include ('items/item_subcategory/construct/_listes.html.twig') }}
+    {{ include ('items/item_subcategory/construct/_tables.html.twig') }}
+    {{ include ('items/item_subcategory/construct/_items.html.twig') }}   
 
 {% endblock %}

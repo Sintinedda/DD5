@@ -2,7 +2,6 @@
 
 namespace App\Entity\Construct;
 
-use App\Entity\Assets\Feat;
 use App\Entity\Backgrounds\BG;
 use App\Entity\Classes\ClasseLevel;
 use App\Entity\Classes\ClasseSpellcasting;
@@ -79,20 +78,8 @@ class Skill
     #[ORM\OneToMany(targetEntity: Table::class, mappedBy: 'skill')]
     private Collection $tables;
 
-    #[ORM\Column(length: 10, nullable: true)]
-    private ?string $type = null;
-
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $part = null;
-
-    #[ORM\Column(length: 3, nullable: true)]
-    private ?string $attack_type = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $damage = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $target = null;
 
     /**
      * @var Collection<int, BG>
@@ -395,18 +382,6 @@ class Skill
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getPart(): ?string
     {
         return $this->part;
@@ -415,42 +390,6 @@ class Skill
     public function setPart(?string $part): static
     {
         $this->part = $part;
-
-        return $this;
-    }
-
-    public function getAttackType(): ?string
-    {
-        return $this->attack_type;
-    }
-
-    public function setAttackType(?string $attack_type): static
-    {
-        $this->attack_type = $attack_type;
-
-        return $this;
-    }
-
-    public function getDamage(): ?string
-    {
-        return $this->damage;
-    }
-
-    public function setDamage(?string $damage): static
-    {
-        $this->damage = $damage;
-
-        return $this;
-    }
-
-    public function getTarget(): ?string
-    {
-        return $this->target;
-    }
-
-    public function setTarget(?string $target): static
-    {
-        $this->target = $target;
 
         return $this;
     }
